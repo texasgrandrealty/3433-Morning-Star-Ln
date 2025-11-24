@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Market Position Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        /* --- NAV BUTTON FIX (Original Formatting) --- */
+        .nav-btn {
+            padding: 0.5rem 0.8rem; 
+            font-size: 0.75rem; 
+            font-weight: 500; 
+            background-color: #F3F4F6; 
+            color: #4B5563; 
+            border-radius: 0.5rem 0.5rem 0 0; 
+            cursor: pointer;
+            transition: background-color 0.3s, color: 0.3s;
+            border-bottom: 4px solid transparent;
+            margin-right: 0.25rem;
+            margin-bottom: 0.5rem; 
+            white-space: nowrap; 
+        }
+        .nav-btn:hover {
+            background-color: #60A5FA; 
+            color: white;
+            border-bottom-color: #60A5FA;
+        }
+        .nav-btn.active {
+            background-color: #1D4ED8; 
+            color: white;
+            font-weight: 700; 
+            border-bottom: 4px solid #1D4ED8;
+        }
+        /* --- COMP SUB-NAV FIX --- */
+        .sub-nav-btn {
+            @apply px-4 py-2 text-xs font-medium rounded-full transition-colors duration-200 border border-gray-300;
+        }
+        .sub-nav-btn.active {
+            @apply bg-blue-600 text-white border-blue-600;
+        }
+        .kpi-card {
+            @apply bg-white shadow-lg rounded-lg p-6 flex flex-col justify-center items-center transition-transform hover:scale-105;
+        }
+        .kpi-title {
+            @apply text-sm font-medium text-gray-500 uppercase tracking-wider;
+        }
+        .kpi-value {
+            @apply text-3xl md:text-4xl font-extrabold text-stone-700 mt-2;
+        }
+        .kpi-sub {
+            @apply text-sm text-gray-400;
+        }
+        .page-section {
+            @apply bg-white shadow-lg rounded-lg p-6 md:p-8;
+        }
+        main > div {
+            @apply bg-white rounded-b-lg shadow-lg;
+        }
+        .data-table th, .data-table td {
+             @apply p-3 whitespace-nowrap;
+        }
+        .data-table thead {
+            @apply text-xs text-gray-700 uppercase bg-gray-100;
+        }
+        /* Custom styles for bold text in Executive Summary to match original request */
+        .summary-bold { font-weight: 700; }
+        .summary-red { color: #dc2626; font-weight: 700; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <header class="py-8 md:py-12 text-center">
+            <img src="logo.png" alt="Logo" class="mx-auto mb-4" style="max-height: 40px; height: auto; width: auto;">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-stone-800">Strategic Market Position Analysis</h1>
+            <p class="text-lg font-medium text-gray-600 mt-2">3433 Morning Star Ln, Garland, TX 75043</p>
+        </header>
+
+        <nav class="border-b border-gray-200 sticky top-0 bg-gray-50 z-10" id="main-nav-container">
+            <div class="flex flex-wrap justify-center pt-4 pb-0 sm:space-x-2">
+                <!-- Data attributes added and will be handled by JS event listeners -->
+                <button id="nav-summary" class="nav-btn active" data-page="summary">Executive Summary</button>
+                <button id="nav-metrics" class="nav-btn" data-page="metrics">Key Pricing Metrics</button>
+                <button id="nav-property" class="nav-btn" data-page="property">Property Analysis</button>
+                <button id="nav-comps" class="nav-btn" data-page="comps">Comparable Properties</button>
+                <button id="nav-rates" class="nav-btn" data-page="rates">Market Rate Update</button>
+                <button id="nav-liquidity" class="nav-btn" data-page="liquidity">Liquidity Risk</button>
+                <button id="nav-options" class="nav-btn" data-page="options">Comparative Options (Summary)</button>
+                <button id="nav-option1" class="nav-btn" data-page="option1">120-Day Price Strategy (Option 1)</button>
+                <button id="nav-option2" class="nav-btn" data-page="option2">3-2-1 Buydown Details (Option 2)</button>
+                <button id="nav-option3" class="nav-btn" data-page="option3">Owner Finance Details (Option 3)</button>
+            </div>
+        </nav>
+
+        <main class="mb-12">
+            <!-- 1. EXECUTIVE SUMMARY PAGE -->
+            <div id="page-summary" class="py-8 md:py-12">
+                <div class="page-section max-w-4xl mx-auto">
+                    <h2 class="text-3xl font-extrabold text-blue-700 text-center mb-6">
+                        Strategic Market Position Analysis: Price Correction for Rapid Sale
+                    </h2>
+                    <h3 class="text-xl font-semibold text-gray-700 text-center mb-8">3433 Morning Star Ln, Garland, TX 75043</h3>
+                    
+                    <!-- NEW IMAGE/MAP PLACEHOLDERS -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <img src="3433_Morning_Star_Front_View.png" alt="Main property view" class="w-full h-auto rounded-lg shadow-md border border-gray-200">
+                        <img src="3433_Morning_Star_Map.png" alt="Google map location" class="w-full h-auto rounded-lg shadow-md border border-gray-200">
+                    </div>
+                    
+                    <div class="prose max-w-none text-gray-600 space-y-6">
+                        <p class="text-lg font-extrabold text-gray-800 border-l-4 border-blue-500 pl-4">
+                            This report outlines a strategic pricing plan designed to meet the seller's mandated starting price of <span class="summary-bold">$375,000</span> and secure a contract within a <span class="summary-red">120-day timeline</span>. The property's value is supported by major structural upgrades, but the high anchor price (25% above average closed PPSF) requires an aggressive, timed correction.
+                        </p>
+                        <h4 class="text-2xl font-semibold text-blue-700 pt-4"><span class="summary-bold">Core Findings & Strategic Mandates:</span></h4>
+                        <ul class="list-disc list-inside space-y-2 pl-4">
+                            <li><span class="summary-bold">Pricing Anchor:</span> The mandated starting price ($375,000 / $186.29/\text{SqFt}$) sits well above the AVM estimate of $343,480, meaning market time will be spent dropping the price toward a proven accepted price floor.</li>
+                            <li><span class="summary-bold">Liquidity Risk:</span> As a **new listing (0 CDOM)**, velocity is key. The market average closing time (74 days) dictates that the price must be reduced quickly if an offer is not received by Day 40.</li>
+                            <li><span class="summary-bold">Strategy:</span> A comprehensive, 6-step price reduction schedule over 120 days is mandatory. This plan is designed to surgically drop the price to the market-validated floor of **$349,900** if the premium anchor fails to deliver a contract.</li>
+                        </ul>
+                    </div>
+                    <div class="mt-8 text-center">
+                         <button class="bg-blue-600 text-white py-3 px-8 rounded-lg shadow-lg hover:bg-blue-700 transition" data-page-target="options">
+                            Explore Financing and Pricing Options
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. KEY METRICS PAGE -->
+            <div id="page-metrics" class="py-8 md:py-12 hidden">
+                <div class="text-center mb-10">
+                    <h2 class="text-2xl font-semibold text-gray-700">Strategic Pricing & Velocity Snapshot</h2>
+                    <p class="mt-2 text-gray-500 max-w-2xl mx-auto">The 120-day price reduction schedule is designed to achieve the $349,900 price floor necessary to secure a sale within the target timeline.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12 px-6 sm:px-8">
+                    <div class="kpi-card">
+                        <span class="kpi-title">Initial List Price</span>
+                        <span class="kpi-value">$375,000</span>
+                        <span class="kpi-sub">Seller Mandated Anchor Price</span>
+                    </div>
+                    <div class="kpi-card">
+                        <span class="kpi-title">Target Sales Timeline</span>
+                        <span class="kpi-value text-red-600">120 Days</span>
+                        <span class="kpi-sub">Total time to contract</span>
+                    </div>
+                    <div class="kpi-card">
+                        <span class="kpi-title">Price Floor (Day 120)</span>
+                        <span class="kpi-value text-blue-700">$349,900</span>
+                        <span class="kpi-sub">Total Reduction: 6.70%</span>
+                    </div>
+                    <div class="kpi-card">
+                        <span class="kpi-title">Total Market Exposure (CDOM)</span>
+                        <span class="kpi-value text-green-600">0 Days</span>
+                        <span class="kpi-sub">New Listing Start</span>
+                    </div>
+                </div>
+
+                <div class="page-section mx-6 sm:mx-8">
+                    <h3 class="text-xl font-semibold text-gray-700 text-center mb-6">Aggressive Pricing Trajectory ($/SqFt)</h3>
+                    <p class="text-gray-500 text-center max-w-xl mx-auto mb-6">The planned reductions target a $173.80/SqFt benchmark by Day 120, aligning with validated closed comps in the RPR data set.</p>
+                    <div class="chart-container">
+                        <canvas id="pricingStrategyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. PROPERTY ANALYSIS PAGE -->
+            <div id="page-property" class="py-8 md:py-12 hidden">
+                <h2 class="text-2xl font-semibold text-gray-700 text-center mb-10">Subject Property Analysis: 3433 Morning Star Ln, Garland</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 px-6 sm:px-8">
+                    
+                    <div class="page-section">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-6">Core Asset Profile & Quality</h3>
+                        
+                        <div class="mb-6">
+                            <h4 class="font-medium text-gray-800 mb-2">Location & Status</h4>
+                            <img src="https://placehold.co/600x300/F9FAFB/111827?text=RESALE+HOME+PHOTO+-+3433+MORNING+STAR" alt="Photo or rendering of 3433 Morning Star Ln" class="w-full h-auto rounded-lg shadow-md border border-gray-200">
+                        </div>
+                        
+                        <ul class="space-y-4 text-gray-600">
+                            <li class="flex justify-between items-center"><span class="font-medium text-gray-800">Gross Living Area (GLA):</span> 2,004 SqFt</li>
+                            <li class="flex justify-between items-center"><span class="font-medium text-gray-800">Bedrooms/Baths:</span> 3 Bedrooms / 2 Baths</li>
+                            <li class="flex justify-between items-center"><span class="font-medium text-gray-800">Year Built:</span> <span class="text-stone-700 summary-bold">1984 (Resale)</span></li>
+                            <li class="flex justify-between items-center"><span class="font-medium text-gray-800">List Price (Anchor):</span> <span class="text-red-600 summary-bold">$375,000</span></li>
+                            <li class="flex justify-between items-center"><span class="font-medium text-gray-800">Price/SqFt (Anchor):</span> <span class="text-red-600 summary-bold">$186.29</span></li>
+                            <li class="flex justify-between items-center"><span class="font-medium text-gray-800">Lot Size:</span> 0.34 Acres (Approx)</li>
+                            <li class="flex justify-between items-center"><span class="font-medium text-gray-800">CDOM:</span> 0 Days (New Listing)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="page-section">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-6">Comparative Strengths & Market Position</h3>
+                        <p class="text-gray-500 mb-6">The value of this property is highly dependent on the recent capital improvements and risk-mitigating investments made by the seller.</p>
+
+                        <div class="space-y-4">
+                            <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
+                                <h4 class="font-bold text-green-800">Major Structural & Utility Updates</h4>
+                                <ul class="list-disc list-inside text-green-700 mt-2">
+                                    <li>New <span class="summary-bold">Solar Panels</span> (Utility Savings).</li>
+                                    <li>New <span class="summary-bold">2-Year-Old Roof</span> (Warranty value).</li>
+                                    <li><span class="summary-bold">10 Foundation Piers Added</span> (<span class="summary-bold">Transferable Lifetime Warranty</span> - critical risk mitigation).</li>
+                                </ul>
+                            </div>
+                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+                                <h4 class="font-bold text-blue-800">Aesthetic & Maintenance Upgrades</h4>
+                                <ul class="list-disc list-inside text-blue-700 mt-2">
+                                    <li>Modestly updated and <span class="summary-bold">very clean/immaculate</span> condition.</li>
+                                    <li>Upgraded <span class="summary-bold">cabinetry</span> and enlarged front drive/walkway design.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <!-- 4. COMPARABLE PROPERTIES MASTER PAGE -->
+            <div id="page-comps" class="py-8 md:py-12 hidden">
+                <h2 class="text-2xl font-semibold text-gray-700 text-center mb-4">Comparable Properties Overview (3 Data Sets)</h2>
+                <p class="text-gray-500 text-center max-w-2xl mx-auto mb-8">This section analyzes the market from three critical angles: local neighborhood pricing, AVM/RPR data, and immediate price-point competition.</p>
+
+                <!-- SUB-TAB NAVIGATION -->
+                <div class="flex justify-center flex-wrap space-x-2 mb-8 mx-6" id="comp-nav-tabs">
+                    <button id="sub-neighborhood" class="nav-btn sub-nav-btn" data-comp="neighborhood">1. Neighborhood Proximity</button>
+                    <button id="sub-avm" class="nav-btn sub-nav-btn" data-comp="avm">2. AVM via RPR/NTREIS</button>
+                    <button id="sub-price_comp" class="nav-btn sub-nav-btn" data-comp="price_comp">3. Direct Price Competition</button>
+                </div>
+
+                <div id="sub-page-neighborhood" class="page-section mx-6 sm:mx-8 hidden">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-6">Data Set 1: Hideaway/Lindale Proximity & Desirability Comps</h3>
+                    
+                    <!-- LINKS BLOCK -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                        <div class="bg-gray-100 p-4 rounded-lg border-l-4 border-blue-500">
+                            <h4 class="font-bold text-gray-800 mb-2">MLS Link: Neighborhood Proximity</h4>
+                            <a href="#" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium break-all underline text-sm">
+                                Link Not Provided - Source Data Only
+                            </a>
+                        </div>
+                        <div class="bg-gray-100 p-4 rounded-lg border-l-4 border-blue-500">
+                            <h4 class="font-bold text-gray-800 mb-2">Analysis Summary Sheet (Drive)</h4>
+                            <a href="#" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium break-all underline text-sm">
+                                Link Not Provided - Source Data Only
+                            </a>
+                        </div>
+                    </div>
+                    <!-- END LINKS BLOCK -->
+
+                    <p class="text-gray-500 max-w-2xl mx-auto mb-8">This set establishes the baseline pricing for 1970s/1980s homes in the immediate Garland area, highlighting price clustering near the $330k mark.</p>
+
+                    <div class="overflow-x-auto">
+                        <h4 class="text-lg font-semibold text-gray-700 mt-6 mb-4">Active Listings (Subject highlighted)</h4>
+                        <table class="w-full text-left text-sm text-gray-600 data-table">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-100"><tr><th class="p-3">MLS#</th><th class="p-3">Address, City</th><th class="p-3">Sqft</th><th class="p-3">YB</th><th class="p-3">Acres</th><th class="p-3">$/SqFt</th><th class="p-3">List Price</th><th class="p-3">CDOM</th></tr></thead>
+                            <tbody id="ds1-active-table" class="divide-y"></tbody>
+                        </table>
+                        
+                        <h4 class="text-lg font-semibold text-gray-700 mt-6 mb-4">Pending Listings</h4>
+                        <table class="w-full text-left text-sm text-gray-600 data-table">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-100"><tr><th class="p-3">MLS#</th><th class="p-3">Address, City</th><th class="p-3">Sqft</th><th class="p-3">YB</th><th class="p-3">Acres</th><th class="p-3">$/SqFt</th><th class="p-3">List Price</th></tr></thead>
+                            <tbody id="ds1-pending-table" class="divide-y"></tbody>
+                        </table>
+
+                        <h4 class="text-lg font-semibold text-gray-700 mt-6 mb-4">Closed Sales</h4>
+                        <table class="w-full text-left text-sm text-gray-600 data-table">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-100"><tr><th class="p-3">MLS#</th><th class="p-3">Address, City</th><th class="p-3">Sqft</th><th class="p-3">YB</th><th class="p-3">Sold Price</th><th class="p-3">Sold Date</th><th class="p-3">S/L Ratio</th><th class="p-3">CDOM</th></tr></thead>
+                            <tbody id="ds1-closed-table" class="divide-y"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB CONTENT 2 (Data Set 2: AVM via RPR in NTREIS) -->
+                <div id="sub-page-avm" class="page-section mx-6 sm:mx-8 hidden">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-6">Data Set 2: AVM (Automated Valuation Model) Analysis</h3>
+
+                    <!-- LINKS BLOCK -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                        <div class="bg-gray-100 p-4 rounded-lg border-l-4 border-blue-500">
+                            <h4 class="font-bold text-gray-800 mb-2">MLS Link: AVM Source</h4>
+                            <a href="#" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium break-all underline text-sm">
+                                Link Not Provided - Source Data Only
+                            </a>
+                        </div>
+                        <div class="bg-gray-100 p-4 rounded-lg border-l-4 border-blue-500">
+                            <h4 class="font-bold text-gray-800 mb-2">Analysis Summary Sheet (Drive)</h4>
+                            <a href="#" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium break-all underline text-sm">
+                                Link Not Provided - Source Data Only
+                            </a>
+                        </div>
+                    </div>
+                    <!-- END LINKS BLOCK -->
+
+                    <h4 class="text-xl font-semibold text-blue-700 mb-4">Subject AVM RVM® Valuation</h4>
+                    <div class="bg-gray-100 p-4 rounded-lg shadow-inner mb-8">
+                         <div class="flex justify-between items-center"><span class="font-medium text-gray-800">RVM® Estimated Price:</span> <span class="text-2xl font-extrabold text-blue-700">$343,480</span></div>
+                         <div class="flex justify-between items-center"><span class="font-medium text-gray-800">RVM® Price per SqFt:</span> <span class="text-lg font-semibold text-blue-700">$171</span></div>
+                         <p class="text-sm text-gray-500 mt-2">The RVM estimate validates the ideal market value is around $343k, suggesting the $375k anchor price requires strong incentives to succeed.</p>
+                    </div>
+
+                    <p class="text-gray-500 max-w-2xl mx-auto mb-8">This dataset shows the direct impact of neighborhood comparable sales on the automated valuation model.</p>
+
+                    <div class="overflow-x-auto">
+                        <h4 class="text-lg font-semibold text-gray-700 mt-6 mb-4">Recently Closed & Off Market Properties (Used for RVM)</h4>
+                        <table class="w-full text-left text-sm text-gray-600 data-table">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-100"><tr><th class="p-3">Status</th><th class="p-3">Address, City</th><th class="p-3">Sqft</th><th class="p-3">YB</th><th class="p-3">Sold Price</th><th class="p-3">$/SqFt</th><th class="p-3">CDOM</th></tr></thead>
+                            <tbody id="ds2-closed-table" class="divide-y"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB CONTENT 3 (Data Set 3: $300k-$400k Price Range) -->
+                <div id="sub-page-price_comp" class="page-section mx-6 sm:mx-8 hidden">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-6">Data Set 3: Direct Price Competition ($300,000 - $400,000)</h3>
+
+                    <!-- LINKS BLOCK -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                        <div class="bg-gray-100 p-4 rounded-lg border-l-4 border-blue-500">
+                            <h4 class="font-bold text-gray-800 mb-2">MLS Link: Price Competition</h4>
+                            <a href="#" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium break-all underline text-sm">
+                                Link Not Provided - Source Data Only
+                            </a>
+                        </div>
+                        <div class="bg-gray-100 p-4 rounded-lg border-l-4 border-blue-500">
+                            <h4 class="font-bold text-gray-800 mb-2">Analysis Summary Sheet (Drive)</h4>
+                            <a href="#" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium break-all underline text-sm">
+                                Link Not Provided - Source Data Only
+                            </a>
+                        </div>
+                    </div>
+                    <!-- END LINKS BLOCK -->
+
+                    <p class="text-gray-500 max-w-2xl mx-auto mb-8">This set shows all inventory currently competing with the Subject (Active, Pending, Closed). The data indicates a clear clustering of closed sales just below the Subject's asking price.</p>
+
+                    <div class="overflow-x-auto">
+                        <h4 class="text-lg font-semibold text-gray-700 mt-6 mb-4">Active Listings (Subject highlighted)</h4>
+                        <table class="w-full text-left text-sm text-gray-600 data-table">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-100"><tr><th class="p-3">MLS#</th><th class="p-3">Address, City</th><th class="p-3">Sqft</th><th class="p-3">YB</th><th class="p-3">Acres</th><th class="p-3">$/SqFt</th><th class="p-3">List Price</th><th class="p-3">CDOM</th></tr></thead>
+                            <tbody id="ds3-active-table" class="divide-y"></tbody>
+                        </table>
+
+                        <h4 class="text-lg font-semibold text-gray-700 mt-10 mb-4">Pending & Closed Listings</h4>
+                        <table class="w-full text-left text-sm text-gray-600 data-table">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-100"><tr><th class="p-3">MLS#</th><th class="p-3">Address, City</th><th class="p-3">Sqft</th><th class="p-3">YB</th><th class="p-3">Sold Price</th><th class="p-3">Sold Date</th><th class="p-3">S/L Ratio</th><th class="p-3">CDOM</th></tr></thead>
+                            <tbody id="ds3-pending-closed-table" class="divide-y"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. MARKET RATE UPDATE PAGE -->
+            <div id="page-rates" class="py-8 md:py-12 hidden">
+                <h2 class="text-2xl font-semibold text-gray-700 text-center mb-10">Current Mortgage Market & Federal Reserve Context</h2>
+                
+                <div class="page-section max-w-4xl mx-auto space-y-8">
+                    <div>
+                        <h3 class="text-xl font-extrabold text-blue-700 mb-4 border-b pb-2 border-blue-100">Recent Volatility: The Hawkish Fed</h3>
+                        <p class="text-gray-700 leading-relaxed">MBS volatility caused rates to sell off heavily last week following a <span class="font-extrabold">25bps Fed Funds Rate cut</span>. The volatility was driven by Chairman Jerome Powell's press conference, which was seen as <span class="font-extrabold text-red-600">hawkish</span>. Powell stated that a December cut was "far from a foregone conclusion," directly countering market expectations that a cut was a certainty.</p>
+                        <p class="text-gray-700 leading-relaxed mt-3">The Fed voted 10-2 to implement the cut, with two dissenting members (one voting for no cut, one voting for a 50bps cut). This highlights internal disagreement regarding the speed and necessity of current rate adjustments.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-extrabold text-blue-700 mb-4 border-b pb-2 border-blue-100">Upcoming Economic Indicators</h3>
+                        <p class="text-gray-700 leading-relaxed">Economic data remains limited due to the government shutdown, delaying critical reports like the October Jobs Report. The market is currently anticipating:</p>
+                        <ul class="list-disc list-inside space-y-2 pl-4 text-gray-700">
+                            <li>**ISM Manufacturing (Monday):** Forecast for 49.1%.</li>
+                            <li>**ADP Employment:** Forecast for a negative reading of <span class="font-extrabold text-red-600">32,000 job losses</span>.</li>
+                            <li>**ISM Services:** Forecast for 50.0%.</li>
+                        </ul>
+                        <p class="text-gray-700 leading-relaxed mt-3">Any surprise in these limited reports could trigger further short-term volatility in the mortgage bond market.</p>
+                        <div class="mt-6 flex flex-wrap gap-4">
+                            <a href="https://www.marketwatch.com/economy-politics/calendar" target="_blank" class="bg-gray-100 px-4 py-2 rounded-lg text-sm font-medium text-blue-600 hover:bg-gray-200">View MarketWatch Economic Calendar</a>
+                            <a href="https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html" target="_blank" class="bg-gray-100 px-4 py-2 rounded-lg text-sm font-medium text-blue-600 hover:bg-gray-200">View CME FedWatch Tool</a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-extrabold text-blue-700 mb-4 border-b pb-2 border-blue-100">Future Fed Action</h3>
+                        <p class="text-gray-700 leading-relaxed">Odds for a 25bps rate cut at the next meeting (December 10th) have fallen to about 70% post-Powell's comments. This upcoming meeting is a "Dot Plot" meeting, which means the Fed will release its summary of economic projections, including each member’s forecast for where the Fed Funds Rate will be in the future, providing a critical clue to long-term rate direction.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. LIQUIDITY RISK PAGE -->
+            <div id="page-liquidity" class="py-8 md:py-12 hidden">
+                <h2 class="text-2xl font-semibold text-gray-700 text-center mb-10">Liquidity Risk Analysis: Cumulative Days on Market (CDOM)</h2>
+                
+                <div class="page-section max-w-4xl mx-auto px-6 sm:px-8">
+                    <h3 class="text-xl font-semibold text-red-700 mb-4 border-b pb-2 border-red-100">
+                        The Liquidity Challenge: 0 CDOM - Set Immediate Velocity
+                    </h3>
+                    <div class="prose max-w-none text-gray-600 space-y-4">
+                        <p>
+                            The subject property is being launched as a <span class="summary-bold">New Listing (0 CDOM)</span>, providing a crucial opportunity to establish immediate high velocity. This launch must be perfectly priced and incentivized to achieve the 120-day target.
+                        </p>
+                        <p>
+                            The average closed velocity for similar homes in the $300k-$400k range is <span class="summary-bold">74 days</span>. The price anchor of $375,000 places the listing well above the average closed PPSF, meaning the listing is relying heavily on the **Solar, Foundation, and Roof** upgrades to justify the premium.
+                        </p>
+                        <ul class="list-disc list-outside pl-6 space-y-2">
+                            <li><span class="font-semibold text-gray-900">Immediate Risk:</span> If the $375,000 price is not accepted by Day 40, the listing will begin to stagnate and must immediately proceed to the next scheduled price reduction to avoid crossing the 74-day average.</li>
+                            <li><span class="font-semibold text-gray-900">Strategy Mandate:</span> The new 120-day plan is the required mechanism to move the property from its ambitious starting price down to the market-validated floor of **$349,900**, ensuring a sale within the mandate.</li>
+                        </ul>
+                        <div class="bg-yellow-50 border-l-4 border-yellow-600 p-4 rounded-r-lg">
+                           <p class="font-extrabold text-yellow-800">
+                               The $375,000 anchor price requires an extended 120-day reduction strategy to successfully liquidate the property without a major price concession outside of the plan.
+                           </p>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container mt-10">
+                        <canvas id="cdomComparisonChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 7. COMPARATIVE OPTIONS (SUMMARY) -->
+            <div id="page-options" class="py-8 md:py-12 hidden">
+                <h2 class="text-2xl font-semibold text-gray-700 text-center mb-10">Comparative Options (Summary)</h2>
+                <p class="text-gray-500 text-center max-w-3xl mx-auto mb-8">The table below compares the buyer impact and seller cost for the three primary strategies. The goal is to choose the option that best drives liquidity in a complex market.</p>
+
+                <div class="page-section mx-6 sm:mx-8 overflow-x-auto">
+                    <table class="w-full text-left text-sm text-gray-600 data-table">
+                        <thead class="bg-blue-100 text-blue-800">
+                            <tr>
+                                <th class="p-3">Strategy</th>
+                                <th class="p-3">Buyer Benefit/Incentive</th>
+                                <th class="p-3">Seller Cost/Loss</th>
+                                <th class="p-3">Purchase Price Anchor</th>
+                                <th class="p-3">Starting Monthly P&I*</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-blue-200">
+                            <!-- Option 1: Price Reduction -->
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-3 font-extrabold text-blue-700">Option 1: 120-Day Price Strategy</td>
+                                <td class="p-3">Permanent $25,100 Price Reduction</td>
+                                <td class="p-3 font-extrabold text-red-600">Loss of Net Proceeds: ~$25,100</td>
+                                <td class="p-3">$349,900 (Price Floor)</td>
+                                <td class="p-3" id="option1-summary-payment"></td>
+                            </tr>
+                            <!-- Option 2: 3-2-1 Buydown -->
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-3 font-extrabold text-blue-700">Option 2: 3-2-1 Rate Buydown</td>
+                                <td class="p-3">Temporarily lowers IR to 3.625% (Yr 1)</td>
+                                <td class="p-3 font-extrabold text-red-600">Upfront Cost: $20,057.81</td>
+                                <td class="p-3">$375,000</td>
+                                <td class="p-3" id="option2-summary-payment"></td>
+                            </tr>
+                            <!-- Option 3: Owner Finance -->
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-3 font-extrabold text-blue-700">Option 3: Owner Finance</td>
+                                <td class="p-3">Guaranteed, Low-DP Financing</td>
+                                <td class="p-3">Loss of Liquidity, 7-Year Risk</td>
+                                <td class="p-3">$375,000</td>
+                                <td class="p-3" id="option3-summary-payment"></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5" class="p-3 text-xs text-gray-500">*Calculations assume a 20% down payment (except Option 3, which assumes 10%) and 30-year amortization.</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- 8. 90-DAY PRICE STRATEGY (OPTION 1) -->
+            <div id="page-option1" class="py-8 md:py-12 hidden">
+                <h2 class="text-2xl font-semibold text-gray-700 text-center mb-10">Option 1: 120-Day Price Reduction Strategy</h2>
+                <div class="page-section max-w-4xl mx-auto space-y-6">
+                    <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500 mb-6">
+                        <h3 class="text-xl font-extrabold text-blue-800">Goal: Achieve Price Floor of $349,900 Within 120 Days</h3>
+                        <p class="text-blue-700 mt-2">This 6-step strategy systematically corrects the $\$375,000$ starting price to the validated market floor, overriding the negative perception of the 103 CDOM.</p>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Pricing Schedule:</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm text-gray-600 data-table">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="p-3">Schedule</th>
+                                    <th class="p-3">Action</th>
+                                    <th class="p-3">Price</th>
+                                    <th class="p-3">Reduction Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y">
+                                <tr>
+                                    <td class="p-3 font-extrabold text-blue-700">Day 0 (Immediate)</td>
+                                    <td class="p-3">Initial Strategic Price</td>
+                                    <td class="p-3 font-extrabold">$375,000</td>
+                                    <td class="p-3">$0</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-extrabold text-blue-700">Day 20</td>
+                                    <td class="p-3">Aggressive Cut 1</td>
+                                    <td class="p-3 font-extrabold">$369,900</td>
+                                    <td class="p-3">$5,100</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-extrabold text-blue-700">Day 40</td>
+                                    <td class="p-3">Aggressive Cut 2</td>
+                                    <td class="p-3 font-extrabold">$364,900</td>
+                                    <td class="p-3">$5,000</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-extrabold text-blue-700">Day 60</td>
+                                    <td class="p-3">Aggressive Cut 3</td>
+                                    <td class="p-3 font-extrabold">$359,900</td>
+                                    <td class="p-3">$5,000</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-extrabold text-blue-700">Day 100</td>
+                                    <td class="p-3">Final Push Cut 4</td>
+                                    <td class="p-3 font-extrabold">$352,400</td>
+                                    <td class="p-3">$7,500</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-extrabold text-red-600">Day 120 (Price Floor)</td>
+                                    <td class="p-3">Definitive Price Anchor</td>
+                                    <td class="p-3 font-extrabold">$349,900</td>
+                                    <td class="p-3">$2,500</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4" class="p-3 text-xs font-extrabold text-gray-700 text-right">Total Reduction from Anchor: $25,100 (6.7% Drop)</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold text-gray-700 pt-4 mb-4">Buyer Financial Impact (At Price Floor)</h3>
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <ul class="space-y-2 text-gray-700">
+                            <li class="flex justify-between items-center"><span class="font-medium">Price Floor:</span> <span class="font-extrabold">$349,900</span></li>
+                            <li class="flex justify-between items-center"><span class="font-medium">Assumed Down Payment (20%):</span> $69,980</li>
+                            <li class="flex justify-between items-center"><span class="font-medium">Loan Principal:</span> $279,920</li>
+                            <li class="flex justify-between items-center"><span class="font-medium">Market Rate (6.45%):</span> <span class="font-extrabold text-blue-700">6.45%</span></li>
+                            <li class="flex justify-between items-center"><span class="font-medium">Monthly P&I Payment:</span> <span class="text-lg font-extrabold text-blue-700" id="option1-payment"></span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. 3-2-1 BUYDOWN DETAILS (OPTION 2) -->
+            <div id="page-option2" class="py-8 md:py-12 hidden">
+                <h2 class="text-2xl font-semibold text-gray-700 text-center mb-10">Option 2: 3-2-1 Rate Buydown Details</h2>
+                <div class="page-section max-w-4xl mx-auto space-y-6">
+                    <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500 mb-6">
+                        <h3 class="text-xl font-extrabold text-green-800">Goal: Maximum Affordability with Preserved Price</h3>
+                        <p class="text-green-700 mt-2">This strategy uses the seller's <span class="font-extrabold">$20,058</span> contribution to lower the buyer's payment dramatically during the first three years, preserving the sale price while offering the lowest initial monthly payment.</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-100 p-4 rounded-lg shadow-inner">
+                            <h4 class="font-extrabold text-gray-800 mb-2">Seller Financial Details</h4>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex justify-between items-center"><span class="font-medium">Purchase Price Anchor:</span> <span class="font-extrabold">$375,000</span></li>
+                                <li class="flex justify-between items-center"><span class="font-medium">Total Seller Contribution:</span> <span class="font-extrabold text-red-600" id="option2-cost"></span></li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-100 p-4 rounded-lg shadow-inner">
+                            <h4 class="font-extrabold text-gray-800 mb-2">Buyer Loan Terms</h4>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex justify-between items-center"><span class="font-medium">Assumed Down Payment (20%):</span> $75,000</li>
+                                <li class="flex justify-between items-center"><span class="font-medium">Loan Principal:</span> $300,000</li>
+                                <li class="flex justify-between items-center"><span class="font-medium">Fully Indexed Rate (Yrs 4-30):</span> <span class="font-extrabold text-blue-700">6.45%</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold text-gray-700 pt-4 mb-4">Buyer Monthly Payment Schedule</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm text-gray-600 data-table">
+                            <thead class="bg-green-100 text-green-800">
+                                <tr>
+                                    <th class="p-3">Period</th>
+                                    <th class="p-3">Interest Rate (IR)</th>
+                                    <th class="p-3">Monthly P&I Payment</th>
+                                    <th class="p-3">Savings vs. Fully Indexed</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-green-200">
+                                <tr>
+                                    <td class="p-3 font-extrabold text-green-700">Year 1</td>
+                                    <td class="p-3 font-extrabold text-green-600">3.625%</td>
+                                    <td class="p-3 font-extrabold text-green-600" id="option2-yr1-payment"></td>
+                                    <td class="p-3 font-extrabold text-green-600" id="option2-yr1-savings"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-extrabold text-green-700">Year 2</td>
+                                    <td class="p-3">4.625%</td>
+                                    <td class="p-3" id="option2-yr2-payment"></td>
+                                    <td class="p-3" id="option2-yr2-savings"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-extrabold text-green-700">Year 3</td>
+                                    <td class="p-3">5.625%</td>
+                                    <td class="p-3" id="option2-yr3-payment"></td>
+                                    <td class="p-3" id="option2-yr3-savings"></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-extrabold text-red-600">Years 4-30</td>
+                                    <td class="p-3 font-extrabold text-red-600">6.45% (Fully Indexed)</td>
+                                    <td class="p-3 font-extrabold text-red-600" id="option2-yr4-payment"></td>
+                                    <td class="p-3">N/A</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- NEW IMAGE SECTION -->
+                    <h3 class="text-xl font-semibold text-gray-700 pt-4 mb-4">Supporting Visuals: 3-2-1 Buydown Costs</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <img src="buydown_cost_sheet_1.png" alt="3-2-1 Rate Buydown Cost Sheet" class="w-full h-auto rounded-lg shadow-md border border-gray-200">
+                        <img src="buydown_cost_sheet_2.png" alt="6.625 Percent Rate Buydown Cost Sheet" class="w-full h-auto rounded-lg shadow-md border border-gray-200">
+                    </div>
+                    <!-- END IMAGE SECTION -->
+                </div>
+            </div>
+
+            <!-- 10. OWNER FINANCE DETAILS (OPTION 3) -->
+            <div id="page-option3" class="py-8 md:py-12 hidden">
+                <h2 class="text-2xl font-semibold text-gray-700 text-center mb-10">Option 3: Owner Finance Details</h2>
+                <div class="page-section max-w-4xl mx-auto space-y-6">
+                    <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500 mb-6">
+                        <h3 class="text-xl font-extrabold text-blue-800">Goal: Access to Non-Conventional Buyers & Increased Seller Revenue</h3>
+                        <p class="text-blue-700 mt-2">This strategy targets buyers who cannot secure conventional financing, while providing the seller with significant interest income and a large balloon payment in <span class="font-extrabold">7</span> years.</p>
+                    </div>
+
+                    <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-500 mb-6">
+                        <h4 class="font-extrabold text-red-800">Seller Financial Summary (7 Year Term)</h4>
+                        <ul class="space-y-2 text-red-700 mt-2">
+                            <li class="flex justify-between items-center"><span class="font-medium">Total Revenue (Principal + Interest):</span> <span id="total-revenue-value" class="font-extrabold text-xl"></span></li>
+                            <li class="flex justify-between items-center"><span class="font-medium">Total Interest/Premium Earned:</span> <span id="interest-earned-value" class="font-extrabold text-xl"></span></li>
+                            <li class="flex justify-between items-center"><span class="font-medium">Seller Premium Over List Price ($375,000):</span> <span class="font-extrabold text-xl" id="seller-premium-value"></span></li>
+                            <li class="flex justify-between items-center border-t-2 border-red-300 pt-2"><span class="font-medium">Total Revenue After Balloon Payment:</span> <span id="total-revenue-after-balloon-value" class="font-extrabold text-xl text-red-900"></span></li>
+                        </ul>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Owner Finance Terms & Amortization Summary</h3>
+                    <div class="bg-gray-100 p-4 rounded-lg mb-6">
+                        <ul class="space-y-2 text-gray-700">
+                            <li class="flex justify-between items-center"><span class="font-medium">List Price Anchor:</span> <span class="font-extrabold">$375,000</span></li>
+                            <li class="flex justify-between items-center"><span class="font-medium">Minimum Down Payment (10%):</span> <span id="owner-finance-dp"></span></li>
+                            <li class="flex justify-between items-center"><span class="font-medium">Loan Principal:</span> <span id="owner-finance-principal"></span></li>
+                            <li class="flex justify-between items-center"><span class="font-medium">Interest Rate (Fixed):</span> <span class="font-extrabold text-red-600">6.75%</span></li>
+                            <li class="flex justify-between items-center"><span class="font-medium">Amortization Period:</span> 30 Years</li>
+                            <li class="flex justify-between items-center"><span class="font-medium">Balloon Due:</span> <span class="font-extrabold text-red-600">7 Years (Month 84)</span></li>
+                            <li class="flex justify-between items-center"><span class="font-medium">Monthly P&I Payment:</span> <span class="text-lg font-extrabold text-red-600" id="owner-finance-payment"></span></li>
+                        </ul>
+                    </div>
+                    
+                    <h4 class="font-bold text-gray-700 mb-2">Amortization Milestones:</h4>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm text-gray-600 min-w-max">
+                            <thead class="text-xs text-white uppercase bg-blue-700">
+                                <tr>
+                                    <th class="p-3">Month</th>
+                                    <th class="p-3">Starting Balance</th>
+                                    <th class="p-3">Payment</th>
+                                    <th class="p-3">Interest Paid</th>
+                                    <th class="p-3">Principal Paid</th>
+                                    <th class="p-3">Ending Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody id="owner-finance-schedule" class="divide-y">
+                                <!-- Data populated by JS -->
+                            </tbody>
+                            <tfoot class="bg-red-100">
+                                <tr>
+                                    <td class="p-3 font-extrabold text-red-800">84 (Balloon)</td>
+                                    <td class="p-3 font-extrabold text-red-800" colspan="4">BALLOON PAYMENT REQUIRED</td>
+                                    <td class="p-3 font-extrabold text-red-800" id="balloon-value"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+        
+        <footer class="text-center py-8 mt-12 border-t border-gray-200">
+            <p class="text-sm text-gray-500">Confidential Residential Market Analysis | Garland, TX | Generated: November 2025</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // --- DATA DEFINITION (All data consolidated into the single file) ---
+
+        const SUBJECT_PRICE = 375000; // Seller's Mandated Anchor Price
+        const SUBJECT_SQFT = 2004; 
+        const SUBJECT_DP_PCT = 0.20; 
+        const MARKET_RATE = 0.0645; // 6.45%
+        const PRICE_FLOOR_OPTION_1 = 349900; // New 120-Day Price Floor
+        const BUYDOWN_PRICE_OPTION_2 = 375000; // Price anchor for the buydown loan
+        const OWNER_FINANCE_RATE = 0.0675; // 6.75%
+        const OWNER_FINANCE_DP_PCT = 0.10; // 10% Down Payment for Owner Finance
+        const TOTAL_CDOM = 0; // New Listing Start
+
+        // Pricing strategy constants
+        const BUYDOWNS = {
+            // 3-2-1 Buydown Rates and Costs 
+            RATES: [0.03625, 0.04625, 0.05625, 0.0645], // Final validated rates
+            SELLER_COST: 20057.81, // $8,302.00 + $5,684.58 + $2,913.13 + $3,158.10
+            PRICE_ANCHOR: BUYDOWN_PRICE_OPTION_2,
+        };
+
+        // Pricing schedule for chart data (PPSF is calculated during chart init)
+        const pricingStrategy = [
+            { label: 'Start Price ($186.29/SqFt)', price: 375000, day: 0 },
+            { label: 'Day 20 Reduction ($183.20/SqFt)', price: 369900, day: 20 },
+            { label: 'Day 40 Reduction ($180.77/SqFt)', price: 364900, day: 40 },
+            { label: 'Day 60 Reduction ($178.29/SqFt)', price: 359900, day: 60 },
+            { label: 'Day 100 Reduction ($175.81/SqFt)', price: 352400, day: 100 },
+            { label: 'Day 120 Floor ($174.60/SqFt)', price: 349900, day: 120 },
+        ];
+
+        const compData = {
+            // DATA SET 1: Neighborhood Proximity (Garland Area)
+            ds1: {
+                active: [
+                    { mls: '21028128', address: '1410 Surrey CT', city: 'Garland', sqft: 2013, yb: 1971, acres: 0.340, ppsf: 163.88, listPrice: 329900, cdom: 103, isSubject: false },
+                    { mls: '20984480', address: '1310 Briar Hollow LN', city: 'Garland', sqft: 2155, yb: 1971, acres: 0.260, ppsf: 157.77, listPrice: 340000, cdom: 142 },
+                    { mls: '21054767', address: '1214 Merrimac TRL', city: 'Garland', sqft: 2000, yb: 1971, acres: 0.234, ppsf: 179.50, listPrice: 359000, cdom: 71 },
+                    // Subject Property
+                    { mls: 'SUBJECT', address: '3433 Morning Star Ln', city: 'Garland', sqft: 2004, yb: 1984, acres: 0.340, ppsf: 186.29, listPrice: 375000, cdom: 0, isSubject: true },
+                ],
+                pending: [
+                    { mls: '20934922', address: '1305 Willow WAY', city: 'Garland', sqft: 2102, yb: 1975, acres: 0.234, ppsf: 161.27, listPrice: 339000, cdom: 150, status: 'PENDING' },
+                ],
+                closed: [
+                    { mls: '20946015', address: '4909 Berkeley CT', city: 'Garland', sqft: 2360, yb: 1989, soldPrice: 344900, soldDate: '08/29/2025', slRatio: 100.0, cdom: 74, ppsf: 146.14 },
+                    { mls: '21033627', address: '1401 Surrey CT', city: 'Garland', sqft: 2491, yb: 1972, soldPrice: 350000, soldDate: '11/07/2025', slRatio: 100.0, cdom: 46, ppsf: 140.51 },
+                    { mls: '20953092', address: '1902 Wiggs WAY', city: 'Garland', sqft: 2566, yb: 1972, soldPrice: 365000, soldDate: '11/07/2025', slRatio: 100.0, cdom: 158, ppsf: 142.24 },
+                ],
+            },
+            // DATA SET 2: AVM via RPR in NTREIS
+            ds2: {
+                active: [
+                    { mls: 'SUBJECT', address: '3433 Morning Star Ln', city: 'Garland', sqft: 2004, yb: 1984, acres: 0.340, ppsf: 171, listPrice: 343480, cdom: 0, isSubject: true }, 
+                    { mls: 'AVM_A', address: '1410 Surrey Ct', city: 'Garland', sqft: 2013, yb: 1971, acres: 0.340, ppsf: 166.37, listPrice: 334900, cdom: 103, isSubject: false },
+                ],
+                pendingClosed: [ 
+                    { status: 'CLOSED', mls: 'AVM_1', address: '3438 Morning Star Ln', city: 'Garland', sqft: 2159, yb: 1977, soldPrice: 320000, soldDate: '06/12/2025', slRatio: 90.0, cdom: 27, ppsf: 148 },
+                    { status: 'CLOSED', mls: 'AVM_2', address: '3318 Sunrise Dr', city: 'Garland', sqft: 2031, yb: 1984, soldPrice: 389500, soldDate: '08/27/2025', slRatio: 100.0, cdom: 33, ppsf: 192 },
+                    { status: 'CLOSED', mls: 'AVM_3', address: '3321 Bluffview Dr', city: 'Garland', sqft: 2500, yb: 1978, soldPrice: 370000, soldDate: '11/11/2025', slRatio: 95.0, cdom: 79, ppsf: 148 },
+                    { status: 'CLOSED', mls: 'AVM_4', address: '3418 Hightrail Ln', city: 'Garland', sqft: 2213, yb: 1981, soldPrice: 385000, soldDate: '03/24/25', slRatio: 95.0, cdom: 33, ppsf: 174 },
+                    { status: 'CLOSED', mls: 'AVM_5', address: '3325 Bluffview Dr', city: 'Garland', sqft: 2500, yb: 1978, soldPrice: 425000, soldDate: '04/08/25', slRatio: 95.0, cdom: 54, ppsf: 170 },
+                ],
+            },
+            // DATA SET 3: Direct Price Competition ($300,000 to $400,000)
+            ds3: {
+                active: [
+                    { mls: '21095955', address: '4030 Random CIR', city: 'Garland', sqft: 1857, yb: 1972, acres: 0.213, ppsf: 166.94, listPrice: 310000, cdom: 23 },
+                    { mls: '21117110', address: '725 Middle Glen DR', city: 'Garland', sqft: 1738, yb: 1977, acres: 0.195, ppsf: 183.54, listPrice: 319000, cdom: 1 },
+                    { mls: '21015393', address: '1610 Iroquois DR', city: 'Garland', sqft: 2426, yb: 1966, acres: 0.293, ppsf: 131.90, listPrice: 320000, cdom: 116 },
+                    { mls: '21077244', address: '4006 Cedar Creek', city: 'Garland', sqft: 1694, yb: 1976, acres: 0.179, ppsf: 193.57, listPrice: 327900, cdom: 49 },
+                    { mls: '21028128', address: '1410 Surrey CT', city: 'Garland', sqft: 2013, yb: 1971, acres: 0.340, ppsf: 163.88, listPrice: 329900, cdom: 103, isSubject: false },
+                    { mls: '20993209', address: '4102 Cedar Creek DR', city: 'Garland', sqft: 2271, yb: 1978, acres: 0.180, ppsf: 145.31, listPrice: 330000, cdom: 136 },
+                    { mls: '20983199', address: '1706 Iroquois DR', city: 'Garland', sqft: 2538, yb: 1968, acres: 0.307, ppsf: 135.93, listPrice: 345000, cdom: 147 },
+                    { mls: '21117223', address: '1510 Palm Valley DR', city: 'Garland', sqft: 2319, yb: 1983, acres: 0.274, ppsf: 150.93, listPrice: 350000, cdom: 1 },
+                    { mls: 'SUBJECT', address: '3433 Morning Star Ln', city: 'Garland', sqft: 2004, yb: 1984, acres: 0.340, ppsf: 186.29, listPrice: 375000, cdom: 0, isSubject: true },
+                ],
+                pendingClosed: [
+                    { status: 'PENDING', mls: '20934922', address: '1305 Willow WAY', city: 'Garland', sqft: 2102, yb: 1975, soldPrice: 339000, soldDate: 'N/A', slRatio: 'N/A', cdom: 150, ppsf: 161.27 },
+                    { status: 'CLOSED', mls: '20829125', address: '3909 Larkin LN', city: 'Garland', sqft: 3555, yb: 1999, soldPrice: 300000, soldDate: '06/11/2025', slRatio: 88.7, cdom: 99, ppsf: 84.39 },
+                    { status: 'CLOSED', mls: '20910414', address: '237 Trailridge DR', city: 'Garland', sqft: 1537, yb: 1971, soldPrice: 300000, soldDate: '07/03/2025', slRatio: 96.8, cdom: 49, ppsf: 195.19 },
+                    { status: 'CLOSED', mls: '20965574', address: '5221 Sarasota DR', city: 'Garland', sqft: 2001, yb: 1974, soldPrice: 300000, soldDate: '08/18/2025', slRatio: 87.0, cdom: 49, ppsf: 149.93 },
+                    { status: 'CLOSED', mls: '20995742', address: '3510 Syracuse DR', city: 'Garland', sqft: 2307, yb: 1975, soldPrice: 300000, soldDate: '11/13/2025', slRatio: 100.0, cdom: 111, ppsf: 130.04 },
+                    { status: 'CLOSED', mls: '21039409', address: '4210 Mayflower DR', city: 'Garland', sqft: 1997, yb: 1973, soldPrice: 300000, soldDate: '10/14/2025', slRatio: 95.2, cdom: 25, ppsf: 150.23 },
+                    { status: 'CLOSED', mls: '21034251', address: '1625 Blackhawk LN', city: 'Garland', sqft: 1754, yb: 1956, soldPrice: 305000, soldDate: '09/16/2025', slRatio: 101.8, cdom: 1, ppsf: 173.89 },
+                    { status: 'CLOSED', mls: '20984464', address: '1310 David DR', city: 'Garland', sqft: 1807, yb: 1986, soldPrice: 314500, soldDate: '08/05/2025', slRatio: 101.5, cdom: 3, ppsf: 174.05 },
+                    { status: 'CLOSED', mls: '20884818', address: '710 Colonial DR', city: 'Garland', sqft: 1935, yb: 1968, soldPrice: 314900, soldDate: '07/22/2025', slRatio: 100.0, cdom: 91, ppsf: 162.74 },
+                    { status: 'CLOSED', mls: '20895891', address: '4906 Portola DR', city: 'Garland', sqft: 2052, yb: 1986, soldPrice: 315000, soldDate: '05/29/2025', slRatio: 100.0, cdom: 8, ppsf: 153.51 },
+                    { status: 'CLOSED', mls: '20880233', address: '1206 Mayapple DR', city: 'Garland', sqft: 1831, yb: 1978, soldPrice: 319000, soldDate: '08/15/2025', slRatio: 100.0, cdom: 100, ppsf: 174.22 },
+                    { status: 'CLOSED', mls: '21099405', address: '4301 Rosehill RD', city: 'Garland', sqft: 1512, yb: 1960, soldPrice: 320000, soldDate: '11/04/2025', slRatio: 97.0, cdom: 4, ppsf: 211.64 },
+                    { status: 'CLOSED', mls: '20784668', address: '4933 Avalon DR', city: 'Garland', sqft: 1635, yb: 1976, soldPrice: 324000, soldDate: '06/09/2025', slRatio: 103.2, cdom: 50, ppsf: 198.17 },
+                    { status: 'CLOSED', mls: '20697256', address: '4821 Worthing DR', city: 'Garland', sqft: 1982, yb: 1993, soldPrice: 325000, soldDate: '06/25/2025', slRatio: 100.0, cdom: 296, ppsf: 163.98 },
+                    { status: 'CLOSED', mls: '20914227', address: '718 Angle Ridge CIR', city: 'Garland', sqft: 1890, yb: 1975, soldPrice: 325000, soldDate: '08/21/2025', slRatio: 98.8, cdom: 88, ppsf: 171.96 },
+                    { status: 'CLOSED', mls: '20934688', address: '1111 Lupine DR', city: 'Garland', sqft: 2027, yb: 1978, soldPrice: 325000, soldDate: '07/09/2025', slRatio: 100.0, cdom: 11, ppsf: 160.34 },
+                    { status: 'CLOSED', mls: '20973032', address: '4005 Azalea LN', city: 'Garland', sqft: 1858, yb: 1977, soldPrice: 325000, soldDate: '08/29/2025', slRatio: 100.0, cdom: 24, ppsf: 174.92 },
+                    { status: 'CLOSED', mls: '20988836', address: '3816 Roan CIR', city: 'Garland', sqft: 1877, yb: 1976, soldPrice: 326000, soldDate: '08/21/2025', slRatio: 100.0, cdom: 2, ppsf: 173.68 },
+                    { status: 'CLOSED', mls: '21042599', address: '4022 Azalea LN', city: 'Garland', sqft: 1668, yb: 1981, soldPrice: 330000, soldDate: '10/31/2025', slRatio: 97.1, cdom: 34, ppsf: 197.84 },
+                    { status: 'CLOSED', mls: '21029010', address: '3001 Jeremes LNDG', city: 'Garland', sqft: 2142, yb: 1985, soldPrice: 339900, soldDate: '09/16/2025', slRatio: 100.0, cdom: 9, ppsf: 158.68 },
+                    { status: 'CLOSED', mls: '20946015', address: '4909 Berkeley CT', city: 'Garland', sqft: 2360, yb: 1989, soldPrice: 344900, soldDate: '08/29/2025', slRatio: 100.0, cdom: 74, ppsf: 146.14 },
+                    { status: 'CLOSED', mls: '20946685', address: '1429 Knob Hill DR', city: 'Garland', sqft: 1667, yb: 1985, soldPrice: 345000, soldDate: '07/23/2025', slRatio: 95.8, cdom: 11, ppsf: 206.96 },
+                    { status: 'CLOSED', mls: '21023759', address: '1902 Merrimac TRL', city: 'Garland', sqft: 2253, yb: 1984, soldPrice: 350010, soldDate: '10/10/2025', slRatio: 100.0, cdom: 15, ppsf: 155.35 },
+                    { status: 'CLOSED', mls: '20967291', address: '5214 Graham DR', city: 'Garland', sqft: 1886, yb: 2001, soldPrice: 355000, soldDate: '07/11/2025', slRatio: 98.6, cdom: 6, ppsf: 188.23 },
+                    { status: 'CLOSED', mls: '20970990', address: '209 Havenwood LN', city: 'Garland', sqft: 1875, yb: 2002, soldPrice: 360000, soldDate: '08/04/2025', slRatio: 94.7, cdom: 90, ppsf: 192.00 },
+                    { status: 'CLOSED', mls: '20880605', address: '1221 Pecan Valley DR', city: 'Garland', sqft: 2350, yb: 1972, soldPrice: 367500, soldDate: '07/15/2025', slRatio: 91.9, cdom: 84, ppsf: 156.38 },
+                    { status: 'CLOSED', mls: '21041035', address: '3321 Bluffview DR', city: 'Garland', sqft: 2500, yb: 1978, soldPrice: 370000, soldDate: '11/11/2025', slRatio: 94.9, cdom: 40, ppsf: 148.00 },
+                    { status: 'CLOSED', mls: '20879659', address: '1717 Lake Bluff DR', city: 'Garland', sqft: 2649, yb: 1999, soldPrice: 372500, soldDate: '06/23/2025', slRatio: 96.0, cdom: 48, ppsf: 140.62 },
+                    { status: 'CLOSED', mls: '21011459', address: '1605 James Good LN', city: 'Garland', sqft: 2483, yb: 1978, soldPrice: 375000, soldDate: '08/29/2025', slRatio: 100.0, cdom: 10, ppsf: 151.03 },
+                    { status: 'CLOSED', mls: '20773714', address: '1410 Pine Hill DR', city: 'Garland', sqft: 2751, yb: 1975, soldPrice: 376500, soldDate: '06/18/2025', slRatio: 97.8, cdom: 150, ppsf: 136.86 },
+                    { status: 'CLOSED', mls: '21041956', address: '1514 Dakota DR', city: 'Garland', sqft: 2410, yb: 1969, soldPrice: 380000, soldDate: '10/03/2025', slRatio: 100.0, cdom: 15, ppsf: 157.68 },
+                    { status: 'CLOSED', mls: '21051343', address: '918 Myers Meadow DR', city: 'Garland', sqft: 2299, yb: 2012, soldPrice: 380000, soldDate: '10/31/2025', slRatio: 97.7, cdom: 205, ppsf: 165.29 },
+                    { status: 'CLOSED', mls: '20857278', address: '8414 Slowburn DR', city: 'Garland', sqft: 1935, yb: 2025, soldPrice: 383585, soldDate: '05/28/2025', slRatio: 95.0, cdom: 17, ppsf: 198.24 },
+                    { status: 'CLOSED', mls: '20954539', address: '4521 Park Meadow CT', city: 'Garland', sqft: 2155, yb: 1997, soldPrice: 385000, soldDate: '06/27/2025', slRatio: 100.0, cdom: 7, ppsf: 178.65 },
+                    { status: 'CLOSED', mls: '21030173', address: '2809 Apple Valley DR', city: 'Garland', sqft: 2589, yb: 1982, soldPrice: 385710, soldDate: '11/12/2025', slRatio: 102.9, cdom: 53, ppsf: 148.98 },
+                    { status: 'CLOSED', mls: '21009914', address: '7293 Farmhouse DR', city: 'Garland', sqft: 1712, yb: 2025, soldPrice: 386085, soldDate: '09/26/2025', slRatio: 97.1, cdom: 33, ppsf: 225.52 },
+                    { status: 'CLOSED', mls: '21018005', address: '7322 Farmhouse DR', city: 'Garland', sqft: 1712, yb: 2025, soldPrice: 386085, soldDate: '08/28/2025', slRatio: 98.5, cdom: 4, ppsf: 225.52 },
+                    { status: 'CLOSED', mls: '21046799', address: '1302 Lakebreeze DR', city: 'Garland', sqft: 3065, yb: 2001, soldPrice: 387000, soldDate: '10/30/2025', slRatio: 96.8, cdom: 21, ppsf: 126.26 },
+                    { status: 'CLOSED', mls: '20884905', address: '7326 Farmhouse DR', city: 'Garland', sqft: 1935, yb: 2025, soldPrice: 388585, soldDate: '06/25/2025', slRatio: 97.5, cdom: 15, ppsf: 200.82 },
+                    { status: 'CLOSED', mls: '21016103', address: '4405 Fairlake DR', city: 'Garland', sqft: 2199, yb: 1998, soldPrice: 389000, soldDate: '09/09/2025', slRatio: 100.0, cdom: 2, ppsf: 176.90 },
+                    { status: 'CLOSED', mls: '20707645', address: '213 Hockaday AVE', city: 'Garland', sqft: 2500, yb: 1974, soldPrice: 390000, soldDate: '06/10/2025', slRatio: 101.3, cdom: 271, ppsf: 156.00 },
+                ],
+            },
+        };
+
+        // --- CHART DATA PREPARATION ---
+
+        const allClosedPpsf = compData.ds3.pendingClosed.filter(c => c.status === 'CLOSED').map(c => c.ppsf);
+        const avgClosedPpsf = allClosedPpsf.reduce((sum, p) => sum + p, 0) / allClosedPpsf.length;
+        const subjectPpsf = 186.29; 
+
+        // --- UTILITY FUNCTIONS (Defined globally in this single file) ---
+
+        const currencyFormat = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        const currencyFormatDetailed = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        const numberFormat = new Intl.NumberFormat('en-US');
+
+        function roundCurrency(value) {
+            return Math.round(value * 100) / 100;
+        }
+
+        function calculateMonthlyPayment(principal, annualRate, termsYears) {
+            const rate = annualRate / 12;
+            const n = termsYears * 12;
+            if (rate === 0) return roundCurrency(principal / n);
+            const payment = principal * (rate * Math.pow(1 + rate, n)) / (Math.pow(1 + rate, n) - 1);
+            return roundCurrency(payment);
+        }
+
+        function calculateRemainingBalance(principal, annualRate, monthlyPayment, paymentsMade) {
+            const r = annualRate / 12;
+            const balance = principal * Math.pow(1 + r, paymentsMade) - monthlyPayment * (Math.pow(1 + r, paymentsMade) - 1) / r;
+            return roundCurrency(balance);
+        }
+
+        // --- CALCULATE ALL OPTION PAYMENTS AND VALUES (with proper rounding) ---
+        
+        // Option 1: Price Strategy
+        const option1Principal = roundCurrency(PRICE_FLOOR_OPTION_1 * (1 - SUBJECT_DP_PCT));
+        const option1Payment = calculateMonthlyPayment(option1Principal, MARKET_RATE, 30);
+
+        // Option 2: 3-2-1 Buydown
+        const option2Principal = roundCurrency(BUYDOWN_PRICE_OPTION_2 * (1 - SUBJECT_DP_PCT));
+        const option2PaymentYear1 = calculateMonthlyPayment(option2Principal, BUYDOWNS.RATES[0], 30);
+        const option2PaymentYear2 = calculateMonthlyPayment(option2Principal, BUYDOWNS.RATES[1], 30);
+        const option2PaymentYear3 = calculateMonthlyPayment(option2Principal, BUYDOWNS.RATES[2], 30);
+        const option2PaymentYear4 = calculateMonthlyPayment(option2Principal, BUYDOWNS.RATES[3], 30);
+
+        // Option 3: Owner Finance (calculated from amortization schedule)
+        const option3DownPayment = roundCurrency(SUBJECT_PRICE * OWNER_FINANCE_DP_PCT);
+        const option3Principal = roundCurrency(SUBJECT_PRICE - option3DownPayment);
+        const option3Payment = calculateMonthlyPayment(option3Principal, OWNER_FINANCE_RATE, 30);
+        
+        // Calculate Option 3 totals from the amortization schedule
+        let option3RemainingBalance = 0;
+        let option3TotalRevenue = 0;
+        let option3InterestEarned = 0;
+        let option3TotalRevenueAfterBalloon = 0;
+        
+        function calculateOption3Totals() {
+            try {
+                // Ensure we have the required values
+                if (!option3Payment || option3Payment === 0) {
+                    console.error('option3Payment is not calculated yet');
+                    return;
+                }
+                
+                if (!option3Principal || option3Principal === 0) {
+                    console.error('option3Principal is not calculated yet');
+                    return;
+                }
+                
+                // Try to get values from amortization schedule first
+                const scheduleData = calculateAmortizationSchedule();
+                const schedule = scheduleData.schedule;
+                
+                if (schedule && Array.isArray(schedule) && schedule.length > 0) {
+                    // Get the balloon payment (month 84) entry
+                    const balloonEntry = schedule.find(entry => entry && entry.month === 84);
+                    if (balloonEntry) {
+                        // Remaining balance (balloon payment due at month 84)
+                        option3RemainingBalance = roundCurrency(balloonEntry.endingBalance || 0);
+                        
+                        // Total Interest/Premium Earned = Cumulative interest paid over 84 months
+                        option3InterestEarned = roundCurrency(balloonEntry.interestPaid || 0);
+                        
+                        // Total Revenue = Total payments received over 84 months
+                        // This equals: Principal Paid + Interest Paid = Monthly Payment × 84
+                        option3TotalRevenue = roundCurrency((balloonEntry.principalPaid || 0) + (balloonEntry.interestPaid || 0));
+                        
+                        // Verify calculation: Total Revenue should equal monthly payment × 84
+                        const verificationTotal = roundCurrency(option3Payment * 84);
+                        if (Math.abs(option3TotalRevenue - verificationTotal) > 0.01) {
+                            console.warn('Total revenue calculation mismatch. Using verified value.');
+                            option3TotalRevenue = verificationTotal;
+                        }
+                        
+                        // Verify interest earned calculation
+                        if (option3InterestEarned === 0 || isNaN(option3InterestEarned)) {
+                            // Recalculate interest earned
+                            option3InterestEarned = roundCurrency(option3TotalRevenue - (balloonEntry.principalPaid || 0));
+                        }
+                        
+                        // Total Revenue After Balloon = Total Revenue (from payments) + Balloon Payment
+                        option3TotalRevenueAfterBalloon = roundCurrency(option3TotalRevenue + option3RemainingBalance);
+                        
+                        return; // Successfully calculated from schedule
+                    }
+                }
+                
+                // Fallback: Calculate using standard formulas
+                console.log('Using fallback calculations for Option 3 totals');
+                option3RemainingBalance = roundCurrency(calculateRemainingBalance(option3Principal, OWNER_FINANCE_RATE, option3Payment, 84));
+                
+                // Total payments received = Monthly Payment × 84 months
+                const totalPayments = roundCurrency(option3Payment * 84);
+                
+                // Principal paid = Original Principal - Remaining Balance
+                const principalPaid = roundCurrency(option3Principal - option3RemainingBalance);
+                
+                // Interest earned = Total Payments - Principal Paid
+                option3InterestEarned = roundCurrency(totalPayments - principalPaid);
+                
+                // Total Revenue = Total Payments Received
+                option3TotalRevenue = totalPayments;
+                
+                // Total Revenue After Balloon = Total Revenue (from payments) + Balloon Payment
+                option3TotalRevenueAfterBalloon = roundCurrency(option3TotalRevenue + option3RemainingBalance);
+                
+            } catch (error) {
+                console.error('Error calculating Option 3 totals:', error);
+                console.error('Error stack:', error.stack);
+                
+                // Final fallback: Use direct calculations
+                try {
+                    option3RemainingBalance = roundCurrency(calculateRemainingBalance(option3Principal, OWNER_FINANCE_RATE, option3Payment, 84));
+                    const totalPayments = roundCurrency(option3Payment * 84);
+                    const principalPaid = roundCurrency(option3Principal - option3RemainingBalance);
+                    option3InterestEarned = roundCurrency(totalPayments - principalPaid);
+                    option3TotalRevenue = totalPayments;
+                    
+                    // Total Revenue After Balloon = Total Revenue (from payments) + Balloon Payment
+                    option3TotalRevenueAfterBalloon = roundCurrency(option3TotalRevenue + option3RemainingBalance);
+                } catch (fallbackError) {
+                    console.error('Fallback calculation also failed:', fallbackError);
+                    // Set to zero to prevent undefined values
+                    option3RemainingBalance = 0;
+                    option3InterestEarned = 0;
+                    option3TotalRevenue = 0;
+                    option3TotalRevenueAfterBalloon = 0;
+                }
+            }
+        }
+
+
+        function showPage(pageId) {
+            if (!pageId) {
+                console.error('showPage called without pageId');
+                return;
+            }
+            
+            try {
+                // Hide all content pages
+                const allPages = document.querySelectorAll('main > div[id^="page-"]');
+                allPages.forEach(page => page.classList.add('hidden'));
+                
+                // Deactivate all nav buttons
+                document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+                
+                // Show the target page
+                const pageElement = document.getElementById(`page-${pageId}`);
+                if (pageElement) {
+                    pageElement.classList.remove('hidden');
+                } else {
+                    console.error(`Page element not found: page-${pageId}`);
+                }
+                
+                // Activate the corresponding button
+                const navButton = document.getElementById(`nav-${pageId}`);
+                if (navButton) {
+                    navButton.classList.add('active');
+                } else {
+                    // Try alternative selector
+                    const altButton = document.querySelector(`.nav-btn[data-page="${pageId}"]`);
+                    if (altButton) {
+                        altButton.classList.add('active');
+                    } else {
+                        console.warn(`Navigation button not found for page: ${pageId}`);
+                    }
+                }
+
+                // Default Comp Sub-tab on page load
+                if (pageId === 'comps') {
+                    showCompSubTab('neighborhood');
+                }
+                
+                // Ensure amortization table and values are populated when Option 3 page is shown
+                if (pageId === 'option3') {
+                    // Small delay to ensure DOM is ready
+                    setTimeout(() => {
+                        // Recalculate totals to ensure they're current
+                        calculateOption3Totals();
+                        // Populate the Option 3 fields
+                        populateOptions();
+                        // Populate the amortization table
+                        populateAmortizationTable();
+                    }, 100);
+                }
+                
+                // Scroll to top of page when switching tabs
+                window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth'
+                });
+                
+            } catch (error) {
+                console.error('Error in showPage:', error);
+            }
+        }
+
+        function showCompSubTab(tabId) {
+            // Sub-tab function 
+            document.querySelectorAll('.sub-comp-content').forEach(div => div.classList.add('hidden'));
+            document.querySelectorAll('.sub-nav-btn').forEach(btn => btn.classList.remove('active'));
+
+            const targetContent = document.getElementById(`sub-page-${tabId}`);
+            if (targetContent) targetContent.classList.remove('hidden');
+
+            const navButton = document.querySelector(`.sub-nav-btn[data-comp="${tabId}"]`);
+            if (navButton) navButton.classList.add('active');
+        }
+
+
+        // --- TABLE POPULATION ---
+
+        function populateCompTable(data, type, tableId) {
+            const tableBody = document.getElementById(tableId);
+            if (!tableBody) return;
+            
+            tableBody.innerHTML = data.map(c => {
+                const isSubject = c.isSubject;
+                const cdomDisplay = c.cdom || 'N/A';
+                const rowClass = isSubject ? 'bg-yellow-50 font-bold' : 'hover:bg-gray-50';
+                const ppsfDisplay = c.ppsf ? c.ppsf.toFixed(2) : 'N/A';
+                const cdomClass = (c.cdom > 100 && !isSubject) ? 'text-red-600' : 'text-stone-700';
+
+                if (type === 'active') {
+                    return `<tr class="${rowClass}">
+                        <td class="p-3 font-medium text-gray-800">${c.mls || 'AVM'}</td>
+                        <td class="p-3">${c.address}, ${c.city || 'Garland'}</td>
+                        <td class="p-3">${numberFormat.format(c.sqft)}</td>
+                        <td class="p-3">${c.yb || 'N/A'}</td>
+                        <td class="p-3">${c.acres ? c.acres.toFixed(2) : 'N/A'}</td>
+                        <td class="p-3">${ppsfDisplay}</td>
+                        <td class="p-3">${currencyFormat.format(c.listPrice)}</td>
+                        <td class="p-3 ${cdomClass}">${cdomDisplay}</td>
+                    </tr>`;
+                } else if (type === 'pending-closed') { 
+                    const isClosed = c.status === 'CLOSED';
+                    const statusClass = isClosed ? 'text-green-600' : 'text-orange-600';
+                    return `<tr class="${rowClass}">
+                        <td class="p-3 font-medium text-gray-800">${c.mls || 'AVM'} <span class="${statusClass}">(${c.status})</span></td>
+                        <td class="p-3">${c.address}, ${c.city || 'Garland'}</td>
+                        <td class="p-3">${numberFormat.format(c.sqft)}</td>
+                        <td class="p-3">${c.yb}</td>
+                        <td class="p-3">${currencyFormat.format(c.soldPrice)}</td>
+                        <td class="p-3">${c.soldDate || 'N/A'}</td>
+                        <td class="p-3">${c.slRatio ? c.slRatio.toFixed(1) + '%' : 'N/A'}</td>
+                        <td class="p-3 ${cdomClass}">${cdomDisplay}</td>
+                    </tr>`;
+                }
+                return '';
+            }).join('');
+        }
+
+        function populateAllCompTables() {
+            // DS1
+            populateCompTable(compData.ds1.active, 'active', 'ds1-active-table');
+            populateCompTable(compData.ds1.pending, 'active', 'ds1-pending-table');
+            populateCompTable(compData.ds1.closed, 'pending-closed', 'ds1-closed-table');
+
+            // DS2 (AVM)
+            populateCompTable(compData.ds2.active, 'active', 'ds2-active-table');
+            populateCompTable(compData.ds2.pendingClosed, 'pending-closed', 'ds2-closed-table');
+
+            // DS3
+            populateCompTable(compData.ds3.active, 'active', 'ds3-active-table');
+            populateCompTable(compData.ds3.pendingClosed, 'pending-closed', 'ds3-pending-closed-table');
+        }
+
+
+        // --- FINANCIAL CALCULATIONS AND POPULATION ---
+
+        function populateOptions() {
+            // Option 1: Price Strategy Details
+            document.getElementById('option1-payment').textContent = currencyFormatDetailed.format(option1Payment);
+            document.getElementById('option1-summary-payment').textContent = currencyFormat.format(option1Payment);
+
+            // Option 2: 3-2-1 Buydown Details
+            const option2SavingsYr1 = roundCurrency(option2PaymentYear4 - option2PaymentYear1);
+            const option2SavingsYr2 = roundCurrency(option2PaymentYear4 - option2PaymentYear2);
+            const option2SavingsYr3 = roundCurrency(option2PaymentYear4 - option2PaymentYear3);
+
+
+            document.getElementById('option2-yr1-payment').textContent = currencyFormatDetailed.format(option2PaymentYear1);
+            document.getElementById('option2-yr1-savings').textContent = `Saves ${currencyFormatDetailed.format(option2SavingsYr1)}/mo`;
+            document.getElementById('option2-yr2-payment').textContent = currencyFormatDetailed.format(option2PaymentYear2);
+            document.getElementById('option2-yr2-savings').textContent = `Saves ${currencyFormatDetailed.format(option2SavingsYr2)}/mo`;
+            document.getElementById('option2-yr3-payment').textContent = currencyFormatDetailed.format(option2PaymentYear3);
+            document.getElementById('option2-yr3-savings').textContent = `Saves ${currencyFormatDetailed.format(option2SavingsYr3)}/mo`;
+            document.getElementById('option2-yr4-payment').textContent = currencyFormatDetailed.format(option2PaymentYear4);
+            document.getElementById('option2-cost').textContent = currencyFormat.format(BUYDOWNS.SELLER_COST);
+            document.getElementById('option2-summary-payment').textContent = currencyFormat.format(option2PaymentYear1);
+
+
+            // Option 3: Owner Finance Details
+            // Ensure values are calculated before displaying
+            if (typeof option3TotalRevenue === 'undefined' || option3TotalRevenue === 0) {
+                calculateOption3Totals();
+            }
+            
+            const totalRevenueEl = document.getElementById('total-revenue-value');
+            const interestEarnedEl = document.getElementById('interest-earned-value');
+            const sellerPremiumEl = document.getElementById('seller-premium-value');
+            const balloonValueEl = document.getElementById('balloon-value');
+            
+            if (totalRevenueEl) {
+                totalRevenueEl.textContent = currencyFormat.format(option3TotalRevenue || 0);
+            } else {
+                console.error('Element total-revenue-value not found');
+            }
+            
+            if (interestEarnedEl) {
+                interestEarnedEl.textContent = currencyFormat.format(option3InterestEarned || 0);
+            } else {
+                console.error('Element interest-earned-value not found');
+            }
+            
+            if (sellerPremiumEl) {
+                sellerPremiumEl.textContent = currencyFormat.format(option3InterestEarned || 0);
+            } else {
+                console.error('Element seller-premium-value not found');
+            }
+            
+            if (balloonValueEl) {
+                balloonValueEl.textContent = currencyFormat.format(option3RemainingBalance || 0);
+            } else {
+                console.error('Element balloon-value not found');
+            }
+            
+            const totalRevenueAfterBalloonEl = document.getElementById('total-revenue-after-balloon-value');
+            if (totalRevenueAfterBalloonEl) {
+                totalRevenueAfterBalloonEl.textContent = currencyFormat.format(option3TotalRevenueAfterBalloon || 0);
+            } else {
+                console.error('Element total-revenue-after-balloon-value not found');
+            }
+            
+            // Set other Option 3 fields
+            const dpEl = document.getElementById('owner-finance-dp');
+            const principalEl = document.getElementById('owner-finance-principal');
+            const paymentEl = document.getElementById('owner-finance-payment');
+            const summaryPaymentEl = document.getElementById('option3-summary-payment');
+            
+            if (dpEl) dpEl.textContent = currencyFormatDetailed.format(option3DownPayment);
+            if (principalEl) principalEl.textContent = currencyFormatDetailed.format(option3Principal);
+            if (paymentEl) paymentEl.textContent = currencyFormatDetailed.format(option3Payment);
+            if (summaryPaymentEl) summaryPaymentEl.textContent = currencyFormat.format(option3Payment);
+        }
+
+        function calculateAmortizationSchedule() {
+            // Option 3: Owner Financing (Fixed 6.75%)
+            const P_owner = roundCurrency(375000 * (1 - 0.10)); // $337,500.00
+            const rate_owner = 0.0675;  
+            const M_owner = calculateMonthlyPayment(P_owner, rate_owner, 30); // Monthly payment for 30 years
+            const balloonMonths_owner = 84; 
+            const r_owner = rate_owner / 12;
+            
+            let schedule = [];
+            const displayMonths = [1, 12, 24, 36, 60, balloonMonths_owner]; 
+
+            let currentBalance = P_owner;
+            let runningTotalInterest = 0;
+            let runningTotalPrincipal = 0;
+
+            for (let month = 1; month <= balloonMonths_owner; month++) {
+                // Capture starting balance at the beginning of the month (rounded)
+                const startingBalance = roundCurrency(currentBalance);
+                
+                // Calculate monthly interest payment (based on current balance)
+                const monthlyInterest = roundCurrency(startingBalance * r_owner);
+                
+                // Calculate monthly principal payment (payment minus interest)
+                const monthlyPrincipal = roundCurrency(M_owner - monthlyInterest);
+                
+                // Calculate ending balance (starting balance minus principal paid this month)
+                const endingBalance = roundCurrency(startingBalance - monthlyPrincipal);
+                
+                // Update running totals (cumulative)
+                runningTotalInterest = roundCurrency(runningTotalInterest + monthlyInterest);
+                runningTotalPrincipal = roundCurrency(runningTotalPrincipal + monthlyPrincipal);
+                
+                // Update balance for next iteration
+                currentBalance = endingBalance;
+                
+                // Store milestone data if this is a display month
+                if (displayMonths.includes(month)) {
+                    // Verify ending balance matches expected value (original principal - cumulative principal paid)
+                    const expectedEndingBalance = roundCurrency(P_owner - runningTotalPrincipal);
+                    
+                    // Use the calculated ending balance (should match expected, but use calculated for accuracy)
+                    const finalEndingBalance = roundCurrency(endingBalance);
+                    
+                    schedule.push({
+                        month: month,
+                        startingBalance: startingBalance,
+                        payment: M_owner,
+                        interestPaid: runningTotalInterest,  // Cumulative total interest paid
+                        principalPaid: runningTotalPrincipal,  // Cumulative total principal paid
+                        endingBalance: finalEndingBalance  // Remaining balance after this month
+                    });
+                }
+            }
+            
+            return {
+                schedule
+            };
+        }
+
+        function populateAmortizationTable() {
+            try {
+                // Get the table body element
+                const tableBody = document.getElementById('owner-finance-schedule');
+                
+                if (!tableBody) {
+                    console.error('Table body element not found: owner-finance-schedule');
+                    return;
+                }
+                
+                // Calculate the amortization schedule
+                const data = calculateAmortizationSchedule();
+                
+                if (!data || !data.schedule) {
+                    console.error('Invalid schedule data returned from calculateAmortizationSchedule');
+                    tableBody.innerHTML = '<tr><td colspan="6" class="p-3 text-center text-red-600">Error: Invalid schedule data</td></tr>';
+                    return;
+                }
+                
+                const schedule = data.schedule;
+                
+                if (!Array.isArray(schedule) || schedule.length === 0) {
+                    console.error('Amortization schedule is empty or not an array. Length:', schedule ? schedule.length : 'null');
+                    tableBody.innerHTML = '<tr><td colspan="6" class="p-3 text-center text-red-600">No schedule data available</td></tr>';
+                    return;
+                }
+                
+                // Build HTML rows for each milestone
+                let html = '';
+                
+                schedule.forEach((item, index) => {
+                    if (!item) {
+                        console.warn(`Schedule item at index ${index} is null or undefined`);
+                        return;
+                    }
+                    
+                    // Extract and validate values
+                    const month = item.month || 0;
+                    const startingBalance = roundCurrency(item.startingBalance || 0);
+                    const payment = roundCurrency(item.payment || 0);
+                    const interestPaid = roundCurrency(item.interestPaid || 0);  // Cumulative interest paid
+                    const principalPaid = roundCurrency(item.principalPaid || 0);  // Cumulative principal paid
+                    const endingBalance = roundCurrency(item.endingBalance || 0);
+                    
+                    // Determine if this is the balloon payment month
+                    const isBalloon = month === 84;
+                    const rowClass = isBalloon ? 'bg-red-100 font-bold text-red-900 border-t-2 border-red-700' : 'text-gray-700';
+                    const balloonText = isBalloon ? ' <span class="text-red-600">(BALLOON DUE)</span>' : '';
+                    
+                    // Build the table row HTML using template literals
+                    html += `
+                        <tr class="${rowClass}">
+                            <td class="p-3">${month}${balloonText}</td>
+                            <td class="p-3">${currencyFormatDetailed.format(startingBalance)}</td>
+                            <td class="p-3">${currencyFormatDetailed.format(payment)}</td>
+                            <td class="p-3">${currencyFormatDetailed.format(interestPaid)}</td>
+                            <td class="p-3">${currencyFormatDetailed.format(principalPaid)}</td>
+                            <td class="p-3 font-extrabold">${currencyFormatDetailed.format(endingBalance)}</td>
+                        </tr>
+                    `;
+                });
+                
+                // Insert the HTML into the table body
+                if (html === '') {
+                    console.error('No HTML rows were generated from schedule');
+                    tableBody.innerHTML = '<tr><td colspan="6" class="p-3 text-center text-red-600">No rows generated</td></tr>';
+                } else {
+                    tableBody.innerHTML = html;
+                }
+                
+            } catch (error) {
+                console.error('Error populating amortization table:', error);
+                console.error('Error stack:', error.stack);
+                const tableBody = document.getElementById('owner-finance-schedule');
+                if (tableBody) {
+                    tableBody.innerHTML = '<tr><td colspan="6" class="p-3 text-center text-red-600">Error loading schedule data: ' + error.message + '</td></tr>';
+                }
+            }
+        }
+
+
+        // --- CHART INITIALIZATION (Simplified) ---
+
+        function initCharts() {
+            try {
+                // Chart 1: Pricing Strategy Trajectory (Key Pricing Metrics Tab)
+                const pricingChartElement = document.getElementById('pricingStrategyChart');
+                if (!pricingChartElement) {
+                    console.error('pricingStrategyChart element not found');
+                } else if (!pricingStrategy || !Array.isArray(pricingStrategy) || pricingStrategy.length === 0) {
+                    console.error('pricingStrategy array is missing or empty');
+                } else {
+                    // Extract data from pricingStrategy array
+                    const chartData = pricingStrategy.map(p => p.price);
+                    const chartLabels = pricingStrategy.map(p => `Day ${p.day}`);
+                    
+                    new Chart(pricingChartElement, {
+                        type: 'line',
+                        data: {
+                            labels: chartLabels,
+                            datasets: [{
+                                label: 'List Price',
+                                data: chartData,
+                                borderColor: 'rgb(59, 130, 246)',
+                                tension: 0.2,
+                                fill: true,
+                                pointBackgroundColor: 'rgb(29, 78, 216)'
+                            }]
+                        },
+                        options: {
+                            responsive: true, 
+                            maintainAspectRatio: false,
+                            plugins: { legend: { display: false } },
+                            scales: {
+                                y: { 
+                                    beginAtZero: false, 
+                                    ticks: { callback: (val) => currencyFormat.format(val) }, 
+                                    min: 345000, 
+                                    max: 380000 
+                                },
+                                x: { 
+                                    title: { display: true, text: 'Action Day' }, 
+                                    type: 'category' 
+                                }
+                            }
+                        }
+                    });
+                }
+
+                // Chart 2: CDOM Comparison (Liquidity Risk Tab)
+                const cdomChartElement = document.getElementById('cdomComparisonChart');
+                if (!cdomChartElement) {
+                    console.error('cdomComparisonChart element not found');
+                } else if (!compData || !compData.ds3 || !compData.ds3.pendingClosed) {
+                    console.error('compData.ds3.pendingClosed is missing');
+                } else {
+                    // Filter closed comps from compData.ds3.pendingClosed
+                    const closedComps = compData.ds3.pendingClosed.filter(c => c.status === 'CLOSED');
+                    
+                    if (!closedComps || closedComps.length === 0) {
+                        console.error('No closed comps found in compData.ds3.pendingClosed');
+                    } else {
+                        // Build CDOM data array: Subject Property + Closed Comps
+                        const cdomData = [
+                            TOTAL_CDOM,
+                            ...closedComps.map(c => c.cdom)
+                        ];
+                        
+                        // Build labels array
+                        const cdomLabels = [
+                            `Subject Property (${TOTAL_CDOM} CDOM)`,
+                            ...closedComps.map(c => `${c.address.split(' ')[0]} (${c.cdom} CDOM)`)
+                        ];
+                        
+                        // Build background colors array (red for subject, blue for comps)
+                        const backgroundColors = [
+                            'rgb(220, 38, 38)', 
+                            ...closedComps.map(() => 'rgb(59, 130, 246)')
+                        ];
+
+                        new Chart(cdomChartElement, {
+                            type: 'bar',
+                            data: {
+                                labels: cdomLabels.map(l => l.split(' (')[0]),
+                                datasets: [{
+                                    label: 'CDOM',
+                                    data: cdomData,
+                                    backgroundColor: backgroundColors,
+                                }]
+                            },
+                            options: {
+                                responsive: true, 
+                                maintainAspectRatio: false,
+                                plugins: { legend: { display: false } },
+                                scales: {
+                                    y: { 
+                                        beginAtZero: true, 
+                                        title: { display: true, text: 'Cumulative Days on Market (CDOM)' } 
+                                    },
+                                    x: { 
+                                        title: { display: true, text: 'Property (Red is Subject)' } 
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+            } catch (error) {
+                console.error('Error initializing charts:', error);
+                console.error('Error stack:', error.stack);
+            }
+        }
+
+
+        // --- EVENT LISTENERS AND INITIALIZATION (The Final Fix) ---
+        function attachEventListeners() {
+            // Attach event listener to all nav buttons (multiple selectors to ensure we catch them all)
+            const navButtons = document.querySelectorAll('.nav-btn[data-page], #main-nav-container .nav-btn, nav .nav-btn');
+            
+            navButtons.forEach((button) => {
+                // Create click handler function
+                const clickHandler = function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const targetPageId = this.getAttribute('data-page');
+                    if (targetPageId) {
+                        showPage(targetPageId);
+                    }
+                };
+                
+                // Add click event listener
+                button.addEventListener('click', clickHandler);
+                
+                // Ensure button is clickable
+                button.style.cursor = 'pointer';
+                button.setAttribute('role', 'button');
+                button.setAttribute('tabindex', '0');
+                
+                // Add keyboard support
+                button.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        clickHandler.call(this, e);
+                    }
+                });
+            });
+
+            // Attach event listener to the main summary button
+            const exploreButton = document.querySelector('[data-page-target="options"]');
+            if (exploreButton) {
+                 exploreButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showPage(exploreButton.getAttribute('data-page-target'));
+                });
+                exploreButton.style.cursor = 'pointer';
+            }
+
+            // Attach event listener for sub-tab buttons
+            const subTabButtons = document.querySelectorAll('#comp-nav-tabs .sub-nav-btn, .sub-nav-btn[data-comp]');
+            subTabButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const compId = this.getAttribute('data-comp');
+                    if (compId) {
+                        showCompSubTab(compId);
+                    }
+                });
+                button.style.cursor = 'pointer';
+            });
+        }
+
+
+        window.onload = function() {
+            try {
+                // 1. Calculate Option 3 totals first (depends on amortization schedule)
+                calculateOption3Totals();
+                
+                // 2. Attach ALL event handlers *after* the DOM is fully loaded
+                attachEventListeners();
+                
+                // 3. Populate all dynamic fields and tables
+                populateAllCompTables();
+                populateOptions();
+                populateAmortizationTable(); 
+                
+                // 4. Initialize charts
+                initCharts();
+
+                // 5. Set default page
+                showPage('summary');
+            } catch (error) {
+                console.error('Error during page initialization:', error);
+                // Still try to show the page even if there are errors
+                try {
+                    attachEventListeners();
+                    showPage('summary');
+                } catch (e) {
+                    console.error('Critical error preventing page display:', e);
+                }
+            }
+        };
+    </script>
+</body>
+</html>
