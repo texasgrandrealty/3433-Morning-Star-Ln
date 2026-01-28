@@ -1,15 +1,28 @@
+<!--
+  Morningstar 2026 Gold Standard Template
+  - Single-source-of-truth: propertyData object powers all key UI/metrics.
+  - Master Gallery Engine: Google Drive CDN carousel for Drone / HDR / Virtual.
+  - Knox / 2026 Executive Dashboard styling: 13-tab nav, dark slate cards, premium modal cues.
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Strategic Market Position Analysis</title>
+    <!-- Fonts & Core Libraries -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
         .chart-container {
             position: relative;
@@ -39,30 +52,30 @@
             display: none; /* Chrome, Safari, Opera */
         }
         .nav-btn {
-            padding: 0.5rem 0.8rem; 
-            font-size: 0.75rem; 
-            font-weight: 500; 
-            background-color: #F3F4F6; 
-            color: #4B5563; 
-            border-radius: 0.5rem 0.5rem 0 0; 
+            padding: 0.6rem 0.9rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            background-color: transparent;
+            color: #6B7280;
+            border-radius: 9999px;
             cursor: pointer;
-            transition: background-color 0.3s, color: 0.3s;
-            border-bottom: 4px solid transparent;
-            margin-right: 0.25rem;
-            margin-bottom: 0.5rem; 
+            transition: background-color 0.2s ease, color 0.2s ease;
+            border-bottom: 3px solid transparent;
             white-space: nowrap;
             flex: 0 0 auto; /* Prevent squishing on iPhone */
         }
         .nav-btn:hover {
-            background-color: #60A5FA; 
-            color: white;
-            border-bottom-color: #60A5FA;
+            background-color: rgba(59,130,246,0.08);
+            color: #1D4ED8;
+            border-bottom-color: rgba(59,130,246,0.5);
         }
         .nav-btn.active {
-            background-color: #1D4ED8; 
-            color: white;
-            font-weight: 700; 
-            border-bottom: 4px solid #1D4ED8;
+            background-color: rgba(37,99,235,0.18);
+            color: #1D4ED8;
+            font-weight: 700;
+            border-bottom: 3px solid #2563EB;
         }
         /* --- COMP SUB-NAV FIX --- */
         .sub-nav-btn {
@@ -104,35 +117,70 @@
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <!-- Glass-morphism Header -->
-        <header class="relative py-8 md:py-12 text-center border-b border-gray-200/50 backdrop-blur-xl bg-white/80">
-            <div class="absolute inset-0 bg-gradient-to-b from-white/90 to-white/70"></div>
-            <div class="relative z-10">
-                <img src="logo.png" alt="Logo" class="mx-auto mb-4" style="height: 160px; width: auto; object-fit: contain;">
-                <h1 class="text-3xl md:text-4xl font-extrabold text-stone-800">Strategic Market Position Analysis</h1>
-                <p class="text-lg font-medium text-gray-600 mt-2" id="header-address">3433 Morning Star Ln, Garland, TX 75043</p>
+        <!-- Glass-morphism Executive Header (Knox Standard) -->
+        <header class="relative mt-6 mb-6 rounded-3xl border border-white/60 bg-white/80 backdrop-blur-xl shadow-lg sticky top-0 z-20">
+            <div class="absolute inset-0 bg-gradient-to-b from-white/95 to-white/80 pointer-events-none"></div>
+            <div class="relative z-10 px-4 sm:px-6 lg:px-8 pt-5 pb-3 md:pb-4">
+                <!-- Top Row: Address + Spec Ribbon -->
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-6">
+                    <div class="flex items-center gap-4">
+                        <img src="logo.png" alt="Logo" class="h-14 w-auto object-contain drop-shadow-sm">
+                        <div class="text-left">
+                            <p class="text-[0.7rem] font-semibold tracking-[0.28em] text-blue-600 uppercase mb-1">
+                                Executive Property Dashboard
+                            </p>
+                            <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900 leading-snug">
+                                Strategic Market Position Analysis
+                            </h1>
+                            <p class="text-sm md:text-base font-medium text-gray-600 mt-1" id="header-address">
+                                3433 Morning Star Ln, Garland, TX 75043
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Spec Ribbon (pulls from propertyData) -->
+                    <div class="flex flex-wrap justify-start md:justify-end gap-2 md:gap-3 text-xs md:text-sm">
+                        <div class="px-3 py-2 rounded-full bg-slate-900 text-slate-50 flex flex-col min-w-[7rem] shadow">
+                            <span class="text-[0.6rem] uppercase tracking-[0.18em] text-slate-400 mb-0.5">Year</span>
+                            <span id="spec-year" class="font-semibold">1984 (Resale)</span>
+                        </div>
+                        <div class="px-3 py-2 rounded-full bg-slate-900 text-slate-50 flex flex-col min-w-[7rem] shadow">
+                            <span class="text-[0.6rem] uppercase tracking-[0.18em] text-slate-400 mb-0.5">Size</span>
+                            <span id="spec-size" class="font-semibold">2,004 SF</span>
+                        </div>
+                        <div class="px-3 py-2 rounded-full bg-slate-900 text-slate-50 flex flex-col min-w-[7rem] shadow">
+                            <span class="text-[0.6rem] uppercase tracking-[0.18em] text-slate-400 mb-0.5">Beds / Baths</span>
+                            <span id="spec-beds" class="font-semibold">3 BD | 2 BA</span>
+                        </div>
+                        <div class="px-3 py-2 rounded-full bg-slate-900 text-slate-50 flex flex-col min-w-[7rem] shadow">
+                            <span class="text-[0.6rem] uppercase tracking-[0.18em] text-slate-400 mb-0.5">Lot Size</span>
+                            <span id="spec-lot" class="font-semibold">0.23 AC</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Bottom Row: 13-Tab Navigation Ribbon -->
+                <div class="mt-4 pt-3 border-t border-slate-200/70">
+                    <nav id="main-nav-container">
+                        <div class="nav-tabs-container space-x-1 pb-1">
+                            <button id="nav-summary" class="nav-btn active" onclick="showTab('summary', this)">Executive Summary</button>
+                            <button id="nav-property" class="nav-btn" onclick="showTab('property', this)">Property</button>
+                            <button id="nav-local" class="nav-btn" onclick="showTab('metrics', this)">Local Market</button>
+                            <button id="nav-comps" class="nav-btn" onclick="showTab('comps', this)">Comps</button>
+                            <button id="nav-metrics" class="nav-btn" onclick="showTab('metrics', this)">Metrics</button>
+                            <button id="nav-rpr" class="nav-btn" onclick="showTab('rpr', this)">RPR Insights</button>
+                            <button id="nav-roadmap" class="nav-btn" onclick="showTab('roadmap', this)">Roadmap</button>
+                            <button id="nav-campaign" class="nav-btn" onclick="showTab('campaign', this)">Campaign Strategy</button>
+                            <button id="nav-rates" class="nav-btn" onclick="showTab('rates', this)">Rates</button>
+                            <button id="nav-liquidity" class="nav-btn" onclick="showTab('liquidity', this)">Liquidity</button>
+                            <button id="nav-incentives" class="nav-btn" onclick="showTab('options', this)">Incentives</button>
+                            <button id="nav-financial" class="nav-btn" onclick="showTab('financial', this)">Financing</button>
+                            <button id="nav-buydown" class="nav-btn" onclick="showTab('option2', this)">Buydown</button>
+                            <button id="nav-documents" class="nav-btn" onclick="showTab('documents', this)">Documents</button>
+                            <a id="nav-search" href="https://www.texasgrandrealty.com/" target="_blank" rel="noopener noreferrer" class="nav-btn">Search Properties</a>
+                        </div>
+                    </nav>
+                </div>
             </div>
         </header>
-
-        <!-- 13-Tab Navigation Ribbon -->
-        <nav class="border-b border-gray-200 sticky top-0 bg-gray-50/95 backdrop-blur-sm z-10" id="main-nav-container">
-            <div class="nav-tabs-container justify-center pt-4 pb-0">
-                <button id="nav-summary" class="nav-btn active" onclick="showTab('summary')">Executive Summary</button>
-                <button id="nav-metrics" class="nav-btn" onclick="showTab('metrics')">Key Pricing Metrics</button>
-                <button id="nav-property" class="nav-btn" onclick="showTab('property')">Property Analysis</button>
-                <button id="nav-comps" class="nav-btn" onclick="showTab('comps')">Comparable Properties</button>
-                <button id="nav-rates" class="nav-btn" onclick="showTab('rates')">Market Rate Update</button>
-                <button id="nav-liquidity" class="nav-btn" onclick="showTab('liquidity')">Liquidity Risk</button>
-                <button id="nav-campaign" class="nav-btn" onclick="showTab('campaign')">Campaign Strategy</button>
-                <button id="nav-documents" class="nav-btn" onclick="showTab('documents')">Documents</button>
-                <button id="nav-options" class="nav-btn" onclick="showTab('options')">Comparative Options</button>
-                <button id="nav-option1" class="nav-btn" onclick="showTab('option1')">120-Day Price Strategy</button>
-                <button id="nav-option2" class="nav-btn" onclick="showTab('option2')">3-2-1 Buydown Details</button>
-                <button id="nav-option3" class="nav-btn" onclick="showTab('option3')">Owner Finance Details</button>
-                <button id="nav-roadmap" class="nav-btn" onclick="showTab('roadmap')">Pricing Roadmap</button>
-                <button id="nav-financial" class="nav-btn" onclick="showTab('financial')">Financial Analysis</button>
-            </div>
-        </nav>
 
         <main class="mb-12">
             <!-- 1. EXECUTIVE SUMMARY PAGE -->
@@ -481,6 +529,28 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- 4b. RPR INSIGHTS PAGE (Knox-style anchor into AVM/RPR data) -->
+            <div id="tab-rpr" class="py-8 md:py-12 hidden">
+                <div class="page-section max-w-4xl mx-auto px-6 sm:px-8">
+                    <h2 class="text-2xl font-semibold text-gray-700 text-center mb-6">RPR Insights & AVM Summary</h2>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                        This section highlights how the property's pricing aligns with automated valuation models (AVMs) and RPR/NTREIS data.
+                        For full detail, the AVM via RPR/NTREIS data set is available under the Comps tab.
+                    </p>
+                    <div class="bg-gray-50 border border-gray-200 rounded-2xl p-5 mb-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-2">How to Interpret the RPR Data</h3>
+                        <ul class="list-disc list-inside text-gray-700 text-sm space-y-2">
+                            <li>Compare the RPR-estimated value range against the current list price to understand premium or discount.</li>
+                            <li>Evaluate days-on-market and price trajectories for RPR comparables to validate the 120-day roadmap.</li>
+                            <li>Use the RPR dataset in the Comps tab (AVM via RPR/NTREIS) as the primary quantitative cross-check.</li>
+                        </ul>
+                    </div>
+                    <button type="button" onclick="showTab('comps')" class="inline-flex items-center px-4 py-2 rounded-full bg-blue-600 text-white text-xs font-semibold tracking-wide hover:bg-blue-500 transition">
+                        Jump to Full RPR / AVM Data
+                    </button>
+                </div>
+            </div>
 
             <!-- 5. MARKET RATE UPDATE PAGE -->
             <div id="tab-rates" class="py-8 md:py-12 hidden">
@@ -560,7 +630,7 @@
                     </div>
                     
                     <!-- 6-Pillar Dark Grid (3 columns) - Knox Gold Standard -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
                         <!-- Pillar 1: 3D Immersion -->
                         <div class="bg-slate-900 rounded-3xl p-6 shadow-2xl border border-slate-700 transition-all duration-300 hover:scale-[1.03] flex flex-col">
                             <h3 class="text-xl font-bold text-white mb-3">🏠 3D Immersion</h3>
@@ -639,6 +709,43 @@
                                     View Instagram Reel
                                 </a>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Strategic Narrative Box (below media grid) -->
+                    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-600 rounded-lg p-6 mb-8 shadow-md">
+                        <h3 class="text-lg font-bold text-gray-800 mb-2">Strategic Narrative</h3>
+                        <p class="text-gray-700 leading-relaxed">
+                            Visual verification of the property's modernization and immediate access to the Garland corridor establishes the baseline for our Phase 1 pricing strategy.
+                        </p>
+                    </div>
+
+                    <!-- Transparency Reporting & Syndication Proof -->
+                    <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6">
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Transparency Reporting</h3>
+                            <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                                Buyers and their agents are encouraged to validate price, velocity, and neighborhood performance using independent third-party portals.
+                                This dashboard is designed to match what they will see on the public sites.
+                            </p>
+                            <div class="flex flex-wrap gap-3">
+                                <a href="https://drive.google.com/file/d/14fAhNT0vbhphNaCmw0mtBLBKMnnJ8uMw/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 rounded-full bg-slate-900 text-white text-xs font-semibold tracking-wide hover:bg-slate-800 transition">
+                                    View Seller Reporting – Week 1
+                                </a>
+                                <a href="https://drive.google.com/file/d/18pcSMos0ZgbJ3Skztsb82aeTquM64Gb7/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 rounded-full bg-slate-900 text-white text-xs font-semibold tracking-wide hover:bg-slate-800 transition">
+                                    View Seller Reporting – Week 2
+                                </a>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900 rounded-2xl shadow-md border border-slate-700 p-6 text-slate-50">
+                            <h3 class="text-lg font-bold mb-2">Syndication & Reach Verification</h3>
+                            <p class="text-sm text-slate-200 leading-relaxed mb-4">
+                                This listing is distributed across MLS, Zillow Group, Realtor.com, Homes.com, Facebook, Instagram, and our extended 100+ affiliate network.
+                                The Syndication Reach modal provides a live overview of that footprint.
+                            </p>
+                            <button type="button" onclick="openSyndicationModal()" class="inline-flex items-center px-4 py-2 rounded-full bg-blue-600 text-white text-xs font-semibold tracking-wide hover:bg-blue-500 transition">
+                                View Syndication Reach
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1179,11 +1286,17 @@
                 <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
             </button>
             
-            <img id="carouselMainImage" src="" class="max-w-full max-h-[85vh] object-contain shadow-2xl rounded-lg border border-white/10" alt="Property view">
+            <!-- Main image with fade-in; starts hidden until loaded -->
+            <img id="carouselMainImage" src="" class="max-w-full max-h-[85vh] object-contain shadow-2xl rounded-lg border border-white/10 opacity-0 transition-opacity duration-300" alt="Property view">
             
             <button onclick="nextImage()" class="absolute right-4 p-4 text-white/50 hover:text-white transition-colors">
                 <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
             </button>
+        </div>
+        
+        <!-- Loading spinner shown while image fetches -->
+        <div id="carouselSpinner" class="absolute inset-0 flex items-center justify-center pointer-events-none hidden">
+            <div class="h-12 w-12 border-4 border-white/20 border-t-white rounded-full animate-spin"></div>
         </div>
         
         <div id="carouselCounter" class="absolute bottom-8 text-white/70 font-medium tracking-widest bg-white/10 px-4 py-2 rounded-full backdrop-blur-md">
@@ -1197,6 +1310,9 @@
             address: '3433 Morning Star Ln, Garland, TX 75043',
             price: 375000,
             sqft: 2004,
+            beds: 3,
+            baths: 2,
+            lotSize: '0.23 AC',
             yearBuilt: '1984 (Resale)',
             roadmapPhases: [
                 { phase: 1, price: 375000, label: 'Phase 1' },
@@ -1586,11 +1702,31 @@
         function updateCarousel() {
             const imgEl = document.getElementById('carouselMainImage');
             const counterEl = document.getElementById('carouselCounter');
+            const spinnerEl = document.getElementById('carouselSpinner');
             if (!imgEl || !counterEl || !currentImages.length) return;
 
             const total = currentImages.length;
             const imageId = currentImages[currentIndex];
             const src = getGoogleDriveImageUrl(imageId);
+
+            // Show loading spinner and hide image while new source loads
+            if (spinnerEl) {
+                spinnerEl.classList.remove('hidden');
+            }
+            imgEl.classList.add('opacity-0');
+
+            imgEl.onload = () => {
+                if (spinnerEl) {
+                    spinnerEl.classList.add('hidden');
+                }
+                imgEl.classList.remove('opacity-0');
+            };
+
+            imgEl.onerror = () => {
+                if (spinnerEl) {
+                    spinnerEl.classList.add('hidden');
+                }
+            };
 
             imgEl.src = src;
             counterEl.textContent = `${currentIndex + 1} / ${total}`;
@@ -1654,7 +1790,7 @@
         
         // (Deprecated gallery grid helpers removed in favor of carousel-only system)
 
-        function showTab(tabId) {
+        function showTab(tabId, navButtonEl) {
             if (!tabId) {
                 console.error('showTab called without tabId');
                 return;
@@ -1680,17 +1816,20 @@
                 }
                 
                 // Activate the corresponding button
-                const navButton = document.getElementById(`nav-${tabId}`);
+                let navButton = null;
+                if (navButtonEl && navButtonEl.classList && navButtonEl.classList.contains('nav-btn')) {
+                    navButton = navButtonEl;
+                } else {
+                    navButton = document.getElementById(`nav-${tabId}`);
+                    if (!navButton) {
+                        // Try alternative selector for any legacy data attributes
+                        navButton = document.querySelector(`.nav-btn[data-page="${tabId}"]`) || null;
+                    }
+                }
                 if (navButton) {
                     navButton.classList.add('active');
                 } else {
-                    // Try alternative selector
-                    const altButton = document.querySelector(`.nav-btn[data-page="${tabId}"]`);
-                    if (altButton) {
-                        altButton.classList.add('active');
-                    } else {
-                        console.warn(`Navigation button not found for tab: ${tabId}`);
-                    }
+                    console.warn(`Navigation button not found for tab: ${tabId}`);
                 }
 
                 // Default Comp Sub-tab on page load
@@ -2379,6 +2518,24 @@
             // Update header address
             const headerAddress = document.getElementById('header-address');
             if (headerAddress) headerAddress.textContent = propertyData.address;
+            
+            // Update header spec ribbon from propertyData
+            const specYear = document.getElementById('spec-year');
+            if (specYear && propertyData.yearBuilt) {
+                specYear.textContent = propertyData.yearBuilt;
+            }
+            const specSize = document.getElementById('spec-size');
+            if (specSize && typeof propertyData.sqft === 'number') {
+                specSize.textContent = `${propertyData.sqft.toLocaleString()} SF`;
+            }
+            const specBeds = document.getElementById('spec-beds');
+            if (specBeds && propertyData.beds != null && propertyData.baths != null) {
+                specBeds.textContent = `${propertyData.beds} BD | ${propertyData.baths} BA`;
+            }
+            const specLot = document.getElementById('spec-lot');
+            if (specLot && propertyData.lotSize) {
+                specLot.textContent = propertyData.lotSize;
+            }
             
             // Update summary address
             const summaryAddress = document.getElementById('summary-address');
