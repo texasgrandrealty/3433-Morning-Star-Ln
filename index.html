@@ -25,7 +25,19 @@
                 height: 350px;
             }
         }
-        /* --- NAV BUTTON FIX (Original Formatting) --- */
+        /* --- NAV BUTTON FIX (2026 Dashboard Standard) --- */
+        .nav-tabs-container {
+            display: flex;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+        }
+        .nav-tabs-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
         .nav-btn {
             padding: 0.5rem 0.8rem; 
             font-size: 0.75rem; 
@@ -38,7 +50,8 @@
             border-bottom: 4px solid transparent;
             margin-right: 0.25rem;
             margin-bottom: 0.5rem; 
-            white-space: nowrap; 
+            white-space: nowrap;
+            flex: 0 0 auto; /* Prevent squishing on iPhone */
         }
         .nav-btn:hover {
             background-color: #60A5FA; 
@@ -91,52 +104,91 @@
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <header class="py-8 md:py-12 text-center">
-            <img src="logo.png" alt="Logo" class="mx-auto mb-4" style="height: 160px; width: auto; object-fit: contain;">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-stone-800">Strategic Market Position Analysis</h1>
-            <p class="text-lg font-medium text-gray-600 mt-2">3433 Morning Star Ln, Garland, TX 75043</p>
+        <!-- Glass-morphism Header -->
+        <header class="relative py-8 md:py-12 text-center border-b border-gray-200/50 backdrop-blur-xl bg-white/80">
+            <div class="absolute inset-0 bg-gradient-to-b from-white/90 to-white/70"></div>
+            <div class="relative z-10">
+                <img src="logo.png" alt="Logo" class="mx-auto mb-4" style="height: 160px; width: auto; object-fit: contain;">
+                <h1 class="text-3xl md:text-4xl font-extrabold text-stone-800">Strategic Market Position Analysis</h1>
+                <p class="text-lg font-medium text-gray-600 mt-2" id="header-address">3433 Morning Star Ln, Garland, TX 75043</p>
+            </div>
         </header>
 
-        <nav class="border-b border-gray-200 sticky top-0 bg-gray-50 z-10" id="main-nav-container">
-            <div class="flex flex-wrap justify-center pt-4 pb-0 sm:space-x-2">
-                <!-- Data attributes added and will be handled by JS event listeners -->
-                <button id="nav-summary" class="nav-btn active" data-page="summary">Executive Summary</button>
-                <button id="nav-metrics" class="nav-btn" data-page="metrics">Key Pricing Metrics</button>
-                <button id="nav-property" class="nav-btn" data-page="property">Property Analysis</button>
-                <button id="nav-comps" class="nav-btn" data-page="comps">Comparable Properties</button>
-                <button id="nav-rates" class="nav-btn" data-page="rates">Market Rate Update</button>
-                <button id="nav-liquidity" class="nav-btn" data-page="liquidity">Liquidity Risk</button>
-                <button id="nav-options" class="nav-btn" data-page="options">Comparative Options (Summary)</button>
-                <button id="nav-option1" class="nav-btn" data-page="option1">120-Day Price Strategy (Option 1)</button>
-                <button id="nav-option2" class="nav-btn" data-page="option2">3-2-1 Buydown Details (Option 2)</button>
-                <button id="nav-option3" class="nav-btn" data-page="option3">Owner Finance Details (Option 3)</button>
+        <!-- 13-Tab Navigation Ribbon -->
+        <nav class="border-b border-gray-200 sticky top-0 bg-gray-50/95 backdrop-blur-sm z-10" id="main-nav-container">
+            <div class="nav-tabs-container justify-center pt-4 pb-0">
+                <button id="nav-summary" class="nav-btn active" onclick="showTab('summary')">Executive Summary</button>
+                <button id="nav-metrics" class="nav-btn" onclick="showTab('metrics')">Key Pricing Metrics</button>
+                <button id="nav-property" class="nav-btn" onclick="showTab('property')">Property Analysis</button>
+                <button id="nav-comps" class="nav-btn" onclick="showTab('comps')">Comparable Properties</button>
+                <button id="nav-rates" class="nav-btn" onclick="showTab('rates')">Market Rate Update</button>
+                <button id="nav-liquidity" class="nav-btn" onclick="showTab('liquidity')">Liquidity Risk</button>
+                <button id="nav-campaign" class="nav-btn" onclick="showTab('campaign')">Campaign Strategy</button>
+                <button id="nav-documents" class="nav-btn" onclick="showTab('documents')">Documents</button>
+                <button id="nav-options" class="nav-btn" onclick="showTab('options')">Comparative Options</button>
+                <button id="nav-option1" class="nav-btn" onclick="showTab('option1')">120-Day Price Strategy</button>
+                <button id="nav-option2" class="nav-btn" onclick="showTab('option2')">3-2-1 Buydown Details</button>
+                <button id="nav-option3" class="nav-btn" onclick="showTab('option3')">Owner Finance Details</button>
+                <button id="nav-roadmap" class="nav-btn" onclick="showTab('roadmap')">Pricing Roadmap</button>
+                <button id="nav-financial" class="nav-btn" onclick="showTab('financial')">Financial Analysis</button>
             </div>
         </nav>
 
         <main class="mb-12">
             <!-- 1. EXECUTIVE SUMMARY PAGE -->
-            <div id="page-summary" class="py-8 md:py-12">
+            <div id="tab-summary" class="py-8 md:py-12">
                 <div class="page-section max-w-4xl mx-auto">
                     <h2 class="text-3xl font-extrabold text-blue-700 text-center mb-6">
                         Strategic Market Position Analysis: Price Correction for Rapid Sale
                     </h2>
-                    <h3 class="text-xl font-semibold text-gray-700 text-center mb-8">3433 Morning Star Ln, Garland, TX 75043</h3>
+                    <h3 class="text-xl font-semibold text-gray-700 text-center mb-8" id="summary-address"></h3>
                     
-                    <!-- NEW IMAGE/MAP PLACEHOLDERS -->
+                    <!-- HERO SECTION: Property Image LEFT, Google Map RIGHT -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                        <img src="3433_Morning_Star_Front_View.png" alt="Main property view" class="w-full h-auto rounded-lg shadow-md border border-gray-200">
-                        <img src="3433_Morning_Star_Map.png" alt="Google map location" class="w-full h-auto rounded-lg shadow-md border border-gray-200">
+                        <!-- Property Image on LEFT -->
+                        <div class="h-[450px] rounded-3xl shadow-xl overflow-hidden">
+                            <img src="3433_Morning_Star_Front_View.png" alt="Main property view" class="w-full h-full object-cover">
+                        </div>
+                        <!-- Google Map on RIGHT -->
+                        <div class="h-[450px] rounded-3xl shadow-xl overflow-hidden relative">
+                            <iframe 
+                                src="https://www.google.com/maps?q=3433+Morning+Star+Ln,+Garland,+TX+75043&output=embed"
+                                width="100%" 
+                                height="100%" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade"
+                                class="w-full h-full">
+                            </iframe>
+                            <div class="absolute bottom-3 right-3 z-10">
+                                <a 
+                                    href="https://maps.app.goo.gl/eAtgZ7bWPf5EvVS86" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    class="bg-white px-4 py-2 rounded-md shadow-lg text-sm font-medium text-blue-600 hover:bg-blue-50 transition-colors flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+                                    </svg>
+                                    Open in Google Maps
+                                </a>
+                            </div>
+                            <div class="absolute top-3 left-3 z-10 bg-white/95 backdrop-blur-sm px-3 py-2 rounded-md shadow-md">
+                                <p class="text-gray-800 font-semibold text-sm">3433 Morning Star Ln</p>
+                                <p class="text-gray-600 text-xs">Garland, TX 75043</p>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="prose max-w-none text-gray-600 space-y-6">
                         <p class="text-lg font-extrabold text-gray-800 border-l-4 border-blue-500 pl-4">
-                            This report outlines a strategic pricing plan designed to meet the seller's mandated starting price of <span class="summary-bold">$375,000</span> and secure a contract within a <span class="summary-red">120-day timeline</span>. The property's value is supported by major structural upgrades, but the high anchor price (25% above average closed PPSF) requires an aggressive, timed correction.
+                            This report outlines a strategic pricing plan designed to meet the seller's mandated starting price of <span class="summary-bold" id="summary-price"></span> and secure a contract within a <span class="summary-red">120-day timeline</span>. The property's value is supported by major structural upgrades, but the high anchor price (25% above average closed PPSF) requires an aggressive, timed correction.
                         </p>
                         <h4 class="text-2xl font-semibold text-blue-700 pt-4"><span class="summary-bold">Core Findings & Strategic Mandates:</span></h4>
                         <ul class="list-disc list-inside space-y-2 pl-4">
                             <li><span class="summary-bold">Pricing Anchor:</span> The mandated starting price ($375,000 / $186.29/\text{SqFt}$) sits well above the AVM estimate of $343,480, meaning market time will be spent dropping the price toward a proven accepted price floor.</li>
                             <li><span class="summary-bold">Liquidity Risk:</span> As a **new listing (0 CDOM)**, velocity is key. The market average closing time (74 days) dictates that the price must be reduced quickly if an offer is not received by Day 40.</li>
-                            <li><span class="summary-bold">Strategy:</span> A comprehensive, 6-step price reduction schedule over 120 days is mandatory. This plan is designed to surgically drop the price to the market-validated floor of **$349,900** if the premium anchor fails to deliver a contract.</li>
+                            <li><span class="summary-bold">Strategy:</span> A comprehensive, 6-step price reduction schedule over 120 days is mandatory. This plan is designed to surgically drop the price to the market-validated floor of <span class="summary-bold" id="summary-floor"></span> if the premium anchor fails to deliver a contract.</li>
                         </ul>
                     </div>
                     <div class="mt-8 text-center">
@@ -144,11 +196,16 @@
                             Explore Financing and Pricing Options
                         </button>
                     </div>
+                    <div class="mt-8 pt-6 border-t border-gray-200">
+                        <p class="text-sm italic text-gray-600 text-center max-w-3xl mx-auto">
+                            <span class="font-semibold">Expert Note:</span> The Garland market velocity demands strategic positioning. This property's <span class="font-semibold">Solar/Roof/Foundation</span> structural upgrades provide critical risk mitigation and energy efficiency that justify premium pricing. However, market dynamics require a phased approach to maximize seller returns while ensuring timely liquidity in this competitive landscape.
+                        </p>
+                    </div>
                 </div>
             </div>
 
             <!-- 2. KEY METRICS PAGE -->
-            <div id="page-metrics" class="py-8 md:py-12 hidden">
+            <div id="tab-metrics" class="py-8 md:py-12 hidden">
                 <div class="text-center mb-10">
                     <h2 class="text-2xl font-semibold text-gray-700">Strategic Pricing & Velocity Snapshot</h2>
                     <p class="mt-2 text-gray-500 max-w-2xl mx-auto">The 120-day price reduction schedule is designed to achieve the $349,900 price floor necessary to secure a sale within the target timeline.</p>
@@ -187,7 +244,7 @@
             </div>
 
             <!-- 3. PROPERTY ANALYSIS PAGE -->
-            <div id="page-property" class="py-8 md:py-12 hidden">
+            <div id="tab-property" class="py-8 md:py-12 hidden">
                 <h2 class="text-2xl font-semibold text-gray-700 text-center mb-10">Subject Property Analysis: 3433 Morning Star Ln, Garland</h2>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 px-6 sm:px-8">
                     
@@ -259,12 +316,41 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- 3D Virtual Tour Section -->
+                    <div class="page-section mt-8">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-6">3D Virtual Tour</h3>
+                        <div class="relative w-full h-[600px] rounded-lg shadow-xl border border-gray-200 overflow-hidden">
+                            <iframe 
+                                src="https://my.matterport.com/show/?m=cTSxrKFZQvR&play=1&mls=2"
+                                id="matterport-embed"
+                                width="100%" 
+                                height="100%" 
+                                frameborder="0" 
+                                allowfullscreen
+                                allow="xr-spatial-tracking"
+                                class="w-full h-full">
+                            </iframe>
+                            <div class="absolute top-3 right-3 z-10">
+                                <a 
+                                    href="https://my.matterport.com/show/?m=cTSxrKFZQvR" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    class="bg-white px-4 py-2 rounded-md shadow-lg text-sm font-medium text-blue-600 hover:bg-blue-50 transition-colors flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+                                    </svg>
+                                    View 3D Tour
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
             </div>
             
             <!-- 4. COMPARABLE PROPERTIES MASTER PAGE -->
-            <div id="page-comps" class="py-8 md:py-12 hidden">
+            <div id="tab-comps" class="py-8 md:py-12 hidden">
                 <h2 class="text-2xl font-semibold text-gray-700 text-center mb-4">Comparable Properties Overview (3 Data Sets)</h2>
                 <p class="text-gray-500 text-center max-w-2xl mx-auto mb-8">This section analyzes the market from three critical angles: local neighborhood pricing, AVM/RPR data, and immediate price-point competition.</p>
 
@@ -397,7 +483,7 @@
             </div>
 
             <!-- 5. MARKET RATE UPDATE PAGE -->
-            <div id="page-rates" class="py-8 md:py-12 hidden">
+            <div id="tab-rates" class="py-8 md:py-12 hidden">
                 <h2 class="text-2xl font-semibold text-gray-700 text-center mb-10">Current Mortgage Market & Federal Reserve Context</h2>
                 
                 <div class="page-section max-w-4xl mx-auto space-y-8">
@@ -430,7 +516,7 @@
             </div>
 
             <!-- 6. LIQUIDITY RISK PAGE -->
-            <div id="page-liquidity" class="py-8 md:py-12 hidden">
+            <div id="tab-liquidity" class="py-8 md:py-12 hidden">
                 <h2 class="text-2xl font-semibold text-gray-700 text-center mb-10">Liquidity Risk Analysis: Cumulative Days on Market (CDOM)</h2>
                 
                 <div class="page-section max-w-4xl mx-auto px-6 sm:px-8">
@@ -461,8 +547,222 @@
                 </div>
             </div>
             
-            <!-- 7. COMPARATIVE OPTIONS (SUMMARY) -->
-            <div id="page-options" class="py-8 md:py-12 hidden">
+            <!-- 7. CAMPAIGN STRATEGY PAGE - Executive Media Suite -->
+            <div id="tab-campaign" class="py-8 md:py-12 hidden">
+                <h2 class="text-2xl font-semibold text-gray-700 text-center mb-10">Executive Media Suite</h2>
+                <div class="max-w-6xl mx-auto px-6 sm:px-8">
+                    <!-- Strategic Narrative Box -->
+                    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-600 rounded-lg p-6 mb-8 shadow-md">
+                        <h3 class="text-lg font-bold text-gray-800 mb-2">Strategic Narrative</h3>
+                        <p class="text-gray-700 leading-relaxed">
+                            Visual verification of the property's modernization and immediate access to the Garland corridor establishes the baseline for our Phase 1 pricing strategy.
+                        </p>
+                    </div>
+                    
+                    <!-- 6-Pillar Dark Grid (3 columns) - Knox Gold Standard -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Pillar 1: 3D Immersion -->
+                        <div class="bg-slate-900 rounded-3xl p-6 shadow-2xl border border-slate-700 transition-all duration-300 hover:scale-[1.03] flex flex-col">
+                            <h3 class="text-xl font-bold text-white mb-3">🏠 3D Immersion</h3>
+                            <p class="text-slate-300 mb-4 text-sm leading-relaxed">Interactive Matterport tour providing 360° property exploration from anywhere in the world.</p>
+                            <div class="grid grid-cols-1 gap-3 mt-auto">
+                                <a href="https://my.matterport.com/show/?m=cTSxrKFZQvR" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200">
+                                    View 3D Tour
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Pillar 2: Aerial Intel -->
+                        <div class="bg-slate-900 rounded-3xl p-6 shadow-2xl border border-slate-700 transition-all duration-300 hover:scale-[1.03] flex flex-col">
+                            <h3 class="text-xl font-bold text-white mb-3">🚁 Aerial Intel</h3>
+                            <p class="text-slate-300 mb-4 text-sm leading-relaxed">Professional drone photography showcasing property context, lot size, and neighborhood positioning.</p>
+                            
+                            <div class="grid grid-cols-1 gap-3 mt-auto">
+                                <a href="https://youtu.be/zvhdvlnRB1U" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200">
+                                    View Drone Video
+                                </a>
+                                <button type="button" onclick="openCarousel('drone')" class="inline-flex items-center justify-center w-full px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200">
+                                    View Drone HDR
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Pillar 3: HDR Mastery -->
+                        <div class="bg-slate-900 rounded-3xl p-6 shadow-2xl border border-slate-700 transition-all duration-300 hover:scale-[1.03] flex flex-col">
+                            <h3 class="text-xl font-bold text-white mb-3">📸 HDR Mastery</h3>
+                            <p class="text-slate-300 mb-4 text-sm leading-relaxed">High Dynamic Range photography highlighting architectural details and premium finishes.</p>
+                            
+                            <div class="grid grid-cols-1 gap-3 mt-auto">
+                                <button type="button" onclick="openCarousel('hdr')" class="inline-flex items-center justify-center w-full px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200">
+                                    View HDR Gallery
+                                </button>
+                                <button type="button" onclick="openCarousel('virtual')" class="inline-flex items-center justify-center w-full px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200">
+                                    Virtual Staging
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Pillar 4: Video Marketing -->
+                        <div class="bg-slate-900 rounded-3xl p-6 shadow-2xl border border-slate-700 transition-all duration-300 hover:scale-[1.03] flex flex-col">
+                            <h3 class="text-xl font-bold text-white mb-3">🎬 Video Marketing</h3>
+                            <p class="text-slate-300 mb-4 text-sm leading-relaxed">Professional video compilation showcasing property features and neighborhood context.</p>
+                            <div class="grid grid-cols-1 gap-3 mt-auto">
+                                <a href="https://youtu.be/fj_mo819gi0" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200">
+                                    View TGR Compilation
+                                </a>
+                                <a href="https://youtu.be/91lSqOvc2m4" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200">
+                                    View YouTube Short
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Pillar 5: Distribution Network -->
+                        <div class="bg-slate-900 rounded-3xl p-6 shadow-2xl border border-slate-700 transition-all duration-300 hover:scale-[1.03] flex flex-col">
+                            <h3 class="text-xl font-bold text-white mb-3">🌐 Distribution Network</h3>
+                            <p class="text-slate-300 mb-4 text-sm leading-relaxed">Multi-platform distribution across MLS, Zillow, Realtor.com, and premium real estate networks.</p>
+                            <div class="grid grid-cols-1 gap-3 mt-auto">
+                                <button onclick="openSyndicationModal()" class="inline-flex items-center justify-center w-full px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200">
+                                    View Syndication Reach
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Pillar 6: Social Acceleration -->
+                        <div class="bg-slate-900 rounded-3xl p-6 shadow-2xl border border-slate-700 transition-all duration-300 hover:scale-[1.03] flex flex-col">
+                            <h3 class="text-xl font-bold text-white mb-3">🚀 Social Acceleration</h3>
+                            <p class="text-slate-300 mb-4 text-sm leading-relaxed">Social media marketing and engagement across Facebook, Instagram, and LinkedIn platforms.</p>
+                            <div class="grid grid-cols-1 gap-3 mt-auto">
+                                <a href="https://www.facebook.com/TexasGrandRealty/videos/717407894216647/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200">
+                                    View Facebook Reel
+                                </a>
+                                <a href="https://www.instagram.com/reels/DLyCyyEtMF8/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200">
+                                    View Instagram Reel
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 8. DOCUMENTS PAGE - Secure Asset Repository -->
+            <div id="tab-documents" class="py-8 md:py-12 hidden">
+                <div class="max-w-6xl mx-auto px-6 sm:px-8">
+                    <!-- Header with Blue Glowing Circle -->
+                    <div class="text-center mb-10">
+                        <div class="inline-flex items-center justify-center w-20 h-20 bg-blue-600 rounded-full shadow-lg shadow-blue-500/50 mb-4">
+                            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                        </div>
+                        <h2 class="text-3xl font-bold text-gray-800">Secure Asset Repository</h2>
+                        <p class="text-gray-600 mt-2">All property documentation and legal disclosures</p>
+                    </div>
+                    
+                    <!-- 7-Card Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Card 1: Listing Agreement -->
+                        <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+                            <div class="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-lg mb-4">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">Listing Agreement</h3>
+                            <p class="text-gray-600 text-sm mb-4">Exclusive right to sell agreement and terms.</p>
+                            <button class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors">
+                                View Document
+                            </button>
+                        </div>
+                        
+                        <!-- Card 2: IABS -->
+                        <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+                            <div class="flex items-center justify-center w-12 h-12 bg-green-100 rounded-lg mb-4">
+                                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">IABS</h3>
+                            <p class="text-gray-600 text-sm mb-4">Information About Brokerage Services disclosure.</p>
+                            <button class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors">
+                                View Document
+                            </button>
+                        </div>
+                        
+                        <!-- Card 3: Seller Disclosure -->
+                        <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+                            <div class="flex items-center justify-center w-12 h-12 bg-purple-100 rounded-lg mb-4">
+                                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">Seller Disclosure</h3>
+                            <p class="text-gray-600 text-sm mb-4">Property condition and known defects disclosure.</p>
+                            <button class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors">
+                                View Document
+                            </button>
+                        </div>
+                        
+                        <!-- Card 4: LBP (Lead-Based Paint) -->
+                        <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+                            <div class="flex items-center justify-center w-12 h-12 bg-yellow-100 rounded-lg mb-4">
+                                <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">LBP</h3>
+                            <p class="text-gray-600 text-sm mb-4">Lead-Based Paint disclosure (if applicable).</p>
+                            <button disabled class="w-full px-4 py-2 bg-gray-300 text-gray-500 font-medium rounded-lg cursor-not-allowed">
+                                N/A
+                            </button>
+                        </div>
+                        
+                        <!-- Card 5: HOA -->
+                        <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+                            <div class="flex items-center justify-center w-12 h-12 bg-indigo-100 rounded-lg mb-4">
+                                <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">HOA</h3>
+                            <p class="text-gray-600 text-sm mb-4">Homeowners Association documents and bylaws.</p>
+                            <button class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors">
+                                View Document
+                            </button>
+                        </div>
+                        
+                        <!-- Card 6: Financing -->
+                        <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+                            <div class="flex items-center justify-center w-12 h-12 bg-red-100 rounded-lg mb-4">
+                                <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">Financing</h3>
+                            <p class="text-gray-600 text-sm mb-4">Financing options and loan documentation.</p>
+                            <button class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors">
+                                View Document
+                            </button>
+                        </div>
+                        
+                        <!-- Card 7: Sewer -->
+                        <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+                            <div class="flex items-center justify-center w-12 h-12 bg-teal-100 rounded-lg mb-4">
+                                <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">Sewer</h3>
+                            <p class="text-gray-600 text-sm mb-4">Sewer line inspection and documentation.</p>
+                            <button class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors">
+                                View Document
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 9. COMPARATIVE OPTIONS (SUMMARY) -->
+            <div id="tab-options" class="py-8 md:py-12 hidden">
                 <h2 class="text-2xl font-semibold text-gray-700 text-center mb-10">Comparative Options (Summary)</h2>
                 <p class="text-gray-500 text-center max-w-3xl mx-auto mb-8">The table below compares the buyer impact and seller cost for the three primary strategies. The goal is to choose the option that best drives liquidity in a complex market.</p>
 
@@ -513,7 +813,7 @@
             </div>
             
             <!-- 8. 90-DAY PRICE STRATEGY (OPTION 1) -->
-            <div id="page-option1" class="py-8 md:py-12 hidden">
+            <div id="tab-option1" class="py-8 md:py-12 hidden">
                 <h2 class="text-2xl font-semibold text-gray-700 text-center mb-10">Option 1: 120-Day Price Reduction Strategy</h2>
                 <div class="page-section max-w-4xl mx-auto space-y-6">
                     <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500 mb-6">
@@ -592,7 +892,7 @@
             </div>
 
             <!-- 9. 3-2-1 BUYDOWN DETAILS (OPTION 2) -->
-            <div id="page-option2" class="py-8 md:py-12 hidden">
+            <div id="tab-option2" class="py-8 md:py-12 hidden">
                 <h2 class="text-2xl font-semibold text-gray-700 text-center mb-10">Option 2: 3-2-1 Rate Buydown Details</h2>
                 <div class="page-section max-w-4xl mx-auto space-y-6">
                     <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500 mb-6">
@@ -673,7 +973,7 @@
             </div>
 
             <!-- 10. OWNER FINANCE DETAILS (OPTION 3) -->
-            <div id="page-option3" class="py-8 md:py-12 hidden">
+            <div id="tab-option3" class="py-8 md:py-12 hidden">
                 <h2 class="text-2xl font-semibold text-gray-700 text-center mb-10">Option 3: Owner Finance Details</h2>
                 <div class="page-section max-w-4xl mx-auto space-y-6">
                     <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500 mb-6">
@@ -751,6 +1051,43 @@
                 </div>
             </div>
             
+            <!-- 11. PRICING ROADMAP PAGE -->
+            <div id="tab-roadmap" class="py-8 md:py-12 hidden">
+                <h2 class="text-2xl font-semibold text-gray-700 text-center mb-10">Pricing Roadmap: Strategic Phases</h2>
+                <div class="page-section max-w-4xl mx-auto space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="roadmap-phases">
+                        <!-- Phases populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 12. FINANCIAL ANALYSIS PAGE -->
+            <div id="tab-financial" class="py-8 md:py-12 hidden">
+                <h2 class="text-2xl font-semibold text-gray-700 text-center mb-10">Financial Analysis Summary</h2>
+                <div class="page-section max-w-4xl mx-auto space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500">
+                            <h3 class="text-lg font-bold text-blue-800 mb-4">Property Fundamentals</h3>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex justify-between"><span class="font-medium">List Price:</span> <span id="financial-price" class="font-bold"></span></li>
+                                <li class="flex justify-between"><span class="font-medium">Square Footage:</span> <span id="financial-sqft" class="font-bold"></span></li>
+                                <li class="flex justify-between"><span class="font-medium">Price per SqFt:</span> <span id="financial-ppsf" class="font-bold"></span></li>
+                                <li class="flex justify-between"><span class="font-medium">Year Built:</span> <span id="financial-year" class="font-bold"></span></li>
+                            </ul>
+                        </div>
+                        <div class="bg-green-50 p-6 rounded-lg border-l-4 border-green-500">
+                            <h3 class="text-lg font-bold text-green-800 mb-4">Market Position</h3>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex justify-between"><span class="font-medium">CDOM:</span> <span id="financial-cdom" class="font-bold"></span></li>
+                                <li class="flex justify-between"><span class="font-medium">Price Floor:</span> <span id="financial-floor" class="font-bold"></span></li>
+                                <li class="flex justify-between"><span class="font-medium">Market Rate:</span> <span id="financial-rate" class="font-bold"></span></li>
+                                <li class="flex justify-between"><span class="font-medium">Total Reduction:</span> <span id="financial-reduction" class="font-bold text-red-600"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </main>
         
         <footer class="text-center py-8 mt-12 border-t border-gray-200">
@@ -759,18 +1096,133 @@
 
     </div>
 
-    <script>
-        // --- DATA DEFINITION (All data consolidated into the single file) ---
+    <!-- Syndication Modal -->
+    <div id="syndicationModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-2xl">
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-800">Global Distribution Network</h3>
+                    <p class="text-sm text-gray-600 mt-1">900+ Publisher Partners | Verified Reach</p>
+                </div>
+                <button onclick="closeSyndicationModal()" class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                        <h4 class="font-bold text-blue-800 mb-2">MLS Networks</h4>
+                        <ul class="text-sm text-gray-700 space-y-1">
+                            <li>• NTREIS (North Texas Real Estate Information Systems)</li>
+                            <li>• Real Estate Board of Greater Fort Worth</li>
+                            <li>• MetroTex Association of REALTORS®</li>
+                        </ul>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                        <h4 class="font-bold text-green-800 mb-2">Consumer Portals</h4>
+                        <ul class="text-sm text-gray-700 space-y-1">
+                            <li>• Zillow</li>
+                            <li>• Realtor.com</li>
+                            <li>• Trulia</li>
+                            <li>• Redfin</li>
+                        </ul>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                        <h4 class="font-bold text-purple-800 mb-2">Premium Networks</h4>
+                        <ul class="text-sm text-gray-700 space-y-1">
+                            <li>• Luxury Portfolio International</li>
+                            <li>• Leading Real Estate Companies of the World</li>
+                            <li>• Realty.com</li>
+                        </ul>
+                    </div>
+                    <div class="bg-orange-50 p-4 rounded-lg border border-orange-200">
+                        <h4 class="font-bold text-orange-800 mb-2">Social Media</h4>
+                        <ul class="text-sm text-gray-700 space-y-1">
+                            <li>• Facebook Marketplace</li>
+                            <li>• Instagram Business</li>
+                            <li>• LinkedIn Professional Network</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Extended Global Affiliate Network Section -->
+                <div class="bg-slate-900 rounded-2xl p-8 mb-6 text-center">
+                    <h4 class="text-xl font-bold text-white mb-3">Extended Global Affiliate Network</h4>
+                    <a href="https://drive.google.com/file/d/189BtmEuch1UB4SRdgwMEcqM3XfEf9LtK/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200">
+                        Download Full 100+ Affiliate List
+                    </a>
+                </div>
+                
+                <div class="bg-blue-900 border-l-8 border-blue-400 text-white p-6 rounded-2xl">
+                    <p class="text-sm font-bold text-white">
+                        <span class="relative inline-flex h-3 w-3 mr-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
+                        </span>
+                        <strong>Total Reach:</strong> This property is syndicated across <span class="text-blue-400 font-black">900+ total platforms</span>, ensuring maximum visibility to qualified buyers in the Garland market and beyond.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        const SUBJECT_PRICE = 375000; // Seller's Mandated Anchor Price
-        const SUBJECT_SQFT = 2004; 
-        const SUBJECT_DP_PCT = 0.20; 
-        const MARKET_RATE = 0.0645; // 6.45%
-        const PRICE_FLOOR_OPTION_1 = 349900; // New 120-Day Price Floor
-        const BUYDOWN_PRICE_OPTION_2 = 375000; // Price anchor for the buydown loan
-        const OWNER_FINANCE_RATE = 0.0675; // 6.75%
-        const OWNER_FINANCE_DP_PCT = 0.10; // 10% Down Payment for Owner Finance
-        const TOTAL_CDOM = 0; // New Listing Start
+    <!-- Master Gallery Engine Lightbox -->
+    <div id="imageLightbox" class="fixed inset-0 bg-black/95 backdrop-blur-2xl z-[100] hidden flex flex-col items-center justify-center">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white/70 hover:text-white z-[110]">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+        
+        <div class="relative w-full h-full flex items-center justify-center px-4">
+            <button onclick="prevImage()" class="absolute left-4 p-4 text-white/50 hover:text-white transition-colors">
+                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            
+            <img id="carouselMainImage" src="" class="max-w-full max-h-[85vh] object-contain shadow-2xl rounded-lg border border-white/10" alt="Property view">
+            
+            <button onclick="nextImage()" class="absolute right-4 p-4 text-white/50 hover:text-white transition-colors">
+                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+        </div>
+        
+        <div id="carouselCounter" class="absolute bottom-8 text-white/70 font-medium tracking-widest bg-white/10 px-4 py-2 rounded-full backdrop-blur-md">
+            1 / 25
+        </div>
+    </div>
+
+    <script>
+        // --- PROPERTY DATA OBJECT (2026 Dashboard Standard) ---
+        const propertyData = {
+            address: '3433 Morning Star Ln, Garland, TX 75043',
+            price: 375000,
+            sqft: 2004,
+            yearBuilt: '1984 (Resale)',
+            roadmapPhases: [
+                { phase: 1, price: 375000, label: 'Phase 1' },
+                { phase: 2, price: 364900, label: 'Phase 2' },
+                { phase: 3, price: 349900, label: 'Phase 3' }
+            ],
+            matterportLink: 'https://my.matterport.com/show/?m=cTSxrKFZQvR',
+            matterportEmbedUrl: 'https://my.matterport.com/show/?m=cTSxrKFZQvR&play=1&mls=2',
+            cdom: 0,
+            downPaymentPct: 0.20,
+            marketRate: 0.0645,
+            priceFloor: 349900,
+            ownerFinanceRate: 0.0675,
+            ownerFinanceDownPct: 0.10
+        };
+
+        // --- DERIVED CONSTANTS FROM propertyData ---
+        const SUBJECT_PRICE = propertyData.price;
+        const SUBJECT_SQFT = propertyData.sqft;
+        const SUBJECT_DP_PCT = propertyData.downPaymentPct;
+        const MARKET_RATE = propertyData.marketRate;
+        const PRICE_FLOOR_OPTION_1 = propertyData.priceFloor;
+        const BUYDOWN_PRICE_OPTION_2 = propertyData.price;
+        const OWNER_FINANCE_RATE = propertyData.ownerFinanceRate;
+        const OWNER_FINANCE_DP_PCT = propertyData.ownerFinanceDownPct;
+        const TOTAL_CDOM = propertyData.cdom;
 
         // Pricing strategy constants
         const BUYDOWNS = {
@@ -1032,49 +1484,222 @@
         }
 
 
-        function showPage(pageId) {
-            if (!pageId) {
-                console.error('showPage called without pageId');
+        // --- SYNDICATION MODAL FUNCTIONS ---
+        function openSyndicationModal() {
+            const modal = document.getElementById('syndicationModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            }
+        }
+        
+        function closeSyndicationModal() {
+            const modal = document.getElementById('syndicationModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                document.body.style.overflow = ''; // Restore scrolling
+            }
+        }
+        
+        // Close modal when clicking outside
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('syndicationModal');
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        closeSyndicationModal();
+                    }
+                });
+            }
+            
+            // Close lightbox when clicking outside
+            const lightbox = document.getElementById('imageLightbox');
+            if (lightbox) {
+                lightbox.addEventListener('click', function(e) {
+                    if (e.target === lightbox) {
+                        closeLightbox();
+                    }
+                });
+            }
+            
+            // Keyboard support for Master Gallery Engine
+            document.addEventListener('keydown', function(e) {
+                const lightboxEl = document.getElementById('imageLightbox');
+                const visible = lightboxEl && !lightboxEl.classList.contains('hidden');
+
+                if (!visible) return;
+
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowRight') {
+                    nextImage();
+                } else if (e.key === 'ArrowLeft') {
+                    prevImage();
+                }
+            });
+        });
+        
+        // --- MASTER GALLERY ENGINE (Carousel) ---
+        let currentImages = [];
+        let currentIndex = 0;
+
+        function openCarousel(type) {
+            let sourceArray = [];
+            if (type === 'drone') {
+                sourceArray = droneIds;
+            } else if (type === 'hdr') {
+                sourceArray = hdrIds;
+            } else if (type === 'virtual') {
+                sourceArray = virtualIds;
+            } else {
+                console.warn('Unknown carousel type:', type);
+                return;
+            }
+
+            if (!sourceArray || sourceArray.length === 0) {
+                console.warn('No images available for carousel type:', type);
+                return;
+            }
+
+            // Shuffle on each open so the experience is fresh every time
+            currentImages = shuffleArray(sourceArray);
+            currentIndex = 0;
+
+            const lightbox = document.getElementById('imageLightbox');
+            if (!lightbox) return;
+
+            updateCarousel();
+            lightbox.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('imageLightbox');
+            if (lightbox) {
+                lightbox.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+            currentImages = [];
+            currentIndex = 0;
+        }
+
+        function updateCarousel() {
+            const imgEl = document.getElementById('carouselMainImage');
+            const counterEl = document.getElementById('carouselCounter');
+            if (!imgEl || !counterEl || !currentImages.length) return;
+
+            const total = currentImages.length;
+            const imageId = currentImages[currentIndex];
+            const src = getGoogleDriveImageUrl(imageId);
+
+            imgEl.src = src;
+            counterEl.textContent = `${currentIndex + 1} / ${total}`;
+        }
+
+        function nextImage() {
+            if (!currentImages.length) return;
+            currentIndex = (currentIndex + 1) % currentImages.length;
+            updateCarousel();
+        }
+
+        function prevImage() {
+            if (!currentImages.length) return;
+            currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+            updateCarousel();
+        }
+        
+        // --- GOOGLE DRIVE IMAGE ID ARRAYS (Actual IDs) ---
+        const droneIds = [
+            '1ktkE5HeaVna9Yr1ADoki-e8uMjjHbdTw','19i0vdDYEeIrz-O8jHJqt7pkAuFbjiU--','1zlRqh1RW6C9tBhpEFLSUjUI2xjx8yFEs','1Rfmas63N5WlsE2NNbALGLcutHAKzjO56',
+            '19ExwvWE2aymyEOZJ_j0JF144M6FHhzXY','1ZOot2JiOOZbVC6O3N2uYpJlQzH7SZJAw','13tblUO2EuaX1kJxb64MzefPqF35lp1WT','12DMvY7xUCKL-3fCuQPvOse8-Kckmwa4a',
+            '1KenXrxBk-gkOM2HNrzLCKrIeMZiABCIs','1kPACw-aCsXjXI69NeIItTgfYUJEja_Hh','1OD4yBxJCazWIhFPILK79Hg4ch7UB7L9E','1Jslc1QhI9JKZasa0WQWkVMZC0Kj6pyhE',
+            '1d73zdVIcgqVhtMDKHZzdaA-YbVSEaGSj','1YvoS7DJ7ZraKAR04S2nXGto-KSJvqgzD','1zn110Bjsemwg-8K5-JGr_vxTRkAvS9Sr','1KLvqdGA_CkIguMHMt05NjGdNjC0VP_14',
+            '1n1G43l4dyJ6q7R_rsTE6o8-dwUb3hsV2','18g4dZ90xzdn8tBfOyotpT4o7zjSXKmMy','1F3gP4IudSCLR-Lb82uPztZ2CSrLnajKo','1_3OHXiBTMB5VfdFESwFvQ2AapiMgnzeO',
+            '17njfYLIDzQ7Ej_C_4mFE89IYH2671v_y','1Z08S4ujd-OVpN4ATdnhafKjiD8hh8UHE','1sMmjExZ1x0JduMflNlLv1IhfqrbX3THE','1VF7KGgYq12KkNWUgU5b1M-kHprd7jrAT',
+            '1sjSFeLPKRZHxkfksvFpl0y-gv46Dk-8_'
+        ];
+        
+        const hdrIds = [
+            '1_gpSI8O7C8vrqLZSRkDHyUXfh5CwDzKc','111CrFRaYPFQ6sgbsfVezt7IYiKua--in','1VZ8XXPNmOYYP2Sz8jskftGmriwcShZbF','1m0LL1y8DL6mUqFjwsyDlyEuiHiIhAHk',
+            '1lFArAm14XvxoyyeE5RHjpFT0yHHBTVaI','11JLLscJ9Do1n4l545s3DhkWRVfDOEs-B','1mrtDyYZ9jO4ztJRqqvEL9k9Q8-BbKUZB','1NXhhpCZz5JH1ohPUeSp74nGx4ZAXcw5i',
+            '1B1tCqZQrult1-5EXFYs6n36qnVcA_A8i','1aMJSD-jWRyvMPuQz_vRa-xjR-Rv55r1G','1ADFnfhmvTy_O61I-9WX27yPmjU5UCUMD','1Xwqdl8Mhla6zjswAKK8IpT14tPhyoXyx',
+            '1GKkwf_M11cTCa7Qyz_ETtZuMKG2YKD3l','1zu19BAkuiz0QkkjLEBhceKGgtBTxu88I','1RJlJuC7IpAJdSrnflzXuGn9sKRhos7kP','1aAxUPS3kzXSBLhUH7kpHjlr8NWHi0Uyy',
+            '1OA0xSZNCpFVijU14lEWRR5iczhSpgcwQ','16izSvZYtMRdV8YK-goslUHXrezHOGqYn','1OIz2yQ3F_u0Wq_rOgp7uYNiBnte2VAGg','1wrrkqlU9GP7uxhLEZtc98S5wOIzaYcOb',
+            '165AhMJAbOr-65pJ3zOay413lrYQPqgos','1OriqtEG-yBMGA-RNyFxk2cdByyuCNetz','1JJ-otWlDZmqQhBcjfEwHU1oFZVVA45o-','1msiCeiqMzF1dRx9i4D1OSHM-2PLPZ_Sl',
+            '1dTPRM6S-y6TT5lhP05Smmh4sLwDhKE3D','1jpG4vwRDN10QlQ6VWV2nOGfQGLu3YNVU'
+        ];
+        
+        const virtualIds = [
+            '1bb9lGZysJsxwUD_PDYRxlteak1FA0cUi','1iSiTmbiYrv0-ZykZM3q8341I3ROV_OdI','1OkRW3JcjLiDelWD7b731uN5PBqpyOFYT','19lZdJCf1U_uXUBB7c1sFm0-9_ulKBmFC',
+            '1YXFFVpjUSmNYhh34xIfKomBpHFlubu7t','1smj4srBN7Csb9L1raLbEo_LDOmZlYDWx','1T8M8Bes2aitCWOa3e09-bk9QN9vo9NtC','1NZ34Ouc-OT77Q02ODizDxhjM034DlR0U',
+            '16-gwlV2Uvsml6q7d1lZD64q-La-HdDu5','1h7CRKaz58uUlxrh-2QdT27-3Tl6R_iG6','1UAPubN58Q-3q4RFcVDCx1E9xuSrR5Cox','1sdYE0AG9f_IRMNj6fgkciUAf0ggm-ch9',
+            '1TvOZsDMiPheCpBjBXj0dV6XD_e-Y3piJ','1N3J0kz1rJfSVvhdUKBXGXqcbohXGszdo'
+        ];
+        
+        // --- FISHER-YATES SHUFFLE FUNCTION ---
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+        
+        // --- CONVERT GOOGLE DRIVE ID TO HIGH-PERFORMANCE CDN URL ---
+        function getGoogleDriveImageUrl(fileId) {
+            // Use Google CDN format for high-performance, resized 2048px images
+            return `https://lh3.googleusercontent.com/u/0/d/${fileId}=w2048-h2048`;
+        }
+        
+        // (Deprecated gallery grid helpers removed in favor of carousel-only system)
+
+        function showTab(tabId) {
+            if (!tabId) {
+                console.error('showTab called without tabId');
                 return;
             }
             
             try {
-                // Hide all content pages
-                const allPages = document.querySelectorAll('main > div[id^="page-"]');
-                allPages.forEach(page => page.classList.add('hidden'));
+                // Hide all content tabs (support both tab- and page- for backward compatibility)
+                const allTabs = document.querySelectorAll('main > div[id^="tab-"], main > div[id^="page-"]');
+                allTabs.forEach(tab => tab.classList.add('hidden'));
                 
                 // Deactivate all nav buttons
                 document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
                 
-                // Show the target page
-                const pageElement = document.getElementById(`page-${pageId}`);
-                if (pageElement) {
-                    pageElement.classList.remove('hidden');
+                // Show the target tab (try tab- first, then page- for backward compatibility)
+                let tabElement = document.getElementById(`tab-${tabId}`);
+                if (!tabElement) {
+                    tabElement = document.getElementById(`page-${tabId}`);
+                }
+                if (tabElement) {
+                    tabElement.classList.remove('hidden');
                 } else {
-                    console.error(`Page element not found: page-${pageId}`);
+                    console.error(`Tab element not found: tab-${tabId} or page-${tabId}`);
                 }
                 
                 // Activate the corresponding button
-                const navButton = document.getElementById(`nav-${pageId}`);
+                const navButton = document.getElementById(`nav-${tabId}`);
                 if (navButton) {
                     navButton.classList.add('active');
                 } else {
                     // Try alternative selector
-                    const altButton = document.querySelector(`.nav-btn[data-page="${pageId}"]`);
+                    const altButton = document.querySelector(`.nav-btn[data-page="${tabId}"]`);
                     if (altButton) {
                         altButton.classList.add('active');
                     } else {
-                        console.warn(`Navigation button not found for page: ${pageId}`);
+                        console.warn(`Navigation button not found for tab: ${tabId}`);
                     }
                 }
 
                 // Default Comp Sub-tab on page load
-                if (pageId === 'comps') {
+                if (tabId === 'comps') {
                     showCompSubTab('neighborhood');
                 }
                 
                 // Ensure amortization table and values are populated when Option 3 page is shown
-                if (pageId === 'option3') {
+                if (tabId === 'option3') {
                     // Small delay to ensure DOM is ready
                     setTimeout(() => {
                         // Recalculate totals to ensure they're current
@@ -1089,7 +1714,7 @@
                 }
                 
                 // Re-initialize pricing chart when metrics page is shown
-                if (pageId === 'metrics') {
+                if (tabId === 'metrics') {
                     setTimeout(() => {
                         initPricingChart();
                     }, 150);
@@ -1103,7 +1728,7 @@
                 });
                 
             } catch (error) {
-                console.error('Error in showPage:', error);
+                console.error('Error in showTab:', error);
             }
         }
 
@@ -1700,9 +2325,9 @@
                 const clickHandler = function(e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    const targetPageId = this.getAttribute('data-page');
-                    if (targetPageId) {
-                        showPage(targetPageId);
+                    const targetTabId = this.getAttribute('data-page') || this.getAttribute('onclick')?.match(/showTab\('([^']+)'\)/)?.[1];
+                    if (targetTabId) {
+                        showTab(targetTabId);
                     }
                 };
                 
@@ -1728,7 +2353,7 @@
             if (exploreButton) {
                  exploreButton.addEventListener('click', function(e) {
                     e.preventDefault();
-                    showPage(exploreButton.getAttribute('data-page-target'));
+                    showTab(exploreButton.getAttribute('data-page-target'));
                 });
                 exploreButton.style.cursor = 'pointer';
             }
@@ -1749,8 +2374,88 @@
         }
 
 
+        // --- PROPERTY DATA POPULATION (2026 Dashboard Standard) ---
+        function populatePropertyData() {
+            // Update header address
+            const headerAddress = document.getElementById('header-address');
+            if (headerAddress) headerAddress.textContent = propertyData.address;
+            
+            // Update summary address
+            const summaryAddress = document.getElementById('summary-address');
+            if (summaryAddress) summaryAddress.textContent = propertyData.address;
+            
+            // Update summary price and floor
+            const summaryPrice = document.getElementById('summary-price');
+            if (summaryPrice) summaryPrice.textContent = currencyFormat.format(propertyData.price);
+            
+            const summaryFloor = document.getElementById('summary-floor');
+            if (summaryFloor) summaryFloor.textContent = currencyFormat.format(propertyData.priceFloor);
+            
+            // Update Matterport link in Campaign Strategy tab
+            const matterportLink = document.getElementById('matterport-link');
+            if (matterportLink && propertyData.matterportLink) {
+                matterportLink.href = propertyData.matterportLink;
+            }
+            
+            // Update embedded Matterport viewer in Property tab
+            const matterportEmbed = document.getElementById('matterport-embed');
+            if (matterportEmbed && propertyData.matterportEmbedUrl) {
+                matterportEmbed.src = propertyData.matterportEmbedUrl;
+            }
+            
+            // Populate Roadmap Phases
+            const roadmapContainer = document.getElementById('roadmap-phases');
+            if (roadmapContainer && propertyData.roadmapPhases) {
+                let roadmapHtml = '';
+                propertyData.roadmapPhases.forEach((phase, index) => {
+                    const isActive = index === 0;
+                    roadmapHtml += `
+                        <div class="bg-gradient-to-br ${isActive ? 'from-blue-600 to-blue-800' : 'from-gray-100 to-gray-200'} rounded-xl p-6 shadow-lg border ${isActive ? 'border-blue-500' : 'border-gray-300'}">
+                            <div class="text-center">
+                                <div class="text-sm font-semibold ${isActive ? 'text-blue-100' : 'text-gray-600'} mb-2">${phase.label}</div>
+                                <div class="text-3xl font-extrabold ${isActive ? 'text-white' : 'text-gray-800'} mb-2">${currencyFormat.format(phase.price)}</div>
+                                <div class="text-xs ${isActive ? 'text-blue-200' : 'text-gray-500'}">${currencyFormat.format(phase.price / propertyData.sqft)}/SqFt</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                roadmapContainer.innerHTML = roadmapHtml;
+            }
+            
+            // Populate Financial Analysis
+            const financialPrice = document.getElementById('financial-price');
+            if (financialPrice) financialPrice.textContent = currencyFormat.format(propertyData.price);
+            
+            const financialSqft = document.getElementById('financial-sqft');
+            if (financialSqft) financialSqft.textContent = propertyData.sqft.toLocaleString() + ' SqFt';
+            
+            const financialPpsf = document.getElementById('financial-ppsf');
+            if (financialPpsf) financialPpsf.textContent = currencyFormat.format(propertyData.price / propertyData.sqft) + '/SqFt';
+            
+            const financialYear = document.getElementById('financial-year');
+            if (financialYear) financialYear.textContent = propertyData.yearBuilt;
+            
+            const financialCdom = document.getElementById('financial-cdom');
+            if (financialCdom) financialCdom.textContent = propertyData.cdom + ' Days';
+            
+            const financialFloor = document.getElementById('financial-floor');
+            if (financialFloor) financialFloor.textContent = currencyFormat.format(propertyData.priceFloor);
+            
+            const financialRate = document.getElementById('financial-rate');
+            if (financialRate) financialRate.textContent = (propertyData.marketRate * 100).toFixed(2) + '%';
+            
+            const financialReduction = document.getElementById('financial-reduction');
+            if (financialReduction) {
+                const reduction = propertyData.price - propertyData.priceFloor;
+                financialReduction.textContent = currencyFormat.format(reduction) + ' (' + ((reduction / propertyData.price) * 100).toFixed(2) + '%)';
+            }
+        }
+
         window.onload = function() {
             try {
+                // 0. Populate propertyData values first
+                populatePropertyData();
+                
                 // 1. Calculate Option 3 totals first (depends on amortization schedule)
                 calculateOption3Totals();
                 
@@ -1767,13 +2472,13 @@
                 initCharts();
 
                 // 5. Set default page
-                showPage('summary');
+                showTab('summary');
             } catch (error) {
                 console.error('Error during page initialization:', error);
                 // Still try to show the page even if there are errors
                 try {
                     attachEventListeners();
-                    showPage('summary');
+                    showTab('summary');
                 } catch (e) {
                     console.error('Critical error preventing page display:', e);
                 }
