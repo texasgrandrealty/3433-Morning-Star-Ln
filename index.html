@@ -195,7 +195,7 @@
                         </div>
                         <div class="px-3 py-2 rounded-full bg-slate-900 text-slate-50 flex flex-col min-w-[7rem] shadow">
                             <span class="text-[0.6rem] uppercase tracking-[0.18em] text-slate-400 mb-0.5">Lot Size</span>
-                            <span id="spec-lot" class="font-semibold">0.23 AC</span>
+                            <span id="spec-lot" class="font-semibold">0.34 AC</span>
                         </div>
                     </div>
                 </div>
@@ -458,6 +458,11 @@
                                     <div class="chart-container">
                                         <canvas id="localSupplyChart"></canvas>
                                     </div>
+                                    <!-- Knox-style explicit legend (static & institutional) -->
+                                    <div class="mt-3 flex flex-wrap justify-center gap-x-6 gap-y-1 text-xs font-bold text-slate-800" style="font-family: 'Montserrat', sans-serif;">
+                                        <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-full shrink-0" style="background:#2563EB"></span> Blue = 4.4 Mo Supply</span>
+                                        <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-full shrink-0 bg-gray-200"></span> Gray = 1.6 Mo Equilibrium Gap</span>
+                                    </div>
                                     <p class="mt-3 text-xs text-gray-500">
                                         Garland 75043 currently carries approximately <span class="font-semibold text-slate-900">4.4 months</span> of inventory,
                                         with <span class="font-semibold text-slate-900">449 active listings</span> and <span class="font-semibold text-slate-900">355 new listings</span> in the current reporting period.
@@ -470,6 +475,11 @@
                                 <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-4">
                                     <div class="chart-container">
                                         <canvas id="localOutcomesChart"></canvas>
+                                    </div>
+                                    <!-- Knox-style explicit legend (static & institutional) -->
+                                    <div class="mt-3 flex flex-wrap justify-center gap-x-6 gap-y-1 text-xs font-bold text-slate-800" style="font-family: 'Montserrat', sans-serif;">
+                                        <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-full shrink-0" style="background:#16A34A"></span> Green = Sold Success (62%)</span>
+                                        <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-full shrink-0" style="background:#DC2626"></span> Red = Failed/Expired (38%)</span>
                                     </div>
                                     <p class="mt-3 text-xs text-gray-500">
                                         Outcome data emphasizes the importance of entering the market at a defensible price: a large share of listings still require at least one price reduction
@@ -2345,6 +2355,26 @@
         }
         
         // --- LOCAL MARKET CHARTS (Morningstar-style donuts) ---
+        // Center-label plugin: draws static text in doughnut center (Montserrat Bold)
+        const centerLabelPlugin = {
+            id: 'centerLabel',
+            afterDraw(chart) {
+                const opts = chart.options.plugins?.centerLabel;
+                if (!opts || !opts.text || chart.config.type !== 'doughnut') return;
+                const ctx = chart.ctx;
+                const { width, height } = chart;
+                const fontSize = opts.fontSize != null ? opts.fontSize : 26;
+                ctx.save();
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.font = 'bold ' + fontSize + 'px "Montserrat", sans-serif';
+                ctx.fillStyle = opts.color || '#111827';
+                ctx.fillText(opts.text, width / 2, height / 2);
+                ctx.restore();
+            }
+        };
+        if (window.Chart && typeof Chart.register === 'function') Chart.register(centerLabelPlugin);
+
         let localSupplyChart = null;
         let localOutcomesChart = null;
 
@@ -2359,7 +2389,7 @@
             localSupplyChart = new Chart(supplyCtx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Months of Supply', 'Equilibrium (6 mo)'],
+                    labels: ['4.4 Mo Supply', '1.6 Mo Equilibrium Gap'],
                     datasets: [{
                         data: [4.4, 6 - 4.4],
                         backgroundColor: ['#2563EB', '#E5E7EB'],
@@ -2368,9 +2398,20 @@
                 },
                 options: {
                     cutout: '70%',
+                    responsive: true,
+                    maintainAspectRatio: true,
                     plugins: {
-                        legend: { display: false },
-                        tooltip: { enabled: true }
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                font: { family: '"Montserrat", sans-serif', weight: 'bold', size: 12 },
+                                padding: 16,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: { enabled: true },
+                        centerLabel: { text: '4.4 Mo', fontSize: 26, color: '#111827' }
                     }
                 }
             });
@@ -2378,18 +2419,29 @@
             localOutcomesChart = new Chart(outcomesCtx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Closed / Under Contract', 'Price Reductions / Expired'],
+                    labels: ['Sold Success (62%)', 'Failed/Expired (38%)'],
                     datasets: [{
-                        data: [60, 40],
-                        backgroundColor: ['#16A34A', '#F97316'],
+                        data: [62, 38],
+                        backgroundColor: ['#16A34A', '#DC2626'],
                         borderWidth: 0
                     }]
                 },
                 options: {
                     cutout: '70%',
+                    responsive: true,
+                    maintainAspectRatio: true,
                     plugins: {
-                        legend: { display: false },
-                        tooltip: { enabled: true }
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                font: { family: '"Montserrat", sans-serif', weight: 'bold', size: 12 },
+                                padding: 16,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: { enabled: true },
+                        centerLabel: { text: '62% Sold', fontSize: 26, color: '#111827' }
                     }
                 }
             });
@@ -2538,6 +2590,14 @@
             }
             
             try {
+                // Auto-stop YouTube video in tab-summary when switching tabs (reset iframe)
+                const video = document.querySelector('#tab-summary iframe');
+                if (video) {
+                    const src = video.src;
+                    video.src = '';
+                    video.src = src;
+                }
+                
                 // Hide all content tabs (support both tab- and page- for backward compatibility)
                 const allTabs = document.querySelectorAll('main > div[id^="tab-"], main > div[id^="page-"]');
                 allTabs.forEach(tab => tab.classList.add('hidden'));
