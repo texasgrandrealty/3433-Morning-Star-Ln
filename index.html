@@ -2,7 +2,7 @@
   Morningstar 2026 Gold Standard Template
   - Single-source-of-truth: propertyData object powers all key UI/metrics.
   - Master Gallery Engine: Google Drive CDN carousel for Drone / HDR / Virtual.
-  - Knox / 2026 Executive Dashboard styling: 13-tab nav, dark slate cards, premium modal cues.
+  - Morningstar / 2026 Executive Dashboard styling: 13-tab nav, dark slate cards, premium modal cues.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -40,6 +40,7 @@
         }
         /* --- NAV BUTTON FIX (2026 Dashboard Standard) --- */
         .nav-tabs-container {
+            position: relative;
             display: flex;
             overflow-x: auto;
             overflow-y: hidden;
@@ -50,6 +51,47 @@
         }
         .nav-tabs-container::-webkit-scrollbar {
             display: none; /* Chrome, Safari, Opera */
+        }
+        .nav-scroll-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .nav-arrow {
+            border: none;
+            background: #2563EB; /* solid blue-600 */
+            color: #FFFFFF;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.35rem;
+            border-radius: 9999px;
+            box-shadow: 0 8px 20px rgba(15,23,42,0.35); /* heavy shadow-xl style */
+            z-index: 50;
+        }
+        .nav-arrow:hover {
+            background: #1E40AF; /* blue-800 */
+        }
+        .nav-arrow svg {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+        .nav-shadow {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 24px;
+            pointer-events: none;
+        }
+        .nav-shadow-left {
+            left: 0;
+            background: linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0));
+        }
+        .nav-shadow-right {
+            right: 0;
+            background: linear-gradient(to left, rgba(255,255,255,1), rgba(255,255,255,0));
         }
         .nav-btn {
             padding: 0.6rem 0.9rem;
@@ -117,7 +159,7 @@
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <!-- Glass-morphism Executive Header (Knox Standard) -->
+        <!-- Glass-morphism Executive Header (Morningstar Standard) -->
         <header class="relative mt-6 mb-6 rounded-3xl border border-white/60 bg-white/80 backdrop-blur-xl shadow-lg sticky top-0 z-20">
             <div class="absolute inset-0 bg-gradient-to-b from-white/95 to-white/80 pointer-events-none"></div>
             <div class="relative z-10 px-4 sm:px-6 lg:px-8 pt-5 pb-3 md:pb-4">
@@ -160,22 +202,36 @@
                 <!-- Bottom Row: 13-Tab Navigation Ribbon -->
                 <div class="mt-4 pt-3 border-t border-slate-200/70">
                     <nav id="main-nav-container">
-                        <div class="nav-tabs-container space-x-1 pb-1">
-                            <button id="nav-summary" class="nav-btn active" onclick="showTab('summary', this)">Executive Summary</button>
-                            <button id="nav-property" class="nav-btn" onclick="showTab('property', this)">Property</button>
-                            <button id="nav-local" class="nav-btn" onclick="showTab('metrics', this)">Local Market</button>
-                            <button id="nav-comps" class="nav-btn" onclick="showTab('comps', this)">Comps</button>
-                            <button id="nav-metrics" class="nav-btn" onclick="showTab('metrics', this)">Metrics</button>
-                            <button id="nav-rpr" class="nav-btn" onclick="showTab('rpr', this)">RPR Insights</button>
-                            <button id="nav-roadmap" class="nav-btn" onclick="showTab('roadmap', this)">Roadmap</button>
-                            <button id="nav-campaign" class="nav-btn" onclick="showTab('campaign', this)">Campaign Strategy</button>
-                            <button id="nav-rates" class="nav-btn" onclick="showTab('rates', this)">Rates</button>
-                            <button id="nav-liquidity" class="nav-btn" onclick="showTab('liquidity', this)">Liquidity</button>
-                            <button id="nav-incentives" class="nav-btn" onclick="showTab('options', this)">Incentives</button>
-                            <button id="nav-financial" class="nav-btn" onclick="showTab('financial', this)">Financing</button>
-                            <button id="nav-buydown" class="nav-btn" onclick="showTab('option2', this)">Buydown</button>
-                            <button id="nav-documents" class="nav-btn" onclick="showTab('documents', this)">Documents</button>
-                            <a id="nav-search" href="https://www.texasgrandrealty.com/" target="_blank" rel="noopener noreferrer" class="nav-btn">Search Properties</a>
+                        <div class="nav-scroll-wrapper">
+                            <button type="button" class="nav-arrow animate-pulse" onclick="scrollNav('left')">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                </svg>
+                            </button>
+                            <div class="nav-tabs-container space-x-1 pb-1 px-12" id="nav-tabs-container">
+                                <button id="nav-summary" class="nav-btn active" onclick="showTab('summary', this)">Executive Summary</button>
+                                <button id="nav-property" class="nav-btn" onclick="showTab('property', this)">Property</button>
+                                <button id="nav-local" class="nav-btn" onclick="showTab('local', this)">Local Market</button>
+                                <button id="nav-comps" class="nav-btn" onclick="showTab('comps', this)">Comps</button>
+                                <button id="nav-rpr" class="nav-btn" onclick="showTab('rpr', this)">Value and Equity</button>
+                                <button id="nav-metrics" class="nav-btn" onclick="showTab('metrics', this)">Metrics</button>
+                                <button id="nav-roadmap" class="nav-btn" onclick="showTab('roadmap', this)">Roadmap</button>
+                                <button id="nav-campaign" class="nav-btn" onclick="showTab('campaign', this)">Marketing Strategy</button>
+                                <button id="nav-rates" class="nav-btn" onclick="showTab('rates', this)">Rates & Financing</button>
+                                <button id="nav-liquidity" class="nav-btn" onclick="showTab('liquidity', this)">Liquidity</button>
+                                <button id="nav-incentives" class="nav-btn" onclick="showTab('options', this)">Incentives</button>
+                                <button id="nav-financial" class="nav-btn" onclick="showTab('financial', this)">Financing</button>
+                                <button id="nav-buydown" class="nav-btn" onclick="showTab('option2', this)">Buydown</button>
+                                <button id="nav-documents" class="nav-btn" onclick="showTab('documents', this)">Documents</button>
+                                <a id="nav-search" href="https://www.texasgrandrealty.com/" target="_blank" rel="noopener noreferrer" class="nav-btn">Search Properties</a>
+                            </div>
+                            <button type="button" class="nav-arrow animate-pulse" onclick="scrollNav('right')">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </button>
+                            <div class="nav-shadow nav-shadow-left"></div>
+                            <div class="nav-shadow nav-shadow-right"></div>
                         </div>
                     </nav>
                 </div>
@@ -183,71 +239,144 @@
         </header>
 
         <main class="mb-12">
-            <!-- 1. EXECUTIVE SUMMARY PAGE -->
+            <!-- 1. EXECUTIVE SUMMARY PAGE (Knox Street Institutional Layout – Morning Star) -->
             <div id="tab-summary" class="py-8 md:py-12">
-                <div class="page-section max-w-4xl mx-auto">
-                    <h2 class="text-3xl font-extrabold text-blue-700 text-center mb-6">
-                        Strategic Market Position Analysis: Price Correction for Rapid Sale
+                <div class="max-w-6xl mx-auto px-6 sm:px-8">
+                    <!-- Title & Subtitle (Montserrat, heavy tracking) -->
+                    <h2 class="text-3xl font-extrabold text-slate-900 text-center mb-2 font-[Montserrat] tracking-[0.04em]">
+                        Executive Brief: 3433 Morning Star Ln
                     </h2>
-                    <h3 class="text-xl font-semibold text-gray-700 text-center mb-8" id="summary-address"></h3>
-                    
-                    <!-- HERO SECTION: Property Image LEFT, Google Map RIGHT -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                        <!-- Property Image on LEFT -->
-                        <div class="h-[450px] rounded-3xl shadow-xl overflow-hidden">
-                            <img src="3433_Morning_Star_Front_View.png" alt="Main property view" class="w-full h-full object-cover">
-                        </div>
-                        <!-- Google Map on RIGHT -->
-                        <div class="h-[450px] rounded-3xl shadow-xl overflow-hidden relative">
-                            <iframe 
-                                src="https://www.google.com/maps?q=3433+Morning+Star+Ln,+Garland,+TX+75043&output=embed"
-                                width="100%" 
-                                height="100%" 
-                                style="border:0;" 
-                                allowfullscreen="" 
-                                loading="lazy" 
-                                referrerpolicy="no-referrer-when-downgrade"
-                                class="w-full h-full">
-                            </iframe>
-                            <div class="absolute bottom-3 right-3 z-10">
-                                <a 
-                                    href="https://maps.app.goo.gl/eAtgZ7bWPf5EvVS86" 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    class="bg-white px-4 py-2 rounded-md shadow-lg text-sm font-medium text-blue-600 hover:bg-blue-50 transition-colors flex items-center gap-2">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
-                                    </svg>
-                                    Open in Google Maps
-                                </a>
+                    <p class="text-center text-slate-600 text-lg font-semibold uppercase tracking-[0.18em] mb-8 font-[Montserrat]">
+                        Strategic Market Analysis | 2026 Executive Summary
+                    </p>
+
+                    <!-- Institutional Video Frame (Knox Standard: Cinema Frame) -->
+                    <div class="flex justify-center mb-10">
+                        <div class="relative w-full md:w-1/2 max-w-2xl mx-auto rounded-3xl overflow-hidden shadow-2xl ring-8 ring-slate-100 bg-slate-900">
+                            <div class="aspect-video w-full">
+                                <iframe
+                                    src="https://www.youtube.com/embed/fj_mo819gi0"
+                                    title="3433 Morning Star Ln – Executive Summary"
+                                    class="w-full h-full"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen
+                                    loading="lazy">
+                                </iframe>
                             </div>
-                            <div class="absolute top-3 left-3 z-10 bg-white/95 backdrop-blur-sm px-3 py-2 rounded-md shadow-md">
-                                <p class="text-gray-800 font-semibold text-sm">3433 Morning Star Ln</p>
-                                <p class="text-gray-600 text-xs">Garland, TX 75043</p>
-                            </div>
+                            <div class="absolute inset-0 pointer-events-none rounded-3xl ring-2 ring-inset ring-black/20"></div>
                         </div>
                     </div>
-                    
-                    <div class="prose max-w-none text-gray-600 space-y-6">
-                        <p class="text-lg font-extrabold text-gray-800 border-l-4 border-blue-500 pl-4">
-                            This report outlines a strategic pricing plan designed to meet the seller's mandated starting price of <span class="summary-bold" id="summary-price"></span> and secure a contract within a <span class="summary-red">120-day timeline</span>. The property's value is supported by major structural upgrades, but the high anchor price (25% above average closed PPSF) requires an aggressive, timed correction.
-                        </p>
-                        <h4 class="text-2xl font-semibold text-blue-700 pt-4"><span class="summary-bold">Core Findings & Strategic Mandates:</span></h4>
-                        <ul class="list-disc list-inside space-y-2 pl-4">
-                            <li><span class="summary-bold">Pricing Anchor:</span> The mandated starting price ($375,000 / $186.29/\text{SqFt}$) sits well above the AVM estimate of $343,480, meaning market time will be spent dropping the price toward a proven accepted price floor.</li>
-                            <li><span class="summary-bold">Liquidity Risk:</span> As a **new listing (0 CDOM)**, velocity is key. The market average closing time (74 days) dictates that the price must be reduced quickly if an offer is not received by Day 40.</li>
-                            <li><span class="summary-bold">Strategy:</span> A comprehensive, 6-step price reduction schedule over 120 days is mandatory. This plan is designed to surgically drop the price to the market-validated floor of <span class="summary-bold" id="summary-floor"></span> if the premium anchor fails to deliver a contract.</li>
-                        </ul>
+
+                    <!-- Strategic Pricing Roadmap Table (3-phase) -->
+                    <div class="mb-10 overflow-hidden rounded-2xl border border-slate-200 shadow-lg">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-800 text-white font-[Montserrat] uppercase tracking-[0.14em] text-xs">
+                                <tr>
+                                    <th class="px-6 py-4">Phase</th>
+                                    <th class="px-6 py-4">Label</th>
+                                    <th class="px-6 py-4 text-right">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 bg-white">
+                                <tr class="hover:bg-slate-50">
+                                    <td class="px-6 py-4 font-bold text-slate-900">Phase 1</td>
+                                    <td class="px-6 py-4 text-slate-700">Market Test</td>
+                                    <td class="px-6 py-4 text-right font-semibold text-slate-900">$375,000</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="px-6 py-4 font-bold text-slate-900">Phase 2</td>
+                                    <td class="px-6 py-4 text-slate-700">Expert Pivot</td>
+                                    <td class="px-6 py-4 text-right font-semibold text-slate-900">$364,900</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="px-6 py-4 font-bold text-slate-900">Phase 3</td>
+                                    <td class="px-6 py-4 text-slate-700">Liquidity Floor</td>
+                                    <td class="px-6 py-4 text-right font-semibold text-slate-900">$349,900</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="mt-8 text-center">
-                         <button class="bg-blue-600 text-white py-3 px-8 rounded-lg shadow-lg hover:bg-blue-700 transition" data-page-target="options">
-                            Explore Financing and Pricing Options
-                        </button>
+
+                    <!-- Dual-Column Strategic Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                        <!-- Left: Listing Concept Preview + Our Marketing Strategy -->
+                        <div class="space-y-6">
+                            <div class="bg-slate-800 rounded-2xl border border-slate-700 shadow-xl p-6 text-white">
+                                <h4 class="text-sm font-extrabold uppercase tracking-[0.18em] text-blue-300 mb-4 font-[Montserrat]">
+                                    Listing Concept Preview
+                                </h4>
+                                <p class="text-slate-200 text-sm leading-relaxed mb-4">
+                                    3433 Morning Star Ln represents the <span class="font-semibold text-white">Morning Star Modernization</span> tier—solar array, 2-year-old roof, and 10 foundation piers with transferable lifetime warranty. These structural and energy upgrades define the premium positioning and support the phased pricing strategy from $375,000 to the $349,900 market floor.
+                                </p>
+                                <p class="text-slate-300 text-xs">
+                                    Garland 75043 | 2,004 SF | Strategic 120-day liquidity window.
+                                </p>
+                            </div>
+                            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                                <h4 class="text-sm font-extrabold uppercase tracking-[0.18em] text-slate-800 mb-3 font-[Montserrat]">
+                                    Our Marketing Strategy
+                                </h4>
+                                <ul class="list-disc list-inside space-y-2 text-slate-700 text-sm">
+                                    <li>MLS, Zillow, Realtor.com, Homes.com syndication</li>
+                                    <li>3D Matterport tour and professional photography</li>
+                                    <li>Drone and HDR galleries; social and video campaigns</li>
+                                    <li>900+ Global Affiliate Distribution Footprint</li>
+                                    <li><span class="font-semibold text-slate-900">Real-Time Asset Reporting:</span> Proprietary transparency hub tracking 12 distinct intelligence channels to monitor buyer velocity and market pivot points in real-time.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Right: 2026 Market Intelligence -->
+                        <div class="bg-white rounded-2xl border border-slate-200 shadow-lg p-6">
+                            <h4 class="text-sm font-extrabold uppercase tracking-[0.18em] text-slate-800 mb-4 font-[Montserrat]">
+                                2026 Market Intelligence
+                            </h4>
+                            <ol class="space-y-4 list-decimal list-inside text-slate-700 text-sm">
+                                <li>
+                                    <span class="font-semibold text-slate-900">Inventory Alert.</span>
+                                    <span>Garland 75043: <span class="font-semibold">449 active listings</span>; supply at <span class="font-semibold">2.4 months</span>. Competitive entry and phased pricing are critical.</span>
+                                </li>
+                                <li>
+                                    <span class="font-semibold text-slate-900">Price Velocity.</span>
+                                    <span>RVM® $343,480 supports the $349,900 floor. Phase 1 at $375k tests market; pivots to $364,900 then $349,900 secure appraisal-aligned closing.</span>
+                                </li>
+                                <li>
+                                    <span class="font-semibold text-slate-900">Market Speed.</span>
+                                    <span>Median DOM 96 days; RPR median 64 days. This roadmap targets liquidity within the 120-day window while respecting the seller mandate.</span>
+                                </li>
+                            </ol>
+                        </div>
                     </div>
-                    <div class="mt-8 pt-6 border-t border-gray-200">
-                        <p class="text-sm italic text-gray-600 text-center max-w-3xl mx-auto">
-                            <span class="font-semibold">Expert Note:</span> The Garland market velocity demands strategic positioning. This property's <span class="font-semibold">Solar/Roof/Foundation</span> structural upgrades provide critical risk mitigation and energy efficiency that justify premium pricing. However, market dynamics require a phased approach to maximize seller returns while ensuring timely liquidity in this competitive landscape.
-                        </p>
+
+                    <!-- Expert Note Conclusion (high-contrast slate box with signature icon) -->
+                    <div class="bg-slate-900 rounded-2xl border border-slate-700 shadow-2xl p-6 mb-10 text-white">
+                        <div class="flex items-start gap-4">
+                            <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-blue-600/80 flex-shrink-0">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                </svg>
+                            </span>
+                            <div class="flex-1">
+                                <p class="text-slate-100 font-semibold mb-3">
+                                    This roadmap respects the $375k target while mathematically securing an appraisal-supported closing in the $349k range.
+                                </p>
+                                <p class="text-slate-300 text-sm leading-relaxed">
+                                    <span class="font-semibold text-blue-200">Consultant Observation:</span> Note: The Solar array, new 2-year roof, and 10-pier foundation with transferable warranty represent critical risk-mitigation assets that justify our Phase 1 positioning.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CTA Button: HOW MUCH EQUITY DO I HAVE? (Homebot) -->
+                    <div class="text-center pt-4 pb-2">
+                        <a href="https://hmbt.co/Q63e3g"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="inline-flex items-center justify-center px-10 py-4 rounded-full bg-[#FF007A] hover:bg-[#e6006e] text-white font-semibold text-base shadow-2xl transition-all animate-pulse font-[Montserrat] uppercase tracking-[0.2em]">
+                            HOW MUCH EQUITY DO I HAVE?
+                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -290,8 +419,132 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- 3. LOCAL MARKET PAGE (Morningstar Standard) -->
+            <div id="tab-local" class="py-8 md:py-12 hidden">
+                <div class="max-w-6xl mx-auto px-6 sm:px-8">
+                    <!-- 4-Column Market Snapshot -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 mb-10">
+                        <div class="bg-white rounded-2xl shadow-md border border-gray-200 p-4 flex flex-col">
+                            <span class="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-gray-500 mb-1">Median List Price</span>
+                            <span class="text-xl md:text-2xl font-extrabold text-slate-900">$318,800</span>
+                            <span class="text-xs text-emerald-600 mt-1 font-semibold">+5.91% Growth</span>
+                        </div>
+                        <div class="bg-white rounded-2xl shadow-md border border-gray-200 p-4 flex flex-col">
+                            <span class="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-gray-500 mb-1">Median DOM</span>
+                            <span class="text-xl md:text-2xl font-extrabold text-slate-900">96 Days</span>
+                            <span class="text-xs text-gray-500 mt-1">Time on Market</span>
+                        </div>
+                        <div class="bg-white rounded-2xl shadow-md border border-gray-200 p-4 flex flex-col">
+                            <span class="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-gray-500 mb-1">Supply</span>
+                            <span class="text-xl md:text-2xl font-extrabold text-slate-900">4.4 Months</span>
+                            <span class="text-xs text-gray-500 mt-1">Absorption Velocity</span>
+                        </div>
+                        <div class="bg-white rounded-2xl shadow-md border border-gray-200 p-4 flex flex-col">
+                            <span class="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-gray-500 mb-1">Price / SqFt</span>
+                            <span class="text-xs text-gray-600 mb-1">Market: <span class="font-semibold text-slate-900">$192</span></span>
+                            <span class="text-xs text-gray-600">Subject: <span class="font-semibold text-blue-700">$205</span></span>
+                        </div>
+                    </div>
 
-            <!-- 3. PROPERTY ANALYSIS PAGE -->
+                    <!-- Market Dynamics & Outcome Analysis -->
+                    <div class="page-section">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Market Dynamics & Outcome Analysis</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                            <!-- Supply Velocity Chart -->
+                            <div>
+                                <h3 class="text-sm font-semibold uppercase tracking-[0.18em] text-gray-500 mb-3">Supply Velocity</h3>
+                                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-4">
+                                    <div class="chart-container">
+                                        <canvas id="localSupplyChart"></canvas>
+                                    </div>
+                                    <p class="mt-3 text-xs text-gray-500">
+                                        Garland 75043 currently carries approximately <span class="font-semibold text-slate-900">4.4 months</span> of inventory,
+                                        with <span class="font-semibold text-slate-900">449 active listings</span> and <span class="font-semibold text-slate-900">355 new listings</span> in the current reporting period.
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Listing Outcomes Chart -->
+                            <div>
+                                <h3 class="text-sm font-semibold uppercase tracking-[0.18em] text-gray-500 mb-3">Listing Outcomes</h3>
+                                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-4">
+                                    <div class="chart-container">
+                                        <canvas id="localOutcomesChart"></canvas>
+                                    </div>
+                                    <p class="mt-3 text-xs text-gray-500">
+                                        Outcome data emphasizes the importance of entering the market at a defensible price: a large share of listings still require at least one price reduction
+                                        to secure a contract, with <span class="font-semibold text-slate-900">median RPR days-on-market near 64 days</span>.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Negotiation / Insight Boxes -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                            <div class="bg-blue-50 border-l-4 border-blue-600 rounded-r-xl p-5">
+                                <h3 class="text-sm font-extrabold text-blue-800 mb-2">Negotiation Box: Leveraging Market Context</h3>
+                                <p class="text-sm text-blue-900">
+                                    <span class="font-semibold">Market Reality:</span> Average sale-to-list ratio is <span class="font-semibold">93%</span>. Pricing is strategically positioned to capture interest before the 30-day window.
+                                </p>
+                            </div>
+                            <div class="bg-red-50 border-l-4 border-red-600 rounded-r-xl p-5">
+                                <h3 class="text-sm font-extrabold text-red-800 mb-2">Insight Box: Risk of Overpricing</h3>
+                                <p class="text-sm text-red-900">
+                                    <span class="font-semibold">Warning:</span> <span class="font-semibold">38% of listings in this market fail to sell.</span>
+                                    Success depends on following the precise <span class="font-semibold">Pricing Roadmap</span>.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Inventory Trends & Asset Comparison -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+                            <!-- Inventory Trends -->
+                            <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
+                                <h3 class="text-sm font-extrabold text-gray-900 mb-3 uppercase tracking-[0.18em]">Inventory Trends & Velocity</h3>
+                                <ul class="text-sm text-gray-700 space-y-1.5">
+                                    <li><span class="font-semibold text-slate-900">Active Listings:</span> 449 <span class="text-emerald-600 font-semibold">↓ 32</span></li>
+                                    <li><span class="font-semibold text-slate-900">New Listings:</span> 355 <span class="text-emerald-600 font-semibold">↓ 10</span></li>
+                                    <li><span class="font-semibold text-slate-900">Pending:</span> 86 <span class="text-emerald-600 font-semibold">↓ 10</span></li>
+                                    <li><span class="font-semibold text-slate-900">Closed:</span> 96 <span class="text-rose-600 font-semibold">↓ 20</span></li>
+                                    <li><span class="font-semibold text-slate-900">Median RPR Days on Market:</span> 64</li>
+                                </ul>
+                                <p class="mt-3 text-xs text-gray-500">
+                                    Fewer new listings and a contraction in closed sales signal a market where properly prepared assets still trade,
+                                    but only when pricing and condition clearly separate them from the median.
+                                </p>
+                            </div>
+                            <!-- Asset Comparison -->
+                            <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
+                                <h3 class="text-sm font-extrabold text-gray-900 mb-3 uppercase tracking-[0.18em]">Asset Comparison</h3>
+                                <p class="text-sm text-gray-700 mb-3">
+                                    <span class="font-semibold">Median Home Size (Garland 75043):</span> 1,448 SF<br>
+                                    <span class="font-semibold">Morningstar Asset:</span> 2,004 SF
+                                </p>
+                                <p class="text-sm text-gray-700">
+                                    3433 Morning Star Ln represents the premium <span class="font-semibold">“Modernization” tier</span>—its solar array,
+                                    engineered foundation work, and recent roof place it above the typical Garland inventory set. The pricing strategy
+                                    is therefore calibrated to capture this upgrade story while still respecting the $192/SqFt market benchmark.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Local Market Conversion Hook -->
+                        <div class="mt-10 text-center">
+                            <a href="https://www.texasgrandrealty.com/cma/property-valuation/"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-blue-600 text-white text-xs font-semibold tracking-wide shadow-2xl hover:bg-blue-500 transition">
+                                Request Professional TGR Valuation Refinement
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 4. PROPERTY ANALYSIS PAGE -->
             <div id="tab-property" class="py-8 md:py-12 hidden">
                 <h2 class="text-2xl font-semibold text-gray-700 text-center mb-10">Subject Property Analysis: 3433 Morning Star Ln, Garland</h2>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 px-6 sm:px-8">
@@ -530,57 +783,224 @@
                 </div>
             </div>
             
-            <!-- 4b. RPR INSIGHTS PAGE (Knox-style anchor into AVM/RPR data) -->
+            <!-- 4b. RPR INSIGHTS PAGE (Morningstar RPR integration) -->
             <div id="tab-rpr" class="py-8 md:py-12 hidden">
                 <div class="page-section max-w-4xl mx-auto px-6 sm:px-8">
-                    <h2 class="text-2xl font-semibold text-gray-700 text-center mb-6">RPR Insights & AVM Summary</h2>
-                    <p class="text-gray-600 text-sm leading-relaxed mb-6">
-                        This section highlights how the property's pricing aligns with automated valuation models (AVMs) and RPR/NTREIS data.
-                        For full detail, the AVM via RPR/NTREIS data set is available under the Comps tab.
-                    </p>
-                    <div class="bg-gray-50 border border-gray-200 rounded-2xl p-5 mb-6">
-                        <h3 class="text-lg font-bold text-gray-800 mb-2">How to Interpret the RPR Data</h3>
-                        <ul class="list-disc list-inside text-gray-700 text-sm space-y-2">
-                            <li>Compare the RPR-estimated value range against the current list price to understand premium or discount.</li>
-                            <li>Evaluate days-on-market and price trajectories for RPR comparables to validate the 120-day roadmap.</li>
-                            <li>Use the RPR dataset in the Comps tab (AVM via RPR/NTREIS) as the primary quantitative cross-check.</li>
-                        </ul>
+                    <h2 class="text-2xl font-semibold text-gray-700 text-center mb-6">Market Value & Equity Intelligence</h2>
+                    
+                    <!-- Key RPR Benchmarks -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 flex flex-col">
+                            <span class="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-gray-500 mb-1">Market Value Benchmark (RVM®)</span>
+                            <span class="text-xl md:text-2xl font-extrabold text-slate-900">$343,480</span>
+                            <span class="mt-2 inline-flex items-center px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-[0.7rem] font-semibold tracking-[0.16em] uppercase">
+                                <span class="mr-1.5 text-amber-400">★★★★★</span> 5-Star Confidence
+                            </span>
+                        </div>
+                        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 flex flex-col">
+                            <span class="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-gray-500 mb-1">Supply & Velocity (Garland 75043)</span>
+                            <span class="text-sm text-gray-700">
+                                Supply Level: <span class="font-semibold text-slate-900">2.4 Months</span><br>
+                                Median Days in RPR®: <span class="font-semibold text-slate-900">64 Days</span>
+                            </span>
+                        </div>
                     </div>
-                    <button type="button" onclick="showTab('comps')" class="inline-flex items-center px-4 py-2 rounded-full bg-blue-600 text-white text-xs font-semibold tracking-wide hover:bg-blue-500 transition">
-                        Jump to Full RPR / AVM Data
-                    </button>
+
+                    <!-- Expert Analysis -->
+                    <div class="bg-gray-50 border border-gray-200 rounded-2xl p-5 mb-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-2">Expert Interpretation</h3>
+                        <p class="text-gray-700 text-sm leading-relaxed">
+                            RPR® RVM® data supports a baseline valuation of <span class="font-semibold">$343,480</span>. While our strategic list price sits at a premium, 
+                            the high confidence score and limited <span class="font-semibold">2.4-month inventory</span> in Garland 75043 justify an aggressive Phase 1 positioning 
+                            to capture immediate market liquidity.
+                        </p>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-3 mb-6">
+                        <a href="https://www.narrpr.com/reports-v2/1fcfc166-d82b-4982-b1cc-37a022f11929/pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 rounded-full bg-blue-600 text-white text-xs font-semibold tracking-wide hover:bg-blue-500 transition">
+                            View Full RPR® Market Report
+                        </a>
+                        <button type="button" onclick="showTab('comps')" class="inline-flex items-center px-4 py-2 rounded-full bg-slate-900 text-white text-xs font-semibold tracking-wide hover:bg-slate-800 transition">
+                            Jump to Full RPR / AVM Data
+                        </button>
+                    </div>
+
+                    <!-- Home Wealth Engine (Homebot) -->
+                    <div class="mt-4 bg-white rounded-2xl border border-[#FF007A]/30 shadow-lg p-6 text-center">
+                        <h3 class="text-2xl font-bold text-[#FF007A] mb-4 tracking-tighter uppercase">REDEFINE YOUR EQUITY POSITION</h3>
+
+                        <!-- Graphic Hook -->
+                        <a href="https://hmbt.co/Q63e3g" target="_blank" rel="noopener noreferrer" class="block">
+                            <img src="https://lh3.googleusercontent.com/d/1UlffPjzE5g_W0R7Sa9645vA_080hZPJM"
+                                 alt="Redefine Your Equity Position"
+                                 class="w-full max-w-3xl mx-auto rounded-xl shadow-md border border-slate-200 hover:shadow-lg transition-shadow">
+                        </a>
+
+                        <!-- Text Content -->
+                        <div class="mt-5">
+                            <h4 class="text-lg md:text-xl font-black text-slate-900 mb-2">Want to know how much equity your home has?</h4>
+                            <p class="text-sm text-gray-700 leading-relaxed">
+                                Homebot is your <span class="font-semibold">FREE</span> monthly wealth checkup. Track your home value, tap equity, and explore selling potential.
+                            </p>
+                        </div>
+
+                        <!-- CTA Button -->
+                        <div class="mt-5 flex flex-col items-center gap-3">
+                            <a href="https://hmbt.co/Q63e3g"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#FF007A] text-white text-xs font-semibold tracking-wide shadow-2xl hover:brightness-110 transition relative overflow-hidden animate-pulse">
+                                <span class="inline-flex items-center">
+                                    <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10.5L12 4l9 6.5V20a1 1 0 01-1 1h-5v-7H9v7H4a1 1 0 01-1-1v-9.5z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12v6"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.75 13.25c.25-.75 1-1.25 1.85-1.25 1.1 0 2 .8 2 1.8 0 .7-.45 1.25-1.15 1.55-.8.35-1.2.6-1.2 1.4"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12.5 19.25h0"/>
+                                    </svg>
+                                    Access Your Home Wealth Report (Free)
+                                </span>
+                            </a>
+                            <p class="text-[0.7rem] text-gray-600 max-w-sm">
+                                Compare your <span class="font-semibold">$343,480</span> RVM® against Homebot’s real-time financial algorithms.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- TGR Valuation Refinement CTA -->
+                    <div class="mt-6 bg-slate-900 rounded-2xl border border-slate-700 shadow-lg p-6 text-white">
+                        <h3 class="text-sm font-extrabold tracking-[0.18em] uppercase text-blue-200 mb-2">Strategic Valuation Offset</h3>
+                        <p class="text-sm text-slate-200 mb-4">
+                            Want a professional valuation refinement aligned with your upgrade profile and current market liquidity?
+                        </p>
+                        <a href="https://www.texasgrandrealty.com/cma/property-valuation/"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-blue-600 text-white text-xs font-semibold tracking-wide shadow-2xl hover:bg-blue-500 transition">
+                            Request Professional TGR Valuation Refinement
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
 
             <!-- 5. MARKET RATE UPDATE PAGE -->
             <div id="tab-rates" class="py-8 md:py-12 hidden">
-                <h2 class="text-2xl font-semibold text-gray-700 text-center mb-10">Current Mortgage Market & Federal Reserve Context</h2>
-                
-                <div class="page-section max-w-4xl mx-auto space-y-8">
-                    <div>
-                        <h3 class="text-xl font-extrabold text-blue-700 mb-4 border-b pb-2 border-blue-100">Recent Volatility: The Hawkish Fed</h3>
-                        <p class="text-gray-700 leading-relaxed">MBS volatility caused rates to sell off heavily last week following a <span class="font-extrabold">25bps Fed Funds Rate cut</span>. The volatility was driven by Chairman Jerome Powell's press conference, which was seen as <span class="font-extrabold text-red-600">hawkish</span>. Powell stated that a December cut was "far from a foregone conclusion," directly countering market expectations that a cut was a certainty.</p>
-                        <p class="text-gray-700 leading-relaxed mt-3">The Fed voted 10-2 to implement the cut, with two dissenting members (one voting for no cut, one voting for a 50bps cut). This highlights internal disagreement regarding the speed and necessity of current rate adjustments.</p>
+                <!-- Hero Header (dark blue block) -->
+                <div class="max-w-6xl mx-auto px-6 sm:px-8 mb-6">
+                    <div class="rounded-3xl bg-blue-900 text-white px-6 sm:px-10 py-8 shadow-xl">
+                        <h2 class="text-2xl md:text-3xl font-extrabold mb-2">MBS MARKET VOLATILITY: GLOBAL ALLIANCE IMPACT</h2>
+                        <p class="text-sm md:text-base text-blue-100">Policy vs Geopolitics: The Rate Whiplash Cycle.</p>
                     </div>
-
-                    <div>
-                        <h3 class="text-xl font-extrabold text-blue-700 mb-4 border-b pb-2 border-blue-100">Upcoming Economic Indicators</h3>
-                        <p class="text-gray-700 leading-relaxed">Economic data remains limited due to the government shutdown, delaying critical reports like the October Jobs Report. The market is currently anticipating:</p>
-                        <ul class="list-disc list-inside space-y-2 pl-4 text-gray-700">
-                            <li>**ISM Manufacturing (Monday):** Forecast for 49.1%.</li>
-                            <li>**ADP Employment:** Forecast for a negative reading of <span class="font-extrabold text-red-600">32,000 job losses</span>.</li>
-                            <li>**ISM Services:** Forecast for 50.0%.</li>
-                        </ul>
-                        <p class="text-gray-700 leading-relaxed mt-3">Any surprise in these limited reports could trigger further short-term volatility in the mortgage bond market.</p>
-                        <div class="mt-6 flex flex-wrap gap-4">
-                            <a href="https://www.marketwatch.com/economy-politics/calendar" target="_blank" class="bg-gray-100 px-4 py-2 rounded-lg text-sm font-medium text-blue-600 hover:bg-gray-200">View MarketWatch Economic Calendar</a>
-                            <a href="https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html" target="_blank" class="bg-gray-100 px-4 py-2 rounded-lg text-sm font-medium text-blue-600 hover:bg-gray-200">View CME FedWatch Tool</a>
+                </div>
+                
+                <div class="page-section max-w-6xl mx-auto space-y-10 px-6 sm:px-8">
+                    <!-- 3-Column Command Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-red-50 rounded-2xl shadow-sm p-5 border-l-8 border-red-600">
+                            <h3 class="text-xl font-black text-red-900 mb-2">MBS Geopolitical Shock</h3>
+                            <p class="text-sm text-red-900 leading-relaxed">
+                                Japanese bond selling and the evolving <span class="font-semibold">Greenland Framework</span> have pushed global capital away from bonds,
+                                forcing yields – and therefore mortgage rates – higher in the short term.
+                            </p>
+                        </div>
+                        <div class="bg-blue-50 rounded-2xl shadow-sm p-5 border-l-8 border-blue-600">
+                            <h3 class="text-xl font-black text-blue-900 mb-2">Inflation Shield</h3>
+                            <p class="text-sm text-blue-900 leading-relaxed">
+                                Core PCE – the Fed’s preferred inflation gauge – printed at <span class="font-semibold">0.2%</span>, in line with expectations.
+                                This keeps the long-term inflation narrative stable, even as short-term rate volatility persists.
+                            </p>
+                        </div>
+                        <div class="bg-slate-50 rounded-2xl shadow-sm p-5 border-l-8 border-slate-800">
+                            <h3 class="text-xl font-black text-slate-900 mb-2">The Fed Strategy</h3>
+                            <p class="text-sm text-slate-900 leading-relaxed">
+                                The January meeting shows only a <span class="font-semibold">4% odds</span> of a cut. Markets are now targeting June/July
+                                for the first meaningful move, with March’s Dot Plot meeting as the key signal to watch.
+                            </p>
                         </div>
                     </div>
 
-                    <div>
-                        <h3 class="text-xl font-extrabold text-blue-700 mb-4 border-b pb-2 border-blue-100">Future Fed Action</h3>
-                        <p class="text-gray-700 leading-relaxed">Odds for a 25bps rate cut at the next meeting (December 10th) have fallen to about 70% post-Powell's comments. This upcoming meeting is a "Dot Plot" meeting, which means the Fed will release its summary of economic projections, including each member’s forecast for where the Fed Funds Rate will be in the future, providing a critical clue to long-term rate direction.</p>
+                    <!-- Rate Breakout Graph -->
+                    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+                        <h3 class="text-sm font-extrabold uppercase tracking-[0.18em] text-gray-500 mb-3">Rate Breakout Trajectory</h3>
+                        <div class="chart-container">
+                            <canvas id="rateChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- DIRECT LENDING & PRE-APPROVAL (Centerpiece – strategic buffer between chart and Optimal Blue) -->
+                    <div class="bg-white rounded-2xl border-l-8 border-blue-600 shadow-2xl p-6">
+                        <h3 class="font-black text-xl text-slate-900 mb-4">DIRECT LENDING & PRE-APPROVAL</h3>
+                        <p class="text-slate-800 text-sm mb-4">
+                            Need a loan or refinance options? As the Broker of Texas Grand Realty, I am also a mortgage loan officer with Peoples Mortgage and would love to help. See what you are approved for or what your home is worth, click below.
+                        </p>
+                        <div class="text-[11px] text-slate-700 space-y-1 mb-4">
+                            <p>Thomas Miller, Broker | NMLS ID: 2360948</p>
+                            <p>Texas Grand Realty | TX Brk. Lic. No. 696139 | AZ Brk. Lic. No. BR604504</p>
+                            <p>Direct: 972-850-6038 | Office: 903-449-4439</p>
+                        </div>
+                        <p class="text-[11px] text-slate-500 mb-4 italic">
+                            As always, all borrowers are free to choose any service provider they wish. Thank you.
+                        </p>
+                        <div class="flex justify-center">
+                            <a href="https://myloans.peoplesmortgage.com/homehub/signup/tmiller@peoplesmortgage.com?from_mobile_share=true"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="inline-flex items-center justify-center px-8 py-3.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-colors animate-pulse">
+                                Apply For A Mortgage
+                            </a>
+                        </div>
+                        <p class="mt-4 text-[10px] text-gray-400 font-normal text-center">
+                            Peoples Mortgage Company | NMLS #6274 | 2055 E. Centennial Cir, Tempe, AZ 85284
+                        </p>
+                    </div>
+
+                    <!-- LIVE SECONDARY MARKET INDICES (OPTIMAL BLUE) -->
+                    <div class="bg-white rounded-2xl border border-gray-200 shadow-2xl p-4">
+                        <h3 class="text-sm font-extrabold uppercase tracking-[0.18em] text-gray-700 mb-3">LIVE SECONDARY MARKET INDICES (OPTIMAL BLUE)</h3>
+                        <div class="rounded-xl overflow-hidden shadow-2xl">
+                            <iframe
+                                src="https://www2.optimalblue.com/obmmi/"
+                                class="w-full"
+                                style="height: 600px; border: 0;"
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                        <p class="mt-2 text-[0.7rem] text-gray-500">
+                            Direct feed from the nation’s largest Digital Mortgage Marketplace.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Strategic Valuation Offset & Intelligence Links -->
+                <div class="max-w-6xl mx-auto px-6 sm:px-8 mt-10 space-y-4">
+                    <div class="bg-slate-900 rounded-2xl shadow-2xl shadow-blue-500/50 p-6 md:p-8 text-white text-center">
+                        <h3 class="text-sm md:text-base font-extrabold tracking-[0.18em] uppercase text-blue-200 mb-3">Strategic Valuation Offset</h3>
+                        <p class="text-sm md:text-base text-slate-100 mb-4">
+                            Bridge the gap between automated algorithms and broker-certified intelligence.
+                        </p>
+                        <a href="https://www.texasgrandrealty.com/cma/property-valuation/"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="inline-flex items-center justify-center px-10 py-5 rounded-2xl bg-slate-900 text-white text-xl font-black shadow-2xl shadow-blue-500/50 hover:bg-slate-800 transition">
+                            Request Professional TGR Valuation Refinement
+                            <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                        <p class="mt-3 text-[0.7rem] text-slate-200 max-w-md mx-auto">
+                            Rates are generated dynamically based on specific address and property profiles via the <span class="font-semibold">TGR EstateIQ</span> system.
+                        </p>
+                    </div>
+                    <div class="text-center">
+                        <a href="https://www.simplifyingthemarket.com/en/?a=423457-8966373caa5d64a78811bf5a66c03052"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold tracking-wide hover:bg-blue-100 transition">
+                            Read Latest Market Blog
+                        </a>
                     </div>
                 </div>
             </div>
@@ -617,19 +1037,32 @@
                 </div>
             </div>
             
-            <!-- 7. CAMPAIGN STRATEGY PAGE - Executive Media Suite -->
+            <!-- 7. MARKETING STRATEGY PAGE - Executive Media Suite -->
             <div id="tab-campaign" class="py-8 md:py-12 hidden">
-                <h2 class="text-2xl font-semibold text-gray-700 text-center mb-10">Executive Media Suite</h2>
-                <div class="max-w-6xl mx-auto px-6 sm:px-8">
-                    <!-- Strategic Narrative Box -->
-                    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-600 rounded-lg p-6 mb-8 shadow-md">
-                        <h3 class="text-lg font-bold text-gray-800 mb-2">Strategic Narrative</h3>
-                        <p class="text-gray-700 leading-relaxed">
-                            Visual verification of the property's modernization and immediate access to the Garland corridor establishes the baseline for our Phase 1 pricing strategy.
-                        </p>
+                <h2 class="text-2xl font-semibold text-gray-700 text-center mb-10">Marketing Strategy &amp; Execution</h2>
+
+                <!-- Full-Width Matterport 3D Virtual Tour -->
+                <div class="max-w-6xl mx-auto px-6 sm:px-8 mb-10">
+                    <div class="rounded-3xl shadow-2xl border border-gray-200 overflow-hidden">
+                        <div class="relative w-full h-[500px] bg-black">
+                            <iframe
+                                src="https://my.matterport.com/show/?m=cTSxrKFZQvR&play=1&mls=2"
+                                width="100%"
+                                height="100%"
+                                frameborder="0"
+                                allowfullscreen
+                                allow="xr-spatial-tracking"
+                                class="w-full h-full">
+                            </iframe>
+                        </div>
                     </div>
-                    
-                    <!-- 6-Pillar Dark Grid (3 columns) - Knox Gold Standard -->
+                    <p class="text-center text-xs text-gray-500 mt-2 italic">
+                        Interactive 3D Virtual Environment: Standard in every TGR Strategic Listing.
+                    </p>
+                </div>
+
+                <div class="max-w-6xl mx-auto px-6 sm:px-8">
+                    <!-- 6-Pillar Dark Grid (3 columns) - Morningstar Gold Standard -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
                         <!-- Pillar 1: 3D Immersion -->
                         <div class="bg-slate-900 rounded-3xl p-6 shadow-2xl border border-slate-700 transition-all duration-300 hover:scale-[1.03] flex flex-col">
@@ -639,6 +1072,9 @@
                                 <a href="https://my.matterport.com/show/?m=cTSxrKFZQvR" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200">
                                     View 3D Tour
                                 </a>
+                                <button type="button" onclick="openCarousel('dollhouse')" class="inline-flex items-center justify-center w-full px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200">
+                                    View 3D Images
+                                </button>
                             </div>
                         </div>
                         
@@ -720,32 +1156,188 @@
                         </p>
                     </div>
 
-                    <!-- Transparency Reporting & Syndication Proof -->
-                    <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6">
-                            <h3 class="text-lg font-bold text-gray-900 mb-2">Transparency Reporting</h3>
-                            <p class="text-gray-700 text-sm leading-relaxed mb-4">
-                                Buyers and their agents are encouraged to validate price, velocity, and neighborhood performance using independent third-party portals.
-                                This dashboard is designed to match what they will see on the public sites.
+                    <!-- Transparency Command Center: Real-Time Asset Reporting -->
+                    <div class="mt-10">
+                        <div class="bg-slate-900 rounded-3xl p-8 text-white shadow-2xl">
+                            <h3 class="text-lg md:text-xl font-extrabold tracking-[0.18em] uppercase text-blue-200 mb-3">
+                                TRANSPARENCY COMMAND CENTER: REAL-TIME ASSET REPORTING
+                            </h3>
+                            <p class="text-sm text-slate-200 mb-6">
+                                Elite transparency through 12 distinct intelligence channels. Updated weekly.
                             </p>
-                            <div class="flex flex-wrap gap-3">
-                                <a href="https://drive.google.com/file/d/14fAhNT0vbhphNaCmw0mtBLBKMnnJ8uMw/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 rounded-full bg-slate-900 text-white text-xs font-semibold tracking-wide hover:bg-slate-800 transition">
-                                    View Seller Reporting – Week 1
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <!-- Col 1: Monthly Market Intelligence -->
+                                <a href="https://drive.google.com/file/d/1zkkB8Tzg_estZDqoKEDqX-b-ATf4m8vM/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="flex flex-col h-full bg-slate-800/40 border border-slate-700 rounded-xl p-3 hover:bg-slate-700/60 transition-all group">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-500/20 text-blue-300">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                            </svg>
+                                        </span>
+                                        <span class="font-medium text-slate-100 text-[11px]">Broker's Monthly Market Analysis-Infographic</span>
+                                    </div>
+                                    <div class="mt-auto pt-3">
+                                        <span class="inline-flex items-center px-2 py-1 rounded-full bg-blue-600 text-[10px] font-semibold uppercase tracking-wide">View Report</span>
+                                    </div>
                                 </a>
-                                <a href="https://drive.google.com/file/d/18pcSMos0ZgbJ3Skztsb82aeTquM64Gb7/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 rounded-full bg-slate-900 text-white text-xs font-semibold tracking-wide hover:bg-slate-800 transition">
-                                    View Seller Reporting – Week 2
+
+                                <a href="https://drive.google.com/file/d/1UCden8LOdeNvIAG0qyUxaMNEruRyBG_S/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="flex flex-col h-full bg-slate-800/40 border border-slate-700 rounded-xl p-3 hover:bg-slate-700/60 transition-all group">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-500/20 text-blue-300">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                            </svg>
+                                        </span>
+                                        <span class="font-medium text-slate-100 text-[11px]">Broker's Monthly Market Analysis-Executive Summary</span>
+                                    </div>
+                                    <div class="mt-auto pt-3">
+                                        <span class="inline-flex items-center px-2 py-1 rounded-full bg-blue-600 text-[10px] font-semibold uppercase tracking-wide">View Report</span>
+                                    </div>
+                                </a>
+
+                                <a href="https://drive.google.com/file/d/1o3dIVocp9IykRXDNMmtXaaFdg8ygx8NT/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="flex flex-col h-full bg-slate-800/40 border border-slate-700 rounded-xl p-5 hover:bg-slate-700/60 transition-all group">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-blue-500/20 text-blue-300">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                            </svg>
+                                        </span>
+                                        <span class="font-medium text-slate-100 text-sm">Broker's Updated Monthly Market Analysis Report</span>
+                                    </div>
+                                    <div class="mt-auto pt-4">
+                                        <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-blue-600 text-xs font-semibold uppercase tracking-wide">View Report</span>
+                                    </div>
+                                </a>
+
+                                <a href="https://drive.google.com/file/d/1vyjNPbw4_Nq9bpNm2HLrD9EvUQO89wTG/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="flex flex-col h-full bg-slate-800/40 border border-slate-700 rounded-xl p-3 hover:bg-slate-700/60 transition-all group">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-500/20 text-blue-300">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                            </svg>
+                                        </span>
+                                        <span class="font-medium text-slate-100 text-[11px]">Monthly Social Media Activity Report</span>
+                                    </div>
+                                    <div class="mt-auto pt-3">
+                                        <span class="inline-flex items-center px-2 py-1 rounded-full bg-blue-600 text-[10px] font-semibold uppercase tracking-wide">View Report</span>
+                                    </div>
+                                </a>
+
+                                <!-- Col 2: Bi-Weekly Traffic & Reach -->
+                                <a href="https://drive.google.com/file/d/1OhR6NcsaRv8i97aqI_JjGVCK92TyMgad/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="flex flex-col h-full bg-slate-800/40 border border-slate-700 rounded-xl p-3 hover:bg-slate-700/60 transition-all group">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-500/20 text-blue-300">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                            </svg>
+                                        </span>
+                                        <span class="font-medium text-slate-100 text-[11px]">Bi-Weekly Website Publishing Traffic Report</span>
+                                    </div>
+                                    <div class="mt-auto pt-3">
+                                        <span class="inline-flex items-center px-2 py-1 rounded-full bg-blue-600 text-[10px] font-semibold uppercase tracking-wide">View Report</span>
+                                    </div>
+                                </a>
+
+                                <a href="https://www.google.com/url?sa=E&source=gmail&q=Homes.com" target="_blank" rel="noopener noreferrer" class="flex flex-col h-full bg-slate-800/40 border border-slate-700 rounded-xl p-3 hover:bg-slate-700/60 transition-all group">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-500/20 text-blue-300">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                            </svg>
+                                        </span>
+                                        <span class="font-medium text-slate-100 text-[11px]">Bi-Weekly Homes.com Traffic Report</span>
+                                    </div>
+                                    <div class="mt-auto pt-3">
+                                        <span class="inline-flex items-center px-2 py-1 rounded-full bg-blue-600 text-[10px] font-semibold uppercase tracking-wide">View Report</span>
+                                    </div>
+                                </a>
+
+                                <a href="https://drive.google.com/file/d/18pcSMos0ZgbJ3Skztsb82aeTquM64Gb7/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="flex flex-col h-full bg-slate-800/40 border border-slate-700 rounded-xl p-5 hover:bg-slate-700/60 transition-all group">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-blue-500/20 text-blue-300">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                            </svg>
+                                        </span>
+                                        <span class="font-medium text-slate-100 text-sm">Bi-Weekly Realtor.com Traffic Report</span>
+                                    </div>
+                                    <div class="mt-auto pt-4">
+                                        <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-blue-600 text-xs font-semibold uppercase tracking-wide">View Report</span>
+                                    </div>
+                                </a>
+
+                                <a href="https://drive.google.com/file/d/14fAhNT0vbhphNaCmw0mtBLBKMnnJ8uMw/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="flex flex-col h-full bg-slate-800/40 border border-slate-700 rounded-xl p-3 hover:bg-slate-700/60 transition-all group">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-500/20 text-blue-300">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                            </svg>
+                                        </span>
+                                        <span class="font-medium text-slate-100 text-[11px]">Bi-Weekly Zillow.com Traffic Report</span>
+                                    </div>
+                                    <div class="mt-auto pt-3">
+                                        <span class="inline-flex items-center px-2 py-1 rounded-full bg-blue-600 text-[10px] font-semibold uppercase tracking-wide">View Report</span>
+                                    </div>
+                                </a>
+
+                                <!-- Col 3: Listing Activity & Velocity -->
+                                <a href="https://drive.google.com/file/d/1Fs4M58qowuTKMPM2dKim-ulPJyRDqZPm/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="flex flex-col h-full bg-slate-800/40 border border-slate-700 rounded-xl p-5 hover:bg-slate-700/60 transition-all group">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-blue-500/20 text-blue-300">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                            </svg>
+                                        </span>
+                                        <span class="font-medium text-slate-100 text-sm">Bi-Weekly Showing Activity Report</span>
+                                    </div>
+                                    <div class="mt-auto pt-4">
+                                        <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-blue-600 text-xs font-semibold uppercase tracking-wide">View Report</span>
+                                    </div>
+                                </a>
+
+                                <a href="https://drive.google.com/file/d/1YNAuUJIrEQPE8x7CGVYwujLCEIks4d-n/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="flex flex-col h-full bg-slate-800/40 border border-slate-700 rounded-xl p-3 hover:bg-slate-700/60 transition-all group">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-500/20 text-blue-300">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                            </svg>
+                                        </span>
+                                        <span class="font-medium text-slate-100 text-[11px]">Bi-Weekly MLS Activity Report</span>
+                                    </div>
+                                    <div class="mt-auto pt-3">
+                                        <span class="inline-flex items-center px-2 py-1 rounded-full bg-blue-600 text-[10px] font-semibold uppercase tracking-wide">View Report</span>
+                                    </div>
+                                </a>
+
+                                <a href="https://portal.onehome.com" target="_blank" rel="noopener noreferrer" class="flex flex-col h-full bg-slate-800/40 border border-slate-700 rounded-xl p-3 hover:bg-slate-700/60 transition-all group">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-500/20 text-blue-300">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                            </svg>
+                                        </span>
+                                        <span class="font-medium text-slate-100 text-[11px]">OneHome Market Report</span>
+                                    </div>
+                                    <div class="mt-auto pt-3">
+                                        <span class="inline-flex items-center px-2 py-1 rounded-full bg-blue-600 text-[10px] font-semibold uppercase tracking-wide">View Report</span>
+                                    </div>
+                                </a>
+
+                                <a href="https://www.texasgrandrealty.com/cma/property-valuation/" target="_blank" rel="noopener noreferrer" class="flex flex-col h-full bg-slate-800/40 border border-slate-700 rounded-xl p-3 hover:bg-slate-700/60 transition-all group">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-500/20 text-blue-300">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                            </svg>
+                                        </span>
+                                        <span class="font-medium text-slate-100 text-[11px]">TGR Valuation Strategy</span>
+                                    </div>
+                                    <div class="mt-auto pt-3">
+                                        <span class="inline-flex items-center px-2 py-1 rounded-full bg-blue-600 text-[10px] font-semibold uppercase tracking-wide">View Report</span>
+                                    </div>
                                 </a>
                             </div>
-                        </div>
-                        <div class="bg-slate-900 rounded-2xl shadow-md border border-slate-700 p-6 text-slate-50">
-                            <h3 class="text-lg font-bold mb-2">Syndication & Reach Verification</h3>
-                            <p class="text-sm text-slate-200 leading-relaxed mb-4">
-                                This listing is distributed across MLS, Zillow Group, Realtor.com, Homes.com, Facebook, Instagram, and our extended 100+ affiliate network.
-                                The Syndication Reach modal provides a live overview of that footprint.
-                            </p>
-                            <button type="button" onclick="openSyndicationModal()" class="inline-flex items-center px-4 py-2 rounded-full bg-blue-600 text-white text-xs font-semibold tracking-wide hover:bg-blue-500 transition">
-                                View Syndication Reach
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -1314,6 +1906,12 @@
             baths: 2,
             lotSize: '0.23 AC',
             yearBuilt: '1984 (Resale)',
+            marketRates: {
+                current: 'Highest rates in a month (Range: 6.25% - 6.50%)',
+                fedCutProb: '4% (January Meeting)',
+                unemployment: 'Core PCE at 0.2% (Meeting Forecasts)',
+                adp: 'Jobless Claims 200k'
+            },
             roadmapPhases: [
                 { phase: 1, price: 375000, label: 'Phase 1' },
                 { phase: 2, price: 364900, label: 'Phase 2' },
@@ -1667,6 +2265,8 @@
                 sourceArray = hdrIds;
             } else if (type === 'virtual') {
                 sourceArray = virtualIds;
+            } else if (type === 'dollhouse') {
+                sourceArray = dollhouseIds;
             } else {
                 console.warn('Unknown carousel type:', type);
                 return;
@@ -1744,6 +2344,142 @@
             updateCarousel();
         }
         
+        // --- LOCAL MARKET CHARTS (Morningstar-style donuts) ---
+        let localSupplyChart = null;
+        let localOutcomesChart = null;
+
+        function initLocalMarketCharts() {
+            const supplyCtx = document.getElementById('localSupplyChart');
+            const outcomesCtx = document.getElementById('localOutcomesChart');
+            if (!supplyCtx || !outcomesCtx || !window.Chart) return;
+
+            if (localSupplyChart) localSupplyChart.destroy();
+            if (localOutcomesChart) localOutcomesChart.destroy();
+
+            localSupplyChart = new Chart(supplyCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Months of Supply', 'Equilibrium (6 mo)'],
+                    datasets: [{
+                        data: [4.4, 6 - 4.4],
+                        backgroundColor: ['#2563EB', '#E5E7EB'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    cutout: '70%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: true }
+                    }
+                }
+            });
+
+            localOutcomesChart = new Chart(outcomesCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Closed / Under Contract', 'Price Reductions / Expired'],
+                    datasets: [{
+                        data: [60, 40],
+                        backgroundColor: ['#16A34A', '#F97316'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    cutout: '70%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: true }
+                    }
+                }
+            });
+        }
+
+        // --- RATES TAB: RATE BREAKOUT CHART ---
+        let rateChartInstance = null;
+
+        function initMarketChart() {
+            const ctx = document.getElementById('rateChart');
+            if (!ctx || !window.Chart) return;
+
+            if (rateChartInstance) {
+                rateChartInstance.destroy();
+            }
+
+            const labels = ['Nov 2025', 'Dec 2025', 'Jan 10', 'Jan 20', 'Current'];
+            const dataPoints = [6.15, 6.20, 6.10, 6.45, 6.38];
+
+            rateChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [
+                        {
+                            label: 'Conforming 30-Year Fixed (%)',
+                            data: dataPoints,
+                            borderColor: '#2563EB',
+                            backgroundColor: 'rgba(37,99,235,0.15)',
+                            borderWidth: 2,
+                            tension: 0.35,
+                            pointRadius: 4,
+                            pointBackgroundColor: function(context) {
+                                return context.dataIndex === dataPoints.length - 1 ? '#DC2626' : '#2563EB';
+                            }
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: true },
+                        annotation: window['chartjs-plugin-annotation']
+                            ? {
+                                  annotations: {
+                                      volatilitySpike: {
+                                          type: 'label',
+                                          xValue: labels[labels.length - 1],
+                                          yValue: dataPoints[dataPoints.length - 1],
+                                          backgroundColor: 'rgba(220,38,38,0.9)',
+                                          borderRadius: 4,
+                                          color: '#ffffff',
+                                          content: ['Geopolitical Volatility Spike'],
+                                          font: { size: 10, weight: 'bold' },
+                                          padding: 6,
+                                          yAdjust: -20
+                                      }
+                                  }
+                              }
+                            : undefined
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            ticks: {
+                                callback: function(value) {
+                                    return value.toFixed(2) + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- NAV SCROLL ARROWS ---
+        function scrollNav(direction) {
+            const nav = document.getElementById('main-nav-container');
+            if (!nav) return;
+            const container = nav.querySelector('.nav-tabs-container');
+            if (!container) return;
+            const scrollAmount = 200;
+            if (direction === 'left') {
+                container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        }
+
         // --- GOOGLE DRIVE IMAGE ID ARRAYS (Actual IDs) ---
         const droneIds = [
             '1ktkE5HeaVna9Yr1ADoki-e8uMjjHbdTw','19i0vdDYEeIrz-O8jHJqt7pkAuFbjiU--','1zlRqh1RW6C9tBhpEFLSUjUI2xjx8yFEs','1Rfmas63N5WlsE2NNbALGLcutHAKzjO56',
@@ -1770,6 +2506,11 @@
             '1YXFFVpjUSmNYhh34xIfKomBpHFlubu7t','1smj4srBN7Csb9L1raLbEo_LDOmZlYDWx','1T8M8Bes2aitCWOa3e09-bk9QN9vo9NtC','1NZ34Ouc-OT77Q02ODizDxhjM034DlR0U',
             '16-gwlV2Uvsml6q7d1lZD64q-La-HdDu5','1h7CRKaz58uUlxrh-2QdT27-3Tl6R_iG6','1UAPubN58Q-3q4RFcVDCx1E9xuSrR5Cox','1sdYE0AG9f_IRMNj6fgkciUAf0ggm-ch9',
             '1TvOZsDMiPheCpBjBXj0dV6XD_e-Y3piJ','1N3J0kz1rJfSVvhdUKBXGXqcbohXGszdo'
+        ];
+
+        const dollhouseIds = [
+            '1IxWnN9ygY-qTNAfHU0ytwI4lXMMdpbCb','1L1TsaFekr6ITPzJXKifct36tYYwr-q1n','1L6jkRleArz8samLVe-YeRxFyD1ygkbsC','1myWkBu6_5R5Nb_gnOmmh4Y5XeMCx4ssV',
+            '1QckLczCXH4PbAZammDug-w85ztmrCBK8','1bgk33EXHiz655g07ZIKH1qXV6cm9_WAc','1r7w4tC5LI8QlsvevrnaJu1_tkJfM5lKl','1uHrVVgtapRcFvnIu81nVT6UTeoBp9TjH'
         ];
         
         // --- FISHER-YATES SHUFFLE FUNCTION ---
@@ -1856,6 +2597,20 @@
                 if (tabId === 'metrics') {
                     setTimeout(() => {
                         initPricingChart();
+                    }, 150);
+                }
+
+                // Initialize local market charts when Local Market tab is shown
+                if (tabId === 'local') {
+                    setTimeout(() => {
+                        initLocalMarketCharts();
+                    }, 150);
+                }
+
+                // Initialize rate breakout chart when Rates tab is shown
+                if (tabId === 'rates') {
+                    setTimeout(() => {
+                        initMarketChart();
                     }, 150);
                 }
                 
