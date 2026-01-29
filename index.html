@@ -129,6 +129,25 @@
             background-color: rgba(59,130,246,0.08);
             color: #1D4ED8;
         }
+        /* --- MOBILE HEADER & NAV COMPRESSION --- */
+        @media (max-width: 768px) {
+            header .header-inner {
+                padding-top: 0.5rem;   /* py-2 equivalent */
+                padding-bottom: 0.5rem;
+            }
+            header .header-logo {
+                height: 2rem;          /* h-8 equivalent */
+            }
+            header .header-title {
+                font-size: 1.125rem;   /* text-lg equivalent */
+                line-height: 1.5rem;
+            }
+            .nav-btn,
+            .nav-btn-external {
+                padding-top: 0.35rem;
+                padding-bottom: 0.35rem;
+            }
+        }
         .nav-btn.active {
             background-color: rgba(37,99,235,0.18);
             color: #1D4ED8;
@@ -205,16 +224,16 @@
         <!-- Glass-morphism Executive Header (Morningstar Standard) -->
         <header class="relative mt-6 mb-6 rounded-3xl border border-white/60 bg-white/80 backdrop-blur-xl shadow-lg sticky top-0 z-20">
             <div class="absolute inset-0 bg-gradient-to-b from-white/95 to-white/80 pointer-events-none"></div>
-            <div class="relative z-10 px-4 sm:px-6 lg:px-8 pt-5 pb-3 md:pb-4">
+            <div class="relative z-10 px-4 sm:px-6 lg:px-8 pt-5 pb-3 md:pb-4 header-inner">
                 <!-- Top Row: Address + Spec Ribbon -->
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-6">
                     <div class="flex items-center gap-4">
-                        <img src="logo.png" alt="Logo" class="h-14 w-auto object-contain drop-shadow-sm">
+                        <img src="logo.png" alt="Logo" class="h-14 w-auto object-contain drop-shadow-sm header-logo">
                         <div class="text-left">
                             <p class="text-[0.7rem] font-semibold tracking-[0.28em] text-blue-600 uppercase mb-1">
                                 Executive Property Dashboard
                             </p>
-                            <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900 leading-snug">
+                            <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900 leading-snug header-title">
                                 Strategic Market Position Analysis
                             </h1>
                             <p class="text-sm md:text-base font-medium text-gray-600 mt-1" id="header-address">
@@ -223,7 +242,7 @@
                         </div>
                     </div>
                     <!-- Spec Ribbon (pulls from propertyData) -->
-                    <div class="flex flex-wrap justify-start md:justify-end gap-2 md:gap-3 text-xs md:text-sm">
+                    <div class="hidden md:flex flex-wrap justify-start md:justify-end gap-2 md:gap-3 text-xs md:text-sm">
                         <div class="px-3 py-2 rounded-full bg-slate-900 text-slate-50 flex flex-col min-w-[7rem] shadow">
                             <span class="text-[0.6rem] uppercase tracking-[0.18em] text-slate-400 mb-0.5">Year</span>
                             <span id="spec-year" class="font-semibold">1984 (Resale)</span>
