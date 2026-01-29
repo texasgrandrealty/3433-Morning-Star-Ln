@@ -113,6 +113,22 @@
             color: #1D4ED8;
             border-bottom-color: rgba(59,130,246,0.5);
         }
+        .nav-btn-external {
+            padding: 0.6rem 0.9rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: #6B7280;
+            border-radius: 9999px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            flex: 0 0 auto;
+        }
+        .nav-btn-external:hover {
+            background-color: rgba(59,130,246,0.08);
+            color: #1D4ED8;
+        }
         .nav-btn.active {
             background-color: rgba(37,99,235,0.18);
             color: #1D4ED8;
@@ -137,6 +153,33 @@
         }
         .kpi-sub {
             @apply text-sm text-gray-400;
+        }
+        /* --- OPTIMAL BLUE TOUCH-TO-INTERACT WRAPPER --- */
+        .iframe-touch-wrapper {
+            position: relative;
+        }
+        .iframe-touch-wrapper iframe {
+            pointer-events: none;
+        }
+        .iframe-touch-wrapper.active-iframe iframe {
+            pointer-events: auto;
+        }
+        .iframe-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, rgba(15,23,42,0.3), rgba(15,23,42,0.6));
+            color: #e5e7eb;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+        .iframe-touch-wrapper.active-iframe .iframe-overlay {
+            opacity: 0;
+            pointer-events: none;
         }
         .page-section {
             @apply bg-white shadow-lg rounded-lg p-6 md:p-8;
@@ -223,7 +266,7 @@
                                 <button id="nav-financial" class="nav-btn" onclick="showTab('financial', this)">Financing</button>
                                 <button id="nav-buydown" class="nav-btn" onclick="showTab('option2', this)">Buydown</button>
                                 <button id="nav-documents" class="nav-btn" onclick="showTab('documents', this)">Documents</button>
-                                <a id="nav-search" href="https://www.texasgrandrealty.com/" target="_blank" rel="noopener noreferrer" class="nav-btn">Search Properties</a>
+                                <a href="https://www.texasgrandrealty.com/" target="_blank" rel="noopener noreferrer" class="nav-btn-external">Search Properties</a>
                             </div>
                             <button type="button" class="nav-arrow animate-pulse" onclick="scrollNav('right')">
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -969,7 +1012,12 @@
                     <!-- LIVE SECONDARY MARKET INDICES (OPTIMAL BLUE) -->
                     <div class="bg-white rounded-2xl border border-gray-200 shadow-2xl p-4">
                         <h3 class="text-sm font-extrabold uppercase tracking-[0.18em] text-gray-700 mb-3">LIVE SECONDARY MARKET INDICES (OPTIMAL BLUE)</h3>
-                        <div class="rounded-xl overflow-hidden shadow-2xl">
+                        <div class="rounded-xl overflow-hidden shadow-2xl iframe-touch-wrapper">
+                            <div class="iframe-overlay" onclick="activateIframe(this)">
+                                <span class="px-3 py-1 rounded-full bg-white/80 text-slate-800 shadow">
+                                    Tap to interact with live rates
+                                </span>
+                            </div>
                             <iframe
                                 src="https://www2.optimalblue.com/obmmi/"
                                 class="w-full"
@@ -2411,7 +2459,7 @@
                             }
                         },
                         tooltip: { enabled: true },
-                        centerLabel: { text: '4.4 Mo', fontSize: 26, color: '#111827' }
+                        centerLabel: { text: '4.4 Mo', fontSize: 30, color: '#111827' }
                     }
                 }
             });
@@ -2441,7 +2489,7 @@
                             }
                         },
                         tooltip: { enabled: true },
-                        centerLabel: { text: '62% Sold', fontSize: 26, color: '#111827' }
+                        centerLabel: { text: '62% Sold', fontSize: 30, color: '#111827' }
                     }
                 }
             });
@@ -2532,6 +2580,14 @@
             }
         }
 
+        // --- ACTIVATE OPTIMAL BLUE IFRAME ON TAP (MOBILE-FRIENDLY) ---
+        function activateIframe(overlayEl) {
+            if (!overlayEl) return;
+            const wrapper = overlayEl.closest('.iframe-touch-wrapper');
+            if (!wrapper) return;
+            wrapper.classList.add('active-iframe');
+        }
+
         // --- GOOGLE DRIVE IMAGE ID ARRAYS (Actual IDs) ---
         const droneIds = [
             '1ktkE5HeaVna9Yr1ADoki-e8uMjjHbdTw','19i0vdDYEeIrz-O8jHJqt7pkAuFbjiU--','1zlRqh1RW6C9tBhpEFLSUjUI2xjx8yFEs','1Rfmas63N5WlsE2NNbALGLcutHAKzjO56',
@@ -2602,8 +2658,8 @@
                 const allTabs = document.querySelectorAll('main > div[id^="tab-"], main > div[id^="page-"]');
                 allTabs.forEach(tab => tab.classList.add('hidden'));
                 
-                // Deactivate all nav buttons
-                document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+                // Deactivate all nav buttons (ignore external search link)
+                document.querySelectorAll('.nav-btn:not(.nav-link-external)').forEach(btn => btn.classList.remove('active'));
                 
                 // Show the target tab (try tab- first, then page- for backward compatibility)
                 let tabElement = document.getElementById(`tab-${tabId}`);
@@ -3275,6 +3331,7 @@
             const navButtons = document.querySelectorAll('.nav-btn[data-page], #main-nav-container .nav-btn, nav .nav-btn');
             
             navButtons.forEach((button) => {
+                if (button.classList.contains('nav-btn-external')) return;
                 // Create click handler function
                 const clickHandler = function(e) {
                     e.preventDefault();
